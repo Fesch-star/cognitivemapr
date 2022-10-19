@@ -1,4 +1,4 @@
-# EVALUATION uitrekenen in edgelist - MOETEN NOG LOOPS IN 
+# EVALUATION uitrekenen in edgelist - Hier zouden de loops al in moeten zitten is file na meeting Sven 
 Evaluation_step <- function(edgelist, nodelist){
 
 #evaluation calculations - HIER ZOU LOOP BEGINNEN 
