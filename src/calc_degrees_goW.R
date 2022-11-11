@@ -32,7 +32,7 @@
 #   columns with an * include the meta-data and are optional. For other research-
 #   projects, other types of meta-data may be important. 
 
-#     nodelist : 
+#   nodelist: 
 #       -id: unique id (number) for the node/concept
 #       -node_name: node name/concept in words
 #       
@@ -47,18 +47,14 @@
 #         from
 #       
 #
-#   The function transforms the data into a map (graph) to do the calculations
-#   The function returns a list of lists entitled "node_calc" with all calculated 
-#     values as well as the meta-data
-#
-#   for the function to return and store the following output:
-#       - the initial map associated with the edgelist and nodelist [1]
-#       - a df with the values [2]
-#
-#   You need to insert the following codes below the function in your script: 
-#       - name_period_map <- calc_degrees_goW(edgelist, nodelist)[[1]]
-#       - name_period_node_calc <- calc_degrees_goW(edgelist, nodelist)[[2]]
-#  
+#   The function transforms the data into a map (graph) to do the calculations.
+
+#   The function returns a df entitled "node_calc" with all calculated values as
+#   well as the original data.
+
+#   For the function to return and store the following output a df with the values, 
+#   you need to insert the following codes below the function in your script: 
+#       - node_calc_name_period <- calc_degrees_goW(edgelist, nodelist)
 #
 #///////////////////////////////////////////////////////////////////////////////
 
@@ -68,8 +64,6 @@ calc_degrees_goW <- function(edgelist, nodelist) {
 #transform edge & nodelist into a map
   map <- graph_from_data_frame(d = edgelist, vertices = nodelist, directed = TRUE)
 
-  return(map)
-  
 #calculate for each node
   deg <- degree(map, mode = "all") #degrees (centrality in CM speech)
   indeg <- degree(map, mode = "in") #indegrees

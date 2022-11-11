@@ -9,9 +9,11 @@ install.packages("tidyverse") # for data-wranging incl ggplot2, dplyr, tidyr,
 install.packages("igraph") # for analysing graphs
 install.packages("tidygraph") # analysing graphs in df mode with node & edgelists
 install.packages("ggraph") # extension of ggplot2 tailored to graph visualizations.
+install.packages("visNetwork") # package for network visualisation
 
 # Loading the packages
 library(tidyverse)
 library(igraph)
 library(tidygraph)
 library(ggraph)
+library(visNetwork)

@@ -1,3 +1,5 @@
+#still working on this - check evaluation step next
+
 # exploring data
 library(tidyverse) #zit ggplot2, dplyr, tidyr, readr, purr, tibble al in
 library(igraph) #analysing graphs
@@ -6,26 +8,18 @@ library(ggraph) #gplot2 is poor fit for graph and network visualizations due to 
 
 #df uploaden: nodelist_merkel_p2 (nodelist of example data)
 #df uploaden: edgelist_merkel_p2 (edgelist of example data)
-merkel_p2_nodes  <- read.csv ("data/raw/nodelist_merkel_p2.csv")
-merkel_p2_edges <- read.csv("data/raw/edgelist_merkel_p2.csv")
+nodelist_merkel_p2  <- read.csv ("data/raw/nodelist_merkel_p2.csv")
+edgelist_merkel_p2 <- read.csv("data/raw/edgelist_merkel_p2.csv")
 
-#Calling my new function to calc node degrees and rename the node_calc df it returns
-#TO DO does not work as supposed to/Inserted the two lines below, does it work now? Still try.
+#calling my function to do node calculations (degrees,go) and rename the df it returns
 
-Merkel_p2_map <- calc_degrees_goW(merkel_p2_edges, merkel_p2_nodes)[[1]]
-Merkel_p2_nodecalc <- calc_degrees_goW(merkel_p2_edges, merkel_p2_nodes)[[2]] # takes edgelist, nodeslist
-
-
-
-#TO DO: does not work as supposed to
-merkel_p2_map <- calc_degrees_goW(merkel_p2_edges, merkel_p2_nodes)[[1]]
-merkel_p2_node_calc <- calc_degrees_goW(merkel_p2_edges, merkel_p2_nodes)[[2]]
+node_calc_merkel_p2 <- calc_degrees_goW(edgelist_merkel_p2, nodelist_merkel_p2)
 
 # creating a map/graph
-merkel_p2_map <- graph_from_data_frame(d=merkel_p2_edges, vertices=merkel_p2_nodes, directed = T)
+map_merkel_p2 <- graph_from_data_frame(d=edgelist_merkel_p2, vertices=nodelist_merkel_p2, directed = T)
 
-farthest_vertices(merkel_p2_map, directed = TRUE, unconnected = TRUE)# #determine longest path to set the number of loops below 
-get_diameter (merkel_p2_map, directed = TRUE, unconnected = TRUE)# (superfluous step at this time -Bij Merkel2 is langste pad 6 en na 5 runs balans
+farthest_vertices(map_merkel_p2, directed = TRUE, unconnected = TRUE)# #determine longest path to set the number of loops below 
+get_diameter (map_merkel_p2, directed = TRUE, unconnected = TRUE)# (superfluous step at this time -Bij Merkel2 is langste pad 6 en na 5 runs balans
 
 
 #nieuwe evaluation_step functie proberen
