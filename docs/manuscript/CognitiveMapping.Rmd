@@ -1,0 +1,193 @@
+---
+title: "CognitiveMapping: An R Package for XXX"
+date: "2022-11-09"
+abstract: >
+  An abstract of less than 150 words.
+draft: true
+author:  
+  # see ?rjournal_article for more information
+  - name: Femke A.W.J. Van Esch
+    affiliation: Utrecht University School of Governance
+    address:
+    - Bijlhouwerstraat 6
+    - ??? Utrecht, the Netherlands
+    url: uu.nl/staff/fawjvanesch
+    orcid: 
+    email:  F.a.w.j.vanesch@uu.nl
+  - name: Jeroen Snellens
+    url: ?
+    email: Snellens@gmail.com
+    orcid: 
+    affiliation: Independent researcher
+    address:
+    - ?
+    - ?
+type: package
+output: 
+  rjtools::rjournal_web_article:
+    self_contained: yes
+    toc: no
+bibliography: RJreferences.bib
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(plotly)
+library(ggplot2)
+library(palmerpenguins)
+```
+
+# Introduction
+
+This article will introduce the method of Cognitive Mapping (CM) as well as the 
+Rpackage CognitiveMap that we developed to reduce the initial investment currently needed to start using the method. CM is a method specifically designed to study belief systems as espoused by individuals or organisations and has several advantages over other methods.It starts from the premise that belief systems are best conceived as semantic networks consisting of causal and normative relations between ideas (Axelrod 1976; Young 1996; Yang and González-Bailón 2017). Using visualisation techniques as well as graph theory, CM fosters a more in depth understanding of beliefs as it helps reveal the argumentation underlying belief systems, makes it possible to distinguish amongst different types of beliefs (core versus peripherical beliefs, instrumental versus paradigmatic beliefs) as well as establish the saliency of beliefs and argumentations (Van Esch and Snellens online first). Moreover, it allows scholars to study the belief systems of political actors in both a qualitative and quantitative, deductive and inductive manner. Finally, the CM technique can be used to study beliefs embedded in texts or speech acts as well as be used as a survey tool. It is therefore suitable to study the beliefs of political actors and citizens in an indirect way (at-a-distance) or by querying respondents directly (Van Esch, Joosen, and Van Zuydam 2016).
+To illustrate the various ways in which the technique of Cognitive Mapping may be used, the paper will draw upon a database of cognitive maps of European political and financial leaders and citizens from nine EU member states regarding the Eurozone crisis. 
+
+# Cognitive Mapping
+
+Cognitive mapping offers scholars a standardised way of studying ideas and has been successfully applied in the fields of political and social psychology, communication and organizational sciences and economics (Axelrod 1976; Bougon, Weick, and Binkhorst 1977; Boukes et al. 2020; Laukkanen and Wang 2016; Van Esch 2012) ADD MORE REFERENCES?. 
+The CM technique rests upon the premise that ideas are reflected in spoken or written communication like speech acts, institutional documents, media sources and interviews. Moreover, the technique has also been used as a tool to elicit the beliefs of individuals directly during interviews or in survey settings. Finally, the method has been used in the context of focus groups to elicit, study or stimulate the development of collective belief systems (Boukes et al; Van Esch, Joosen, and Van Zuydam 2016; ref sandra schruyer & stukken over die direct/indirect elicitation).
+Whereas other techniques to derive ideas from text use concepts or themes as their unit of analysis, the basis of a cognitive map is the relationship between the concepts (Axelrod 1976). More specifically, to create a cognitive map all the causal and utility relationships between concepts are derived from a text or elicited from respondents. Utility relations are statements to the effect that concept x is ‘good’, ‘in someone’s interest’ or ‘in the general benefit’. Conducting a CM analysis thus reveals actors’ arguments (a leads to b) as well as their normative evaluations (b is a worthy cause / beneficial), and as such provides an in-depth analysis of the beliefs and underlying argumentation embedded in texts or speech acts. 
+In contrast to other qualitative text analyses, the annotation of texts or direct elicitation of responses for the CM technique is generic in the sense that it is conducted in the same manner regardless of the topic at hand. For the CM as a  text-analysis method, detailed coding-manuals exist, and earlier studies indicate that scholars need relatively little training to achieve good rates of inter-coder reliability (Axelrod 1976; Hart 1977; Young and Schafer 1998). In addition, scholars have also researched and discussed best practices when using the direct elicitation form of CM analysis and do's and don't when integrating the method in a survey (refs). The method therefore forms a reliable alternative to other methods used to study ideas and beliefs, and due to its generic and structured nature may facilitate comparison across studies and knowledge accumulation.Another added value of cognitive mapping is that the relationships between concepts represented in a CM may be analysed in a qualitative and quantitative manner, making the technique useful for a wide variety of research questions. 
+After the standardisation of concepts (MEER UITLEGGEN - suggestie ML approach), the cognitive map is constructed by transforming the relations into a visual graph in which the concepts are depicted as points and the relations between these concepts as arrows (Axelrod 1976; Young 1996; Young and Schafer 1998, see figure 1). The relationships (arrows) in the map are attributed a sign to indicate whether a concept is perceived to contribute positively (+) or negatively (-) to an effect-concept, or whether the actor has (explicitly) indicated that a concept has no bearing on an effect-concept (0). To facilitate the coding and analysis of cognitive maps various tool and applications are available, but requires a steep learning curve and initial investment (Bastian, Heymann, and Jacomy 2009; Young 1996). The newly developed R-package bundles visual, qualitative and quantitative modes of analyses. Moreover, the shiny-app opens ups CM technique to those scholars that do not have the necessary technical skills to use these tools. 
+
+# Conducting CM analysis with \pkg{CognitiveMapping}
+
+## preparing data
+Direct versus indirect elicitation of data. Text still handcoding (but see xxx) direct elicitation quicker - DART (but also mention others). 
+the CognitiveMapping packages uses other packages which use different terms for the same concepts.
+
+CM term    | Meaning                                    |Synonym
+-----------|--------------------------------------------|-------
+Concept    | cause or effect (raw or standardised       | Node
+Relation   | causal or utility relation                 | Edge
+CM         | visual graph showing concepts and relations| Map
+Centrality | number of connections to other concepts    | degree
+Saliency   | weighted nr of connects to other concepts  | weighted degree
+indegree   |
+outdegree  |
+Evaluation |
+distance   |
+
+MISSCHIEN BETER IN EEN ANNEX?
+
+Data structure: input are two csv files with a basic mandatory specific format: 
+* Edgelist: "from","to","weight","edge_value" 
+* nodeslist:"id","node_name","eco","int","value" (CAT and value beter omwisselen?)
+(BENAMING van de edge_value and value consistent maken) / NODElist leidt je af van edgelist - toch?)
+
+In addition, you may add any metadata you require for your analysis to the Edgelist like the title and date of the text or name or ID of the speaker or respondent  (BUT beware of certain colnames). Moreover, to the nodeslist you may want to add columns including different categorisations of the concepts. In the examples used below we use paradigma and type of instrument as categories whereby the first was derived deductively from the literature on the topic of our sources (Eurozone crisis) and the second were derived deductively from the data (see below) 
+
+(THEN introduce example data?)
+
+(DO you describe dependencies/used packages? - or is in the accompanying files?)
+
+(Do you describe reading in the data?)
+
+(DO we want to include deriving lists from large data set - select_speaker_period_make_list.R function?)
+
+
+
+# Conducting CM analysis
+
+There are various ways of analysing CM data contained in the edge and nodelist. Full potential by transforming into a graph - the Cognitive Map.  
+
+## Visualisation and narrative analysis
+The X way to analyse the beliefs represented in a cognitive map is by analysing the paths in a map. A path is a sequence of concepts and relations. Any path leading out of a concept is called a consequent path, any path feeding into a concept is an antecedent path. By analysing the relationships between the concepts in a path, scholars can establish if, and how concepts are seen to be related: causally or normatively, positively or negatively. Figure 1 for instance, shows that according to the Dutch Prime Minister Rutte the European Stability Mechanism (ESM) contributes positively to solving the Eurozone crisis by means of increasing (+) market trust. By analysing the full cognitive map in this manner, the argumentation underlying Rutte’s ideas is revealed. 
+Analysis of the paths may also indicate to what extent a certain idea or concept is valued positively, negatively or ambiguously (evaluation of a concept, Ev). To establish this, the researcher identifies all consequent paths leading from a concept to a ‘utility concept’. By analysing the sign of the consequent path between a concept and a utility concept, it may be established whether an idea is valued positively, negatively or ambiguously (Hart 1977). For instance, assuming that ‘solving the crisis’ is considered a positive goal, we can derive from figure 1 that ‘fiscal discipline’ is also valued positively as it contributes to ‘solving the crisis’, whereas ‘wider yield spreads’ is negatively evaluated.  A CM analysis thus reveals both the nature of ideas as well as whether they are valued positively or negatively.
+(HOE ver ga je hier met visualisatie?)
+
+
+## Calculating Basic CM measures
+(calc_degrees_goW functie)
+The X basis for the analysis of a CM are the weight of relations (W) and the centrality (C) and saliency (S) of the concepts. The weight of a relations is determined by how many times an actor refers to the relation in their texts or speech-acts. So, figure 1 shows that Rutte stated that the ESM will increase market trust twice, as this relation has a weight of two. The centrality of a concept is determined by establishing the number of connections with other concepts. When also taking the weight of the relations into account, the saliency of a concept is established. In figure 1, for instance, the concept ‘market trust’ has a centrality of two as it has an ingoing connection to ‘ESM’ and an outgoing relation to ‘solving the crisis’ of one. However, it has a saliency of three as Rutte mentioned the former connection twice.  Whereas centrality is used as a measure of the complexity of ideas, the weight and saliency are indicators of how strong a particular belief is. Transforming causal and utility relations into graphs facilitates a holistic qualitative analysis of the ideas and argumentations embedded in texts. On the other hand, measures like the weight, centrality and saliency allow for the quantification of the complexity and strength of ideas. As complexity and strength are regarded as consequential for the effect of ideas on policy in the literature, these measures may help answer important research questions in the field
+
+## Evaluation loop
+(Evaluation_step function)
+
+##Categorical analysis
+(calc_dims function)
+
+In the case of the Eurozone crisis, scholars have identified two competing paradigms underlying the policy debate: Keynesianism and Ordoliberalism. The Ordoliberal paradigm is characterised by a belief in the primacy of price stability which may be ensured by pursuing austerity and denouncing monetary financing. In contrast, for Keynesians, economic growth and employment take precedence and economic stimulation is advocated to promote these goals during economic downturns. Keynesians are also more favourable to monetary financing and for a central bank to act as a lender of last resort (Dullien and Guérot 2012; Hall 2014). 
+To capture the paradigmatic orthodoxy of Rutte and Knot’s belief system, all concepts in their CM were classified as either Keynesian, Ordoliberal or neutral (Van Esch et al. 2018).  The result of this analysis shows that during the period from May 2010 and July 2012 both Rutte and Knot’s belief system are more Ordoliberal than Keynesian (see figure 2). Other types of (automated) text analysis are capable of classifying text into broad categories in a similar fashion (Ban 2015). The nuance of the CM analyses, however, reveals that there are also considerable Keynesian elements in Rutte´s and Knot´s belief system, lending support to the thesis that paradigms are not incommensurable (Carstensen 2011b; Princen and Van Esch 2016). Moreover, due to the standardised way the CM technique works, we are also able to compare their scores to other leaders and conclude that internationally, the Dutch leaders have a relatively high leaning towards the Ordoliberalism (Van Esch et al. 2018). In a similar way, we could also analyse changes in ideas over time, thereby fulfilling the third requirement discussed above (Bonham, Shapiro, and Trumble 1979; Van Esch 2014). 
+
+In addition, the CM technique allows scholars to distinguish between different types of beliefs, For instance, it is also possible to establish instrumental beliefs with CM. One way of doing this is to inductively identify a range of possible policy-instruments relevant in the policy area under study. For this, we used a larger set of cognitive maps regarding the Eurozone crisis to derive seven relevant policy measures: Stronger EU fiscal regulation, structural reforms, monetary measures by the ECB, economic stimulation, fiscal support, financial market measures and EMU reforms (Van Esch et al. 2018). Comparing Rutte and Knot’s maps shows that while they both lean towards an Ordoliberal approach, they differ in terms of their instrumental beliefs: Rutte favours implementing structural reforms and stronger fiscal regulation over making institutional reforms to EMU, fiscal support and economic stimulation. He does not discuss financial market measures and ECB measures (see figure 3). Knot favours interventions by the ECB over structural and EMU reforms and stronger EU fiscal regulation. In addition, he shows a similar limited support for providing fiscal aid as the PM and does not support economic stimulation or financial market measures. These findings thus allow us to compare the extent the instrumental ideas of Rutte and Knot influenced the Dutch management of the Eurozone crisis (see below). 
+
+## Causal Power
+(HEB ik nog niet omgezet in R code - zie wouter spekkink lineage voor inspiratie)
+Finally, taking full advantage of its graphical nature, CM can be used to establish the causal strength of the policy instruments identified in a map. For this we combine the narrative analysis with the quantitative measures. We start by assuming that the higher the weight of the link between cause and effect, the stronger actors believe in its causal effect. In addition, we assume that the larger the distance between the cause and the effect (the more logical steps it takes to explain the relationship between instrument and goal), the weaker the presumed causal power of the instrument (cf. Septer, Dijkstra, and Stokman 2012; Shapiro and Bonham 1973). On the basis of this, we propose that the causal power (CP) of an instrument on a particular goal may be established as follows (Septer, Dijkstra, and Stokman 2012): First, for each subsequent concept in the antecedent path, its autonomous power (AP) may be determined following the calculation:   
+
+AP = Ev*W*(0.9(D-1)); 
+Whereby: 
+Ev = Evaluation of the cause concept (-1, 0, +1)
+W = Weight of the relation
+D = Distance/steps to the effect concept 
+
+To calculate the total causal power of a policy instrument, the AP-scores of all concepts in the path are multiplied:
+
+ CP = AP1 * AP2 * … APi
+
+In figure 1, the causal power of the concept ‘ESM’ (D=2) runs via (W=2, EV=+1) the concept ‘market trust’ (D=1), which in turn positively feeds into (W=1, EV=+1) ‘solving the crisis’. The causal power of ESM is thus calculated as follows:
+
+CP=(+1*2*(0.9 (2-1)) * (+1*1*(0.9 (1-1)) = 1.8
+
+Scholars have used similar analyses to derive policy preferences in the domain of environmental and foreign policy decisions to identify conditions under which ideas affect policies and even to run simulations of policy making processes (Bonham, Shapiro, and Trumble 1979; Hart 1976).
+
+## Upgraded visualisation
+(draw final map function)
+
+## (nog ergens overlap in maps? )
+
+# Making CM available for scholars without technical skills: the CM shiny app
+(HEB ik nog niet omgezet in R code)
+
+
+
+(LEAVE what is below, as it illustrates how to format stuff that you do not understand yet)
+
+Some packages on interactive graphics include \CRANpkg{plotly} [@plotly] that interfaces with Javascript for web-based interactive graphics, \CRANpkg{crosstalk} [@crosstalk] that specializes cross-linking elements across individual graphics.  The recent R Journal paper \CRANpkg{tsibbletalk} [@RJ-2021-050] provides a good example of including interactive graphics into an article for the journal. It has both a set of linked plots, and also an animated gif example, illustrating linking between time series plots and feature summaries.
+
+# Customizing tooltip design with \pkg{ToOoOlTiPs}
+
+\pkg{ToOoOlTiPs} is a packages for customizing tooltips in interactive graphics, it features these possibilities.
+
+# A gallery of tooltips examples
+
+The \CRANpkg{palmerpenguins} data [@palmerpenguins]  features three penguin species which has a lovely illustration by Alison Horst in Figure \@ref(fig:penguins-alison). 
+
+```{r penguins-alison, out.width = "100%", out.height = "30%", fig.cap = "Artwork by \\@allison\\_horst", fig.alt="A picture of three different penguins with their species: Chinstrap, Gentoo, and Adelie. "}
+knitr::include_graphics("penguins.png")
+```
+
+Table `r knitr::asis_output(ifelse(knitr::is_html_output(), '\\@ref(tab:penguins-tab-interactive)', '\\@ref(tab:penguins-tab-static)'))` prints at the first few rows of the `penguins` data:
+
+```{r penguins-tab-interactive, eval = knitr::is_html_output(), layout = "l-body-outset"}
+knitr::kable(head(penguins), format = "html", caption = "A basic table")
+```
+
+```{r penguins-tab-static, eval = knitr::is_latex_output()}
+knitr::kable(head(penguins), format = "latex", caption = "A basic table") %>% 
+  kableExtra::kable_styling(font_size = 7)
+```   
+
+Figure `r knitr::asis_output(ifelse(knitr::is_html_output(), '\\@ref(fig:penguins-plotly)', '\\@ref(fig:penguins-ggplot)'))` shows an `r ifelse(knitr::is_html_output(), 'interactive', '')` plot of the penguins data, made using the `r knitr::asis_output(ifelse(knitr::is_html_output(), '\\CRANpkg{plotly}', '\\CRANpkg{ggplot2}'))` package. 
+
+```{r penguins-plotly, echo = TRUE, fig.height = 5, fig.cap="A basic interactive plot made with the plotly package on palmer penguin data. Three species of penguins are plotted with bill depth on the x-axis and bill length on the y-axis. When hovering on a point, a tooltip will show the exact value of the bill depth and length for that point, along with the species name.", include=knitr::is_html_output(), eval=knitr::is_html_output(), fig.alt = "A scatterplot of bill length against bill depth, both measured in millimetre. The three species are shown in different colours and loosely forms three clusters. Adelie has small bill length and large bill depth, Gentoo has small bill depth but large bill length, and Chinstrap has relatively large bill depth and bill length."}
+p <- penguins %>% 
+  ggplot(aes(x = bill_depth_mm, y = bill_length_mm, 
+             color = species)) + 
+  geom_point()
+ggplotly(p)
+```
+
+```{r penguins-ggplot, echo = TRUE, fig.height = 5, fig.cap="A basic non-interactive plot made with the ggplot2 package on palmer penguin data. Three species of penguins are plotted with bill depth on the x-axis and bill length on the y-axis. Visit the online article to access the interactive version made with the plotly package.", include=knitr::is_latex_output(), eval=knitr::is_latex_output()}
+penguins %>% 
+  ggplot(aes(x = bill_depth_mm, y = bill_length_mm, 
+             color = species)) + 
+  geom_point()
+```
+
+# Summary
+
+We have displayed various tooltips that are available in the package \pkg{ToOoOlTiPs}. 
