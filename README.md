@@ -1,8 +1,9 @@
-# [CM_analysis]
+# [cognitivemapr]
  [working on this]
 What does your project do?
 fabulous things
 And help you do easy CM analysis
+
 
 ## config instruction
 R version 4.0.2
