@@ -1,6 +1,6 @@
 ---
-title: "CognitiveMapping: An R Package for XXX"
-date: "2022-11-09"
+title: "cognitivemap: An R Package for XXX"
+date: "2023-15-04"
 abstract: >
   An abstract of less than 150 words.
 draft: true
@@ -41,7 +41,7 @@ library(palmerpenguins)
 # Introduction
 
 This article will introduce the method of Cognitive Mapping (CM) as well as the 
-Rpackage CognitiveMap that we developed to reduce the initial investment currently needed to start using the method. CM is a method specifically designed to study belief systems as espoused by individuals or organisations and has several advantages over other methods.It starts from the premise that belief systems are best conceived as semantic networks consisting of causal and normative relations between ideas (Axelrod 1976; Young 1996; Yang and González-Bailón 2017). Using visualisation techniques as well as graph theory, CM fosters a more in depth understanding of beliefs as it helps reveal the argumentation underlying belief systems, makes it possible to distinguish amongst different types of beliefs (core versus peripherical beliefs, instrumental versus paradigmatic beliefs) as well as establish the saliency of beliefs and argumentations (Van Esch and Snellens online first). Moreover, it allows scholars to study the belief systems of political actors in both a qualitative and quantitative, deductive and inductive manner. Finally, the CM technique can be used to study beliefs embedded in texts or speech acts as well as be used as a survey tool. It is therefore suitable to study the beliefs of political actors and citizens in an indirect way (at-a-distance) or by querying respondents directly (Van Esch, Joosen, and Van Zuydam 2016).
+Rpackage cognitivemapr that we developed to reduce the initial investment currently needed to start using the method. CM is a method specifically designed to study belief systems as espoused by individuals or organisations and has several advantages over other methods.It starts from the premise that belief systems are best conceived as semantic networks consisting of causal and normative relations between ideas (Axelrod 1976; Young 1996; Yang and González-Bailón 2017). Using visualisation techniques as well as graph theory, CM fosters a more in depth understanding of beliefs as it helps reveal the argumentation underlying belief systems, makes it possible to distinguish amongst different types of beliefs (core versus peripherical beliefs, instrumental versus paradigmatic beliefs) as well as establish the saliency of beliefs and argumentations (Van Esch and Snellens online first). Moreover, it allows scholars to study the belief systems of political actors in both a qualitative and quantitative, deductive and inductive manner. Finally, the CM technique can be used to study beliefs embedded in texts or speech acts as well as be used as a survey tool. It is therefore suitable to study the beliefs of political actors and citizens in an indirect way (at-a-distance) or by querying respondents directly (Van Esch, Joosen, and Van Zuydam 2016).
 To illustrate the various ways in which the technique of Cognitive Mapping may be used, the paper will draw upon a database of cognitive maps of European political and financial leaders and citizens from nine EU member states regarding the Eurozone crisis. 
 
 # Cognitive Mapping
@@ -56,7 +56,7 @@ After the standardisation of concepts (MEER UITLEGGEN - suggestie ML approach), 
 
 ## preparing data
 Direct versus indirect elicitation of data. Text still handcoding (but see xxx) direct elicitation quicker - DART (but also mention others). 
-the CognitiveMapping packages uses other packages which use different terms for the same concepts.
+the cognitivemapr package uses other packages which use different terms for the same concepts.
 
 CM term    | Meaning                                    |Synonym
 -----------|--------------------------------------------|-------
@@ -78,6 +78,16 @@ Data structure: input are two csv files with a basic mandatory specific format:
 (BENAMING van de edge_value and value consistent maken) / NODElist leidt je af van edgelist - toch?)
 
 In addition, you may add any metadata you require for your analysis to the Edgelist like the title and date of the text or name or ID of the speaker or respondent  (BUT beware of certain colnames). Moreover, to the nodeslist you may want to add columns including different categorisations of the concepts. In the examples used below we use paradigma and type of instrument as categories whereby the first was derived deductively from the literature on the topic of our sources (Eurozone crisis) and the second were derived deductively from the data (see below) 
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(plotly)
+library(ggplot2)
+library(palmerpenguins)
+```
+
+
 
 (THEN introduce example data?)
 
