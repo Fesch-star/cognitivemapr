@@ -8,3 +8,9 @@
 /results
 .Rproj.user
 docs
+
+.Rhistory
+.Rdata
+.httr-oauth
+.DS_Store
+inst/doc
