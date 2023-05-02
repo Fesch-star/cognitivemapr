@@ -8,8 +8,8 @@ library(ggraph) #gplot2 is poor fit for graph and network visualizations due to 
 
 #df uploaden: nodelist_merkel_p2 (nodelist of example data)
 #df uploaden: edgelist_merkel_p2 (edgelist of example data)
-nodelist_merkel_p2  <- read.csv ("data/raw/nodelist_merkel_p2.csv")
-edgelist_merkel_p2 <- read.csv("data/raw/edgelist_merkel_p2.csv")
+#nodelist_merkel_p2  <- read.csv ("data/raw/nodelist_merkel_p2.csv")
+#edgelist_merkel_p2 <- read.csv("data/raw/edgelist_merkel_p2.csv")
 
 #calling my function to do node calculations (degrees,go) and rename the df it returns
 
@@ -18,7 +18,7 @@ node_calc_merkel_p2 <- calc_degrees_goW(edgelist_merkel_p2, nodelist_merkel_p2)
 # creating a map/graph
 map_merkel_p2 <- graph_from_data_frame(d=edgelist_merkel_p2, vertices=nodelist_merkel_p2, directed = T)
 
-farthest_vertices(map_merkel_p2, directed = TRUE, unconnected = TRUE)# #determine longest path to set the number of loops below 
+farthest_vertices(map_merkel_p2, directed = TRUE, unconnected = TRUE)# #determine longest path to set the number of loops below
 get_diameter (map_merkel_p2, directed = TRUE, unconnected = TRUE)# (superfluous step at this time -Bij Merkel2 is langste pad 6 en na 5 runs balans
 
 
@@ -56,12 +56,12 @@ write.csv(edge_calc, "data\\edge_calc_NAME_PERIOD.csv", row.names = FALSE)
 
 #JEROEN MAPS TEKENEN MET GOW SPACING
 #Use node name as label for nodes in network
-node_calc <- node_calc %>% 
+node_calc <- node_calc %>%
   rename(label = node_name)
 
 #Use GOW to determine location of the node
 #In case of usage of GO, use "rename(level = go)"
-node_calc <- node_calc %>% 
+node_calc <- node_calc %>%
   rename(level = gow)
 
 #Generate map
@@ -69,8 +69,8 @@ install.packages("visNetwork")
 
 library(visNetwork)
 
-visNetwork(node_calc, edges) %>% 
-  visEdges(arrows = "to") %>% 
+visNetwork(node_calc, edges) %>%
+  visEdges(arrows = "to") %>%
   visOptions(highlightNearest = TRUE, nodesIdSelection = TRUE) %>%
   visHierarchicalLayout(direction = "LR", levelSeparation = 400)
 
