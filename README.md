@@ -1,79 +1,90 @@
-# [cognitivemapr]
- [working on this]
-What does your project do?
-fabulous things
-And help you do easy CM analysis
-did this work?
 
+<!-- README.md is generated from README.Rmd. Please edit that file -->
 
-## config instruction
-R version 4.0.2
+# cognitivemapr
 
-[How does the user access your project? (E.g. download, or clone with git clone…)]
+<!-- badges: start -->
 
-[How does the user call the main script(s) that should be executed?]
+![GitHub
+contributors](https://img.shields.io/github/contributors/Fesch-star/cognitivemapr)
+![GitHub last
+commit](https://img.shields.io/github/last-commit/Fesch-star/cognitivemapr)
+<!-- badges: end -->
 
-## installation instructions
+Cognitive Mapping is a method specifically designed to study belief
+systems as espoused by individuals or organisations and has several
+advantages over other methods. The goal of `cognitivemapr` is to reduce
+the initial investment currently needed to start using the method.
+
+## Installation
+
+You can install the development version of cognitivemapr from
+[GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("Fesch-star/cognitivemapr")
+```
+
+## Dependencies
+
 To run the code you need to install the following packages:
 
-- tidyverse - built under R version 4.0.5
-	v ggplot2 3.3.3     v purrr   0.3.4
-	v tibble  3.1.1     v dplyr   1.0.5
-	v tidyr   1.1.3     v stringr 1.4.0
-	v readr   1.4.0     v forcats 0.5.1
-	
-- igraph - built under R version 4.0.5
-- tidygraph
-- ggraph
+-   tidyverse - built under R version 4.0.5 v ggplot2 3.3.3 v purrr
+    0.3.4 v tibble 3.1.1 v dplyr 1.0.5 v tidyr 1.1.3 v stringr 1.4.0 v
+    readr 1.4.0 v forcats 0.5.1
 
+-   igraph - built under R version 4.0.5
 
+-   tidygraph
 
-## operating instructions
+-   ggraph
 
-## Project organization
-- PG = project-generated
-- HW = human-writable
-- RO = read only
+## Example
+
+This is a basic example which shows you how to solve a common problem:
+
+``` r
+library(cognitivemapr)
+## basic example code
 ```
-.
-├── .gitignore
-├── CITATION.md
-├── LICENSE.md
-├── README.md
-├── requirements.txt
-├── bin                <- Compiled and external code, ignored by git (PG)
-│   └── external       <- Any external source code, ignored by git (RO)
-├── config             <- Configuration files (HW)
-├── data               <- All project data, ignored by git
-│   ├── processed      <- The final, canonical data sets for modeling. (PG)
-│   ├── raw            <- The original, immutable data dump. (RO)
-│   └── temp           <- Intermediate data that has been transformed. (PG)
-├── docs               <- Documentation notebook for users (HW)
-│   ├── manuscript     <- Manuscript source, e.g., LaTeX, Markdown, etc. (HW)
-│   └── reports        <- Other project reports and notebooks (e.g. Jupyter, .Rmd) (HW)
-├── results
-│   ├── figures        <- Figures for the manuscript or reports (PG)
-│   └── output         <- Other output for the manuscript or reports (PG)
-└── src                <- Source code for this project (HW)
 
-## file manifest (files included)
+What is special about using `README.Rmd` instead of just `README.md`?
+You can include R chunks like so:
 
+``` r
+summary(cars)
+```
 
+You’ll still need to render `README.Rmd` regularly, to keep `README.md`
+up-to-date. `devtools::build_readme()` is handy for this. You could also
+use GitHub Actions to re-render `README.Rmd` every time you push. An
+example workflow can be found here:
+<https://github.com/r-lib/actions/tree/v1/examples>.
 
+You can also embed plots, for example:
 
+<img src="man/figures/README-pressure-1.png" width="100%" />
 
-## Copy right & License
+In that case, don’t forget to commit and push the resulting figure
+files, so they display on GitHub and CRAN.
 
-This project is licensed under the terms of the [GPL-3.0 License](/LICENSE.md)
+## Contributing
 
-## Contact info
-Femke van Esch: F.a.w.j.vanEsch@uu.nl
+## Authors & Acknowledgements
 
-## Known bugs
-The function calc_degrees_goW.R does not return what it is supposed to
+## License
 
-## Troubleshooting
+This project is licensed under the terms of the [GPL-3.0
+License](/LICENSE.md)
 
-## Credits and acknowledgements
+## Citation
 
-## Citation info
+Please cite this project as follows: Van Esch, Femke A.W.J., Snellens,
+Jeroen F.A. (forthcoming). ‘How to ‘measure’ Ideas. Introducing the
+method of cognitive mapping to the domain of ideational policy studies’.
+Journal of European Public Policy.
+
+## Contact
+
+Femke van Esch: <F.a.w.j.vanEsch@uu.nl>

@@ -1,0 +1,21 @@
+# -----------------------------------------------------------
+# CITATION file created with {cffr} R package, v0.4.1
+# See also: https://docs.ropensci.org/cffr/
+# -----------------------------------------------------------
+ 
+cff-version: 1.2.0
+message: 'To cite package "cognitivemapr" in publications use:'
+type: software
+title: 'cognitivemapr: What the Package Does (One Line, Title Case)'
+version: 0.0.0.9000
+abstract: What the package does (one paragraph).
+authors:
+- family-names: van Esch
+  given-names: Femke
+  email: first.last@example.com
+  orcid: https://orcid.org/YOUR-ORCID-ID
+contact:
+- family-names: van Esch
+  given-names: Femke
+  email: first.last@example.com
+  orcid: https://orcid.org/YOUR-ORCID-ID
