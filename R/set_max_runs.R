@@ -1,4 +1,4 @@
-# this is a function to establish the maximum number of runs through a map
+# this is a function written to establish the maximum number of runs through a map
 # to establish the evaluation of the nodes and edges by taking into account all
 # consequent paths in a CM.
 # The diameter of the CM is taken as the maximum number of runs
