@@ -1,9 +1,9 @@
-# EVALUATION uitrekenen in edgelist - Hier zouden de loops al in moeten zitten is file na meeting Sven 
+# EVALUATION uitrekenen in edgelist - Hier zouden de loops al in moeten zitten is file na meeting Sven
 Evaluation_step <- function(edgelist, nodelist){
 
-#evaluation calculations - HIER ZOU LOOP BEGINNEN 
+#evaluation calculations - HIER ZOU LOOP BEGINNEN
 edgelist$val_xt1 <- edgelist$value.y*edgelist$edge_value #xt1 berekeken
-edgelist$val_xt1 <- edgelist$val_xt1/sqrt(edgelist$val_xt1 ^2) #xt1 unweighted maken
+edgelist$val_xt1 <- edgelist$val_xt1/base::sqrt(edgelist$val_xt1 ^2) #xt1 unweighted maken
 edgelist$val_xt1[is.na(edgelist$val_xt1)] <- 0 #nan omzetten in 0
 
 # xt1 values met ID in een df zetten
@@ -25,11 +25,11 @@ xt1$val_xt1_sum[is.na(xt1$val_xt1_sum)] <- 0
 xt1_to_yt1 <-
   rename(xt1, to = from)
 
-xt1_to_yt1 <-   
+xt1_to_yt1 <-
   rename(xt1_to_yt1, val_yt1 = val_xt1_sum)
 
 #dan moet dit gejoined worden met edgelist
-edgelist <- edgelist %>% 
+edgelist <- edgelist %>%
   left_join(xt1_to_yt1, by = c("to" = "to"))
 
 #na vervangen door value.y (DUS WAAR Y ALLEEN TO IS EN NIET TOT DE LIJST FROM BEHOORT)
@@ -43,12 +43,12 @@ xt1 <- rename (xt1,val_run1 = val_xt1_sum)
 xt1 <- rename (xt1,id = from)
 
 yt1 <- unique(edgelist[, c("to", "val_yt1")]) %>% #haal unieke yt1 uit tabel met ids
-  rename (val_run1 = val_yt1) %>% 
+  rename (val_run1 = val_yt1) %>%
   rename (id=to)
 
 node_val_run1 <- merge(xt1, yt1, all=TRUE) #merge xt2 en yt1 dfs alles behouden, overlap samenvoegen
 
-nodelist <- nodelist %>% 
+nodelist <- nodelist %>%
   left_join(node_val_run1, by = "id") #node_val_run1 aan nodelist binden
 
 edgelist$value.x <- edgelist$val_xt1
