@@ -4,7 +4,7 @@ Evaluation_step <- function(edgelist, nodelist){
 #evaluation calculations - HIER ZOU LOOP BEGINNEN
 edgelist$val_xt1 <- edgelist$value.y*edgelist$edge_value #xt1 berekeken
 edgelist$val_xt1 <- edgelist$val_xt1/base::sqrt(edgelist$val_xt1 ^2) #xt1 unweighted maken
-edgelist$val_xt1[is.na(edgelist$val_xt1)] <- 0 #nan omzetten in 0
+edgelist$val_xt1[base::is.na(edgelist$val_xt1)] <- 0 #nan omzetten in 0
 
 # xt1 values met ID in een df zetten
 xt1 <- edgelist[,c("from", "val_xt1")]
@@ -12,13 +12,13 @@ xt1 <- edgelist[,c("from", "val_xt1")]
 #nu moeten de xt1 scores per ID worden opgeteld - opgeslagen in xt1
 xt1 <- xt1 %>%
   group_by(from) %>%
-  summarise (val_xt1_sum = sum(val_xt1))
+  dplyr::summarise (val_xt1_sum = sum(val_xt1))
 
 #moeten nog unweighted gemaakt worden
-xt1$val_xt1_sum <- xt1$val_xt1_sum/sqrt(xt1$val_xt1_sum ^2)
+xt1$val_xt1_sum <- xt1$val_xt1_sum/base::sqrt(xt1$val_xt1_sum ^2)
 
 # en nan vervangen door 0
-xt1$val_xt1_sum[is.na(xt1$val_xt1_sum)] <- 0
+xt1$val_xt1_sum[base::is.na(xt1$val_xt1_sum)] <- 0
 
 
 #HIER GA JE VALUE Y AANPASSEN: rename from=to en x=y
@@ -33,7 +33,7 @@ edgelist <- edgelist %>%
   left_join(xt1_to_yt1, by = c("to" = "to"))
 
 #na vervangen door value.y (DUS WAAR Y ALLEEN TO IS EN NIET TOT DE LIJST FROM BEHOORT)
-edgelist$val_yt1[is.na(edgelist$val_yt1)] <- edgelist$value.y[is.na(edgelist$val_yt1)]
+edgelist$val_yt1[base::is.na(edgelist$val_yt1)] <- edgelist$value.y[base::is.na(edgelist$val_yt1)]
 
 
 #nu moeten values naar nodeslist  en kijken of consistent is over de from/to lijsten. Voor x staan waarden in xt1
