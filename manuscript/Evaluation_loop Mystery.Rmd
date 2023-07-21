@@ -1,0 +1,256 @@
+---
+title: "evaluation step mystery"
+author: "Femke van Esch"
+date: "2023-07-21"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+Made this document to explain what goes wrong with the Evaluation_step function when put through a for loop. I cannot figure out what goes wrong.
+
+First I make some test data.
+
+```{r}
+#nodelist:
+id <- c(1:5)
+node_name <- c("a","b","c","d","e")
+eco <- c("Ordoliberal", NA, NA, NA, "Keynesian")
+Int <- c("Supranational", NA, "Intergovernmental", NA, NA)
+value <- c(1,1,-1,1,1)
+
+test_nodes <- data.frame(id, node_name, eco, Int,value)
+
+#edgelist:
+from <- c(1,3,4,2)
+to <- c(3,4,5,4)
+weight <- c(1,1,1,1)
+edge_value <- c(1,-1,-1,1)
+map_id <- c(22:25)
+map_date <- c("20-5-2010", "21-5-2010","22-5-2010","23-5-2010")
+value.x <- c(1,-1,1,1)
+value.y <- c(-1,1,1,1)
+
+test_edges <- data.frame(from, to, weight, edge_value, map_id, map_date,value.x, value.y)
+```
+
+Then we call the calc_degrees_gow function to make the node_calc list
+
+```{r}
+calc_degrees_goW <- function(edgelist, nodelist) {
+
+#transform edge & nodelist into a map
+  map <- igraph::graph_from_data_frame(d = edgelist, vertices = nodelist, directed = TRUE)
+
+#calculate for each node
+  deg <- igraph::degree(map, mode = "all") #degrees (centrality in CM speech)
+  indeg <- igraph::degree(map, mode = "in") #indegrees
+  outdeg <- igraph::degree(map, mode = "out") #outdegrees
+  w_indeg <- igraph::strength(map, mode = "in") #weighted indegrees
+  w_outdeg <- igraph::strength(map, mode = "out") #weighted outdegrees
+  w_deg <- igraph::strength(map, mode = "all") #weighted degrees (saliency in CM speech)
+
+#make new df to store the calculated values
+  node_calc <- nodelist
+
+#link vectors with all the (weighted) degrees values to
+#the new node_calc df as columns
+  node_calc$indegree <- indeg
+  node_calc$outdegree <- outdeg
+  node_calc$degree <- deg
+  node_calc$w_indegree <- w_indeg
+  node_calc$w_outdegree <- w_outdeg
+  node_calc$w_degree <- w_deg
+
+#calculates go & goW and link it to the df node_calc as columns
+  node_calc <- dplyr::mutate(node_calc,
+          go = (node_calc$indegree - node_calc$outdegree) / node_calc$degree,
+          gow = (node_calc$w_indegree - node_calc$w_outdegree) / node_calc$w_degree)
+  base::return(node_calc) #returns the df node_calc with all calculated values
+}
+
+```
+
+And we run this on the test data
+
+```{r}
+test_node_calc <- calc_degrees_goW(test_edges, test_nodes)
+```
+
+then we call the last version of the evaluation_step function (document called evaluation_step2 because the pull/push interfered with what Kim pushed to github)
+
+```{r}
+# Creating a function to conduct the evaluation analysis
+Evaluation_step <- function(edgelist, nodelist) {
+
+
+  # Conduct the first evaluation calculations
+  edgelist$val_xt1 <- edgelist$value.y * edgelist$edge_value # Calculating the value of x at t1 (val_xt1)
+  edgelist$val_xt1 <- edgelist$val_xt1 / base::sqrt(edgelist$val_xt1 ^ 2) # Make val_xt1 unweighted
+  edgelist$val_xt1[base::is.na(edgelist$val_xt1)] <- 0 # Transform NaN values to 0
+
+  # Put the val_xt1 values with their ID in a separate df called xt1
+  xt1 <- edgelist[, c("from", "val_xt1")]
+
+  # Add up the xt1 scores per id/concept - then store this in the df xt1
+  xt1 <- xt1 %>%
+    group_by(from) %>%
+    dplyr::summarise(val_xt1_sum = sum(val_xt1))
+
+  # Make the val_xt values unweighted
+  xt1$val_xt1_sum <- xt1$val_xt1_sum / base::sqrt(xt1$val_xt1_sum ^ 2)
+
+  # Replace NaN by 0
+  xt1$val_xt1_sum[base::is.na(xt1$val_xt1_sum)] <- 0
+
+  # Here the transformation of value.y starts
+  # Meaning that you will replace the original value.y with the newly calculated values
+  # Rename from=to and add a val_yt1 value that takes the value of val_xt1 as calculated above
+  # this is wrong, it reorders the to column
+
+  xt1_to_yt1 <- xt1
+
+  xt1_to_yt1 <- rename(xt1_to_yt1, to = from)
+
+  xt1_to_yt1 <- rename(xt1_to_yt1, val_yt1 = val_xt1_sum)
+
+  # Join this to the original edgelist
+  edgelist <- edgelist %>%
+    left_join(xt1_to_yt1, by = c("to" = "to"))
+
+  # Replace NA by value.y (so you basically keep the value.y in instances when y
+  # only appears as an effect ('to') concept and thus has no new value
+  edgelist$val_yt1[base::is.na(edgelist$val_yt1)] <- edgelist$value.y[base::is.na(edgelist$val_yt1)]
+
+  # Now start transferring these values to the nodeslist
+  # and check if they are consistent over the from/to columns.
+  # For x, you need to take the values in column xt1
+  # Change the names of the columns accordingly
+  xt1 <- rename(xt1, val_run1 = val_xt1_sum)
+  xt1 <- rename(xt1, id = from)
+
+  # Take the unique yt1 variables from the table with ids
+  yt1 <- unique(edgelist[, c("to", "val_yt1")]) %>%
+    rename(val_run1 = val_yt1) %>%
+    rename(id = to)
+
+  # Merge xt2 and yt1 while retaining all other columns, collapse the overlap
+  node_val_run1 <- merge(xt1, yt1, all = TRUE)
+
+  # Bind node_val_run1 to nodelist
+  nodelist <- nodelist %>%
+    left_join(node_val_run1, by = "id")
+
+  # Rename some columns to prepare for the next run of the loop
+  edgelist$value.x <- edgelist$val_xt1
+  edgelist$value.y <- edgelist$val_yt1
+
+  edgelist <- select(edgelist, -c(val_xt1, val_yt1))
+
+  # Return the resulting edge and nodelists with the new values
+  return(list(edgelist, nodelist))
+}
+```
+
+Then we run the set_max_runs function to see how many times the function should reiterate 
+over the data
+
+```{r}
+set_max_runs <- function (edgelist, nodelist){
+
+#first draw map to be able to calculate diameter
+map <- graph_from_data_frame(d=edgelist, vertices=nodelist, directed = T)
+
+#determine diameter = the length of the longest geodesic
+diameter <- diameter(map, directed = TRUE, unconnected = TRUE)
+
+#return a vector with max number of runs.
+max_runs <- 1:diameter
+
+return(max_runs)
+}
+```
+
+We run this on our data.
+
+```{r}
+max_runs <- set_max_runs(test_edges, test_nodes)
+```
+
+which reveals we have to do 3 iterations of the function on the data.
+
+then let's run the Evaluation_step function on the data 3 times manually. Every time taking the output of the previous iteration as our input 
+
+```{r}
+test_edge1 <- Evaluation_step(test_edges, test_node_calc)[[1]]
+test_node1 <- Evaluation_step(test_edges, test_node_calc)[[2]]
+
+test_edge2 <- Evaluation_step(test_edge1, test_node1)[[1]]
+test_node2 <- Evaluation_step(test_edge1, test_node1)[[2]]
+
+test_edge3 <- Evaluation_step(test_edge2, test_node2)[[1]]
+test_node3 <- Evaluation_step(test_edge2, test_node2)[[2]]
+```
+
+Let's look at the results per iteration, which are summed up in the val_run1 column of the nodelists, but correspond accurately with the last two columns of each of the edgelists. They are also stored in the last three columns of the final nodelist (test_node3). I am not sure why, because the function should override column 14 in each iteration with the new val_run1 scores. Maybe this provides a clue as what goes wrong? But I do not know how, because the calculations are based on the edgelist, which shows the correct output everytime.
+
+Showing the values that the function should spit out after each iteration:
+
+```{r}
+test_node3[, c(14,15,16)]
+```
+Showing that in fact, the edgelist behaves as it should:
+
+```{r}
+test_edge1 [, c(1,2,7,8)]
+test_edge2 [, c(1,2,7,8)]
+test_edge3 [, c(1,2,7,8)]
+```
+
+I also managed to write a for-loop to do these iterations automatically (with a bit of help from ChatGPT because I am lousy at loops). This is the script.
+
+```{r}
+# creating an empty list to store the results
+
+iterations <- length(max_runs)
+
+result_list <- vector("list", iterations)
+
+for (i in max_runs) {
+# Call the function with appropriate edgelist and nodelist
+# Replace 'your_edgelist' and 'your_nodelist' with the actual data you want to pass to the function
+  result_list[[i]] <- Evaluation_step(test_edges, test_node_calc)
+}
+```
+
+The loop runs and does all 3 iterations. But now let's look at the results. Let's take the val_run column of the nodelists that is returned after each iteration. Which shows that although 3 edgelists and 3 nodeslist have been returned, and in the Environment i has run up to 3 (so 3 iterations should have been made), the calculations seem to get stuck at the first iteration (the calculations are done in that first step, because val_run1 does not exist as a column in the original node_calc_data frame.
+
+```{r}
+result_list[[1]][[2]][,"val_run1"]
+result_list[[2]][[2]][,"val_run1"]
+result_list[[3]][[2]][,"val_run1"]
+
+```
+I have stared at this for hours now, and I cannot figure out what goes wrong :( Help!
+
+
+Below is superfluous stuff that I want to keep
+
+```{r}
+# Access the results for each run
+for (i in max_runs) {
+  edgelist_result <- result_list[[i]][[1]]
+  nodelist_result <- result_list[[i]][[2]]
+
+# Perform any additional actions or analysis on edgelist_result and nodelist_result here
+
+  edgelist_result <- result_list[[i]][[i]]
+}
+```
+
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
