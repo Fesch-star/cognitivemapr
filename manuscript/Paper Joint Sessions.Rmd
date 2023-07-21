@@ -202,6 +202,8 @@ the value.x and value.y in the edgelist).
 
     -   "value": whether the concept is inherently negative (-1),
         positive (1) or ambiguous (0)[^2]
+        
+***ADD INSTRUCTION ON HOW TO PREP DATA FOR PARADIGM & CATEGORY CALCS***
 
 [^2]: This should be consistent to the values (value.x / value.y) in the
     edgelist. We would advise to be reticent in assigning concepts a
@@ -223,14 +225,12 @@ the following code:
 ```{r, results='hide', warning=FALSE, message=FALSE}
 library(readr)
 
-url_rutte_edges <- "https://raw.githubusercontent.com/Fesch-star/cognitivemapr/main/docs/manuscript/rutte_p2-edgelist.csv"
-rutte_p2_edgelist<- read_csv(url_rutte_edges)
-
-url_rutte_nodes <- "https://raw.githubusercontent.com/Fesch-star/cognitivemapr/main/docs/manuscript/rutte_p2-nodelist.csv"
-rutte_p2_nodelist <- read_csv(url_rutte_nodes)
+load("../data/rutte_p2_edgelist.rda")
+load("../data/rutte_p2_nodelist.rda")
 
 
 ```
+
 
 The top 6 rows of both the edgelist and nodelist are shown below. In
 addition to the mandatory columns, it shows the metadata that was
@@ -495,102 +495,112 @@ to the dataframe with the basic CM measures as calculated above, **be
 sure to use the node_calc list**).
 
 ```{r}
-#creating a function to conduct the evaluation analysis 
-Evaluation_step <- function(edgelist, nodelist){
-
-#conduct the first evaluation calculations 
-edgelist$val_xt1 <- edgelist$value.y*edgelist$edge_value #calculating the value of x at t1 (val_xt1)
-edgelist$val_xt1 <- edgelist$val_xt1/sqrt(edgelist$val_xt1 ^2) #make val_xt1 unweighted
-edgelist$val_xt1[is.na(edgelist$val_xt1)] <- 0 #transform nan values in 0
-
-# put the val_xt1 values with their ID in a separate df called xt1
-xt1 <- edgelist[,c("from", "val_xt1")]
-
-#add up the xt1 scores per id/concept - then store this in the df xt1
-xt1 <- xt1 %>%
-  group_by(from) %>%
-  summarise (val_xt1_sum = sum(val_xt1))
-
-#make the val_xt values unweighted
-xt1$val_xt1_sum <- xt1$val_xt1_sum/sqrt(xt1$val_xt1_sum ^2)
-
-#replace nan by 0
-xt1$val_xt1_sum[is.na(xt1$val_xt1_sum)] <- 0
+ # Creating a function to conduct the evaluation analysis
+Evaluation_step <- function(edgelist, nodelist) {
 
 
-#here the transformation of value.y starts
-#meaning that you will replace the original value.y with the newly calculated values 
-#rename from=to and add a val_yt1 value that takes the value of val_xt1 as calculated above
-xt1_to_yt1 <-
-  rename(xt1, to = from)
+  # Conduct the first evaluation calculations
+  edgelist$val_xt1 <- edgelist$value.y * edgelist$edge_value # Calculating the value of x at t1 (val_xt1)
+  edgelist$val_xt1 <- edgelist$val_xt1 / sqrt(edgelist$val_xt1 ^ 2) # Make val_xt1 unweighted
+  edgelist$val_xt1[is.na(edgelist$val_xt1)] <- 0 # Transform NaN values to 0
 
-xt1_to_yt1 <-   
-  rename(xt1_to_yt1, val_yt1 = val_xt1_sum)
+  # Put the val_xt1 values with their ID in a separate df called xt1
+  xt1 <- edgelist[, c("from", "val_xt1")]
 
-#join this to the original edgelist
-edgelist <- edgelist %>% 
-  left_join(xt1_to_yt1, by = c("to" = "to"))
+  # Add up the xt1 scores per id/concept - then store this in the df xt1
+  xt1 <- xt1 %>%
+    group_by(from) %>%
+    summarise(val_xt1_sum = sum(val_xt1))
 
-#replace na by value.y (so you basically keep the value.y in instances when y 
-#only appears as an effect ('to') concept and thus has no new value
-edgelist$val_yt1[is.na(edgelist$val_yt1)] <- edgelist$value.y[is.na(edgelist$val_yt1)]
+  # Make the val_xt values unweighted
+  xt1$val_xt1_sum <- xt1$val_xt1_sum / sqrt(xt1$val_xt1_sum ^ 2)
 
-#now start transferring these values to the nodeslist
-#and check if they are consistent over the from/to columns. 
-#for x you need to take the values in column xt1
-#change the names of the columns accordingly
-xt1 <- rename (xt1,val_run1 = val_xt1_sum)
+  # Replace NaN by 0
+  xt1$val_xt1_sum[is.na(xt1$val_xt1_sum)] <- 0
 
-xt1 <- rename (xt1,id = from)
+  # Here the transformation of value.y starts
+  # Meaning that you will replace the original value.y with the newly calculated values
+  # Rename from=to and add a val_yt1 value that takes the value of val_xt1 as calculated above
+  # this is wrong, it reorders the to column
 
-#take the unique yt1 variables from the table with ids
-yt1 <- unique(edgelist[, c("to", "val_yt1")]) %>% 
-  rename (val_run1 = val_yt1) %>% 
-  rename (id=to)
+  xt1_to_yt1 <- xt1
 
-#merge xt2 and yt1 while retaining all other columns, collapse the overlap
-node_val_run1 <- merge(xt1, yt1, all=TRUE) 
+  xt1_to_yt1 <- rename(xt1_to_yt1, to = from)
 
-#bind node_val_run1 to nodelist
-nodelist <- nodelist %>% 
-  left_join(node_val_run1, by = "id") 
+  xt1_to_yt1 <- rename(xt1_to_yt1, val_yt1 = val_xt1_sum)
 
-#rename some columns to prepare for the next run of the loop
-edgelist$value.x <- edgelist$val_xt1
-edgelist$value.y <- edgelist$val_yt1
+  # Join this to the original edgelist
+  edgelist <- edgelist %>%
+    left_join(xt1_to_yt1, by = c("to" = "to"))
 
-edgelist <- select(edgelist, -c(val_xt1, val_yt1))
+  # Replace NA by value.y (so you basically keep the value.y in instances when y
+  # only appears as an effect ('to') concept and thus has no new value
+  edgelist$val_yt1[is.na(edgelist$val_yt1)] <- edgelist$value.y[is.na(edgelist$val_yt1)]
 
-#return the resulting edge and nodelists with the new values
-return(list(edgelist, nodelist))
+  # Now start transferring these values to the nodeslist
+  # and check if they are consistent over the from/to columns.
+  # For x, you need to take the values in column xt1
+  # Change the names of the columns accordingly
+  xt1 <- rename(xt1, val_run1 = val_xt1_sum)
+  xt1 <- rename(xt1, id = from)
+
+  # Take the unique yt1 variables from the table with ids
+  yt1 <- unique(edgelist[, c("to", "val_yt1")]) %>%
+    rename(val_run1 = val_yt1) %>%
+    rename(id = to)
+
+  # Merge xt2 and yt1 while retaining all other columns, collapse the overlap
+  node_val_run1 <- merge(xt1, yt1, all = TRUE)
+
+  # Bind node_val_run1 to nodelist
+  nodelist <- nodelist %>%
+    left_join(node_val_run1, by = "id")
+
+  # Rename some columns to prepare for the next run of the loop
+  edgelist$value.x <- edgelist$val_xt1
+  edgelist$value.y <- edgelist$val_yt1
+
+  edgelist <- select(edgelist, -c(val_xt1, val_yt1))
+
+  # Return the resulting edge and nodelists with the new values
+  return(list(edgelist, nodelist))
 }
 ```
 
-**DIT WERKT NIET**
 
 ```{r}
-#set index to 1
-index <- 1
+# Below the suggestion by chatGPT - it indeed iterates the function and let you look back at the different steps, which is great. But the result is incorrect and does not correspond to running the evaluation_step function manually multiple times.
+# I did not manage to solve it.
 
-while (index < max_runs){
-  Evaluation_step (rutte_p2_edgelist, rutte_p2_node_calc)
+result_list <- vector("list", max_runs)
+
+for (i in 1:max_runs) {
+  # Call the function with appropriate edgelist and nodelist
+  # Replace 'your_edgelist' and 'your_nodelist' with the actual data you want to pass to the function
+  result_list[[i]] <- Evaluation_step(rutte_p2_edgelist, rutte_p2_node_calc)
 }
 ```
 
+***lijkt ook niet te werken, geen verschil in lijsten per run - als je de functie stap voor stap runt, doet hij het wel***
+
 ```{r}
-# to save the changes in edgelist and nodeslist under a relevant name, use the following code when running this function
-
-# name_period_edgelist <- evaluation_loop(edgelist, nodelist) [[1]] 
-
-# name_period_edge_calc <- evaluation_loop(edgelist, nodelist) [[2]]
-
-# name_period_nodecalc <- evaluation_loop(edgelist, nodelist)) [[3]] 
+# Access the results for each run
+# for (i in 1:max_runs) {
+#  edgelist_result <- result_list[[i]][[1]]
+#  nodelist_result <- result_list[[i]][[2]]
+#}
+  
+# Perform any additional actions or analysis by drawing out the list you need. 
+# In our case the nodelist of the final (5th) run
+  
+  rutte_p2_node_calc <- result_list[[5]][[2]]
 ```
+
 
 A CM analysis thus reveals both the nature, strength and complexity of
 ideas as well as whether they are valued positively or negatively.
 
-## Categorical analysis (calc_dims function)
+## Paradigm support (calc_paradigm_support)
 
 In the case of the Eurozone crisis, scholars have identified two
 competing paradigms underlying the policy debate: Keynesianism and
@@ -603,8 +613,55 @@ downturns. Keynesians are also more favourable to monetary financing and
 for a central bank to act as a lender of last resort (Dullien and Guérot
 2012; Hall 2014). To capture the paradigmatic orthodoxy of Rutte and
 Knot's belief system, all concepts in their CM were classified as either
-Keynesian, Ordoliberal or neutral (Van Esch et al. 2018). The result of
-this analysis shows that during the period from May 2010 and July 2012
+Keynesian, Ordoliberal or neutral (Van Esch et al. 2018). If a concept associated
+with a particular paradigm is evaluated positively,then their saliency scores are
+counted towards their score of support for said paradigm. If a concept associated
+with a particular paradigm is evaluated negatively,then their saliency scores are
+counted towards their score of support for the rivalling paradigm. This way of 
+calculating support corresponds to the theoretical idea that paradigms are 
+incommensurable (cf. Princen and van Esch 2016; see below for 
+a function to use when presuming paradigms are not incommensurable): In our example
+case, this mean for instance that a negative evaluation of a Keynesian measure
+like economic stimulation would be interpreted as support for the Ordoliberal
+paradigm.
+
+
+```{r}
+
+
+# This function calculates paradigm support in a zero-sum manner: meaning that a 
+# negative evaluation of concepts associated with paradigm a, is interpreted as 
+# support for paradigm b and vice versa.
+# Function works but needs to be made generic: prescribing generic names for the
+# columns in the input data. I propose 'paradigm' rather than eco. Changing this
+# requires making a similar change in the test data in the package (rutte_p2_nodelist)
+
+calc_paradigm_support <- function(node_calc, paradigm_a, paradigm_b){
+
+#if a paradigm concept is evaluated positively (> 0), add their w_degree to a new paradigm_a column in the node_calc df'
+  node_calc[, paradigm_a] <- case_when (node_calc$eco == paradigm_a &
+                                           node_calc$val_run1 > 0 ~ node_calc$w_degree,
+                                         #if a paradigm_b concept is evaluated negatively, add their w_degree the paradigm_a column
+                                         node_calc$eco == paradigm_b &
+                                           node_calc$val_run1 < 0 ~ node_calc$w_degree)
+#all other concepts are assigned a zero score in the paradigm_a column by nan <- 0
+  node_calc[paradigm_a][is.na(node_calc[paradigm_a])] <- 0
+
+#same process for paradigm_b
+  node_calc[, paradigm_b] <- case_when (node_calc$eco == paradigm_b &
+                                           node_calc$val_run1 > 0 ~ node_calc$w_degree,
+                                         node_calc$eco == paradigm_a &
+                                           node_calc$val_run1 < 0 ~ node_calc$w_degree)
+
+  node_calc[paradigm_b][is.na(node_calc[paradigm_b])] <- 0 #nan omzetten in 0
+
+  return <- node_calc
+
+}
+```
+
+
+The result of this analysis shows that during the period from May 2010 and July 2012
 both Rutte and Knot's belief system are more Ordoliberal than Keynesian
 (see figure 2). Other types of (automated) text analysis are capable of
 classifying text into broad categories in a similar fashion (Ban 2015).
@@ -619,9 +676,18 @@ Dutch leaders have a relatively high leaning towards the Ordoliberalism
 in ideas over time, thereby fulfilling the third requirement discussed
 above (Bonham, Shapiro, and Trumble 1979; Van Esch 2014).
 
+
 ```{r}
-# plot the 10 most salient concepts
-plot(rutte_p2_node_calc$w_degree [1:10], rutte_p2_node_calc$gow [1:10], xlab = "Saliency", ylab = "Weighted Goal Orientation", pch =19, frame = FALSE, text(rutte_p2_node_calc$w_degree[1:10], rutte_p2_node_calc$gow[1:10], rutte_p2_node_calc$node_name[1:10], pos = 1, cex = 0.5)) 
+# let's run the function for our example
+rutte_p2_node_calc <- calc_paradigm_support (rutte_p2_node_calc, "Ordoliberal", "Keynesian")
+
+# Make df to show a barplot with the results
+paradigm <- c ("Ordoliberal", "Keynesian")
+score <- c(sum(rutte_p2_node_calc$Ordoliberal)/sum(rutte_p2_node_calc$w_degree),
+           sum(rutte_p2_node_calc$Keynesian)/sum(rutte_p2_node_calc$w_degree))
+paradigm_support <- data.frame (paradigm, score)
+ggplot(paradigm_support, aes(x= paradigm, y=score, fill = paradigm, colour = paradigm))+
+  geom_bar(stat = "identity")
 ```
 
 In addition, the CM technique allows scholars to distinguish between
@@ -695,6 +761,15 @@ of policy making processes (Bonham, Shapiro, and Trumble 1979; Hart
 # Making CM available for scholars without technical skills: the CM shiny app
 
 (HEB ik nog niet omgezet in R code)
+
+
+# reserve
+
+
+```{r}
+# plot the 10 most salient concepts
+plot(rutte_p2_node_calc$w_degree [1:10], rutte_p2_node_calc$gow [1:10], xlab = "Saliency", ylab = "Weighted Goal Orientation", pch =19, frame = FALSE, text(rutte_p2_node_calc$w_degree[1:10], rutte_p2_node_calc$gow[1:10], rutte_p2_node_calc$node_name[1:10], pos = 1, cex = 0.5)) 
+```
 
 ## Including Plots
 

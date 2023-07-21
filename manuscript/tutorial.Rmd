@@ -120,6 +120,7 @@ to the dataframe with the basic CM measures as calculated above, **be
 sure to use the node_measures list**).
 
 **NOT WORKING, FIX FUNCTION AND CONTINUE FROM HERE** 
+**Function works (also if I run it manually a few times in a row), but the loop does not, I cannot get it to work***
 
 ```{r}
 #set index to 1
