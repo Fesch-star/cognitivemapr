@@ -62,7 +62,7 @@ others.
 
 ```{r}
 #running the function with the data of Mark Rutte, and storing it as a df
-rutte_p2_node_measures <- cognitivemapr::calc_degrees_goW(rutte_p2_edgelist, rutte_p2_nodelist)
+rutte_p2_node_measures <- cognitivemapr::calculate_degrees(rutte_p2_edgelist, rutte_p2_nodelist)
 
 #provide summary statistics for all measures
 summary(rutte_p2_node_measures)
@@ -108,7 +108,7 @@ Running the function with the original edge and nodelist of the example dataset
 reveals the maximum number of runs for this CM to be 5.
 
 ```{r}
-max_runs <- cognitivemapr::set_max_runs(rutte_p2_edgelist, rutte_p2_nodelist)
+max_runs <- cognitivemapr::set_iterations(rutte_p2_edgelist, rutte_p2_nodelist)
 ```
 
 ## Step 8: 
@@ -127,7 +127,7 @@ sure to use the node_measures list**).
 index <- 1
 
 while (index < max_runs){
-  Evaluation_step (rutte_p2_edgelist, rutte_p2_node_calc)
+  evaluate_concepts (rutte_p2_edgelist, rutte_p2_node_calc)
 }
 ```
 
