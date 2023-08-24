@@ -1,5 +1,5 @@
 #check whether the GetAncestorDistance function works
-#test with another map 
+#test with another map
 library(readr)
 library(tidyverse)
 library(igraph)
@@ -66,7 +66,7 @@ for (i in first_anc_209_position) {
   current_anc <- ego(mapRutte_p2,1,i,"in", mindist = 1)
   # The current_anc vector holds all the direct antecedents found in this run of the loop.
   second_anc_209 <- append(second_anc_209, current_anc)
-} 
+}
 # interesting gives a list with the 2nd anc embedded with the 1st
 # but I do not know how to unlist/unembeded maintaining that info
 
@@ -109,13 +109,13 @@ get.all.shortest.paths()
 # niet op mijn node-id, als je mode=ïn" doet, geeft hij alleen ancestors
 # cijfer 1 of 2 etc geeft de diepte. Daarmee zou ik dus de distance kunnen berekenen
 # maar ik heb nog steeds niet een pad en hij maakt lists van lists - zucht
-# maar als eerste geeft hij wel de node zelf, dat is wel handig. 
+# maar als eerste geeft hij wel de node zelf, dat is wel handig.
 # kan ik een matrix van de list van lists maken? dan hoef ik in principe maar 1 lijn terug steeds
 # ff andere functies uitproberen# but how do I make a df out of the list of lists?
 # first, find out automatically what the row is of the concept you are interested in
 # a <- which(grepl ("^8$", rutte_p2_nodelist$id)) # werkt die gekke tekens moeten erbij
 # want anders pakt hij alles waar een 8 in zit dus ook 78 oid
-# a <- which(grepl("Euro-crisis", rutte_p2_nodelist$node_name)) #werkt ook 
+# a <- which(grepl("Euro-crisis", rutte_p2_nodelist$node_name)) #werkt ook
 #kijken of de ChatGpt versie ook werkt, nope
 
 # try the original function - did not work for Merkel, works for Rutte2
@@ -144,7 +144,7 @@ get.all.shortest.paths()
 
 
 #eerste ronde is gewoon uit de edgelist te halen:
-targets <- unique(edgelist_merkel_p2[,2]) #extract only the 'to' nodes 
+targets <- unique(edgelist_merkel_p2[,2]) #extract only the 'to' nodes
 GoalConcept <- 39 #This is the concept for which we want to know the ancestors
 Ancestors <- edgelist_merkel_p2[edgelist_merkel_p2$to == GoalConcept,] #df met alleen de ancestors van 39
 
@@ -153,127 +153,127 @@ Ancestors <- edgelist_merkel_p2[edgelist_merkel_p2$to == GoalConcept,] #df met a
   Index <- which(edgelist_merkel_p2$to == GoalConcept)# F...dit geeft rijnummer niet de ancestor
   FirstLevelAncestors <- unlist(edgelist_merkel_p2[c(Index),"from"]) #Hiermee kun je ze wel achterhalen
   #die staan dan dus al in de Ancesters df hierboven
- 
+
   #this is the part that gets you the secondlevel ancestors
   Secondlevel <- vector(mode = "numeric", length = 0)
- 
 
-  #dan de for-loop       
+
+  #dan de for-loop
   for (i in 1:length(FirstLevelAncestors)) {
     Secondlevel <- which(edgelist_merkel_p2[,2] == FirstLevelAncestors[i])
                         } #hij slaat de rijen in df op ipv de ancestor
 
 #hiermee kun je dan dus weer de ancestors krijgen
   SecondLevelAncestors <- unlist(edgelist_merkel_p2[c(Secondlevel),"from"])
-  
+
    #dan die rijen isoleren uit de edgelist
   for (i in 1:length(Secondlevel)) {
     Ancestors <- edgelist_merkel_p2[edgelist_merkel_p2$to == Secondlevel[i],]
-  } 
+  }
 
   ## hier ben je
   ### DIT GAAT NERGENS HEEN: Kijk op https://kateto.net/networks-r-igraph VOOR een GRAPH BASED METHODE
-  
- 
-  
+
+
+
 #dat is per ongeluk handig want daarmee kan ik die hele rijen uit de df halen
-Ancestors2 <- edgelist_merkel_p2[c(SecondLevelAncestors),]    
+Ancestors2 <- edgelist_merkel_p2[c(SecondLevelAncestors),]
 
-  ThirdLevelAncestors<- vector(mode = "numeric", length = 0) #dit wordt dus niks,  dit moet ik gaan loopen.                         
+  ThirdLevelAncestors<- vector(mode = "numeric", length = 0) #dit wordt dus niks,  dit moet ik gaan loopen.
 
-  #dan de for-loop       
+  #dan de for-loop
   for (i in 1:length(SecondLevelAncestors)) {
     Thirdlevel <- which(edgelist_merkel_p2[,2] == SecondLevelAncestors[i])
     ThirdLevelAncestors <- append (ThirdLevelAncestors, Thirdlevel)
-  } #hij slaat de rijen in df op ipv de ancestor                        
+  } #hij slaat de rijen in df op ipv de ancestor
                                    Ancestors <- data.frame(FirstLevelAncestors, SecondLevelAncestors)#werkt neit want niet evenveel rijen/cols
-### tot hier ben je  
-  
-  AllSecondLevelAncestors <- apply(seq_along (i in 1:length((FirstLevelAncestors))), function (i) {
-    SecondLevelAncestors <- which(edgelist_merkel_p2[,2] == FirstLevelAncestors[i]
-                                  distances <- 1
-  }
-  do.call(rbind, AllSecondLevelAncestors)
-  rm(i)
-  
-  
-  finishedAncestors <- vector(mode = "numeric", length = 0)
-  distances <- c(node=0)
-  
-  while(length(intersect(unfinishedTargets, targets)) > 0) {
-    newAncestors <- vector(mode = "numeric", length = 0)
-    for(i in 1:length(unfinishedTargets)) {
-      indexVector <- which(arcs[,2] == unfinishedTargets[i])
-      if (length(indexVector) > 0) {
-        for (j in 1:length(indexVector)) {
-          currentAnc <- arcs[indexVector[j],1]
-          newAncestors <- append(newAncestors, currentAnc)
-          finishedAncestors <- append(finishedAncestors, newAncestors)
-        }
-      }
-    }
-    distances <- c(distances, rep(distances[unfinishedTargets]+1,length(newAncestors)))
-    unfinishedTargets <- unique(newAncestors)
-    cat("Ancestors found:", length(unique(finishedAncestors)), "\r")
-  }
-  
-  return(list(ancestors=sort(unique(finishedAncestors), decreasing = TRUE), distances=distances[sort(finishedAncestors, decreasing = TRUE)]))
-}
+### tot hier ben je
 
-#asking ChatGPT to correct the code, it said: The code appears to be encountering 
-#an issue because the finishedAncestors vector is being appended to with 
-#newAncestors on every iteration of the loop, rather than with the newly found 
-#ancestor. The corrected code is as follows:
-GetAncestorsDistanceNew <- function (arcs, node) {
-  targets <- unique(arcs[,2])
-  unfinishedTargets <- node
-  finishedAncestors <- vector(mode = "numeric", length = 0)
-  distances <- c(node=0)
-  
-  while(length(intersect(unfinishedTargets, targets)) > 0) {
-    newAncestors <- vector(mode = "numeric", length = 0)
-    for(i in 1:length(unfinishedTargets)) {
-      indexVector <- which(arcs[,2] == unfinishedTargets[i])
-      if (length(indexVector) > 0) {
-        for (j in 1:length(indexVector)) {
-          currentAnc <- arcs[indexVector[j],1]
-          newAncestors <- append(newAncestors, currentAnc)
-        }
-      }
-    }
-    finishedAncestors <- sort(unique(c(finishedAncestors,newAncestors)))
-    distances <- c(distances, rep(distances[unfinishedTargets]+1,length(newAncestors)))
-    unfinishedTargets <- unique(newAncestors)
-    cat("Ancestors found:", length(unique(finishedAncestors)), "\r")
-  }
-  
-  return(list(ancestors=sort(unique(finishedAncestors), decreasing = TRUE), distances=distances[sort(finishedAncestors, decreasing = TRUE)]))
-}
-
-#did not work, asked for alternative
-GetAncestorsDistance3 <- function (arcs, node) {
-  targets <- unique(arcs[,2])
-  unfinishedTargets <- node
-  finishedAncestors <- vector(mode = "numeric", length = 0)
-  distances <- c(node=0)
-  
-  while(length(intersect(unfinishedTargets, targets)) > 0) {
-    newAncestors <- vector(mode = "numeric", length = 0)
-    for(i in 1:length(unfinishedTargets)) {
-      indexVector <- which(arcs[,2] == unfinishedTargets[i])
-      if (length(indexVector) > 0) {
-        for (j in 1:length(indexVector)) {
-          currentAnc <- arcs[indexVector[j],1]
-          newAncestors <- append(newAncestors, currentAnc)
-        }
-      }
-    }
-    finishedAncestors <- c(finishedAncestors, newAncestors)
-    distances <- c(distances, rep(distances[unfinishedTargets]+1,length(newAncestors)))
-    unfinishedTargets <- unique(newAncestors)
-    cat("Ancestors found:", length(unique(finishedAncestors)), "\r")
-  }
-  
-  return(list(ancestors=sort(unique(finishedAncestors), decreasing = TRUE), distances=distances[sort(finishedAncestors, decreasing = TRUE)]))
-}
-
+# #  AllSecondLevelAncestors <- apply(seq_along (i in 1:length((FirstLevelAncestors))), function (i) {
+# #    SecondLevelAncestors <- which(edgelist_merkel_p2[,2] == FirstLevelAncestors[i]
+#                                   distances <- 1
+# #  }
+# #  do.call(rbind, AllSecondLevelAncestors)
+# #  rm(i)
+#
+#
+# #  finishedAncestors <- vector(mode = "numeric", length = 0)
+# #  distances <- c(node=0)
+#
+# #  while(length(intersect(unfinishedTargets, targets)) > 0) {
+#     newAncestors <- vector(mode = "numeric", length = 0)
+#     for(i in 1:length(unfinishedTargets)) {
+#       indexVector <- which(arcs[,2] == unfinishedTargets[i])
+#       if (length(indexVector) > 0) {
+#         for (j in 1:length(indexVector)) {
+#           currentAnc <- arcs[indexVector[j],1]
+#           newAncestors <- append(newAncestors, currentAnc)
+#           finishedAncestors <- append(finishedAncestors, newAncestors)
+#         }
+#       }
+#     }
+#     distances <- c(distances, rep(distances[unfinishedTargets]+1,length(newAncestors)))
+#     unfinishedTargets <- unique(newAncestors)
+#     cat("Ancestors found:", length(unique(finishedAncestors)), "\r")
+#   }
+#
+#   return(list(ancestors=sort(unique(finishedAncestors), decreasing = TRUE), distances=distances[sort(finishedAncestors, decreasing = TRUE)]))
+# }
+#
+# #asking ChatGPT to correct the code, it said: The code appears to be encountering
+# #an issue because the finishedAncestors vector is being appended to with
+# #newAncestors on every iteration of the loop, rather than with the newly found
+# #ancestor. The corrected code is as follows:
+# GetAncestorsDistanceNew <- function (arcs, node) {
+#   targets <- unique(arcs[,2])
+#   unfinishedTargets <- node
+#   finishedAncestors <- vector(mode = "numeric", length = 0)
+#   distances <- c(node=0)
+#
+#   while(length(intersect(unfinishedTargets, targets)) > 0) {
+#     newAncestors <- vector(mode = "numeric", length = 0)
+#     for(i in 1:length(unfinishedTargets)) {
+#       indexVector <- which(arcs[,2] == unfinishedTargets[i])
+#       if (length(indexVector) > 0) {
+#         for (j in 1:length(indexVector)) {
+#           currentAnc <- arcs[indexVector[j],1]
+#           newAncestors <- append(newAncestors, currentAnc)
+#         }
+#       }
+#     }
+#     finishedAncestors <- sort(unique(c(finishedAncestors,newAncestors)))
+#     distances <- c(distances, rep(distances[unfinishedTargets]+1,length(newAncestors)))
+#     unfinishedTargets <- unique(newAncestors)
+#     cat("Ancestors found:", length(unique(finishedAncestors)), "\r")
+#   }
+#
+#   return(list(ancestors=sort(unique(finishedAncestors), decreasing = TRUE), distances=distances[sort(finishedAncestors, decreasing = TRUE)]))
+# }
+#
+# #did not work, asked for alternative
+# GetAncestorsDistance3 <- function (arcs, node) {
+#   targets <- unique(arcs[,2])
+#   unfinishedTargets <- node
+#   finishedAncestors <- vector(mode = "numeric", length = 0)
+#   distances <- c(node=0)
+#
+#   while(length(intersect(unfinishedTargets, targets)) > 0) {
+#     newAncestors <- vector(mode = "numeric", length = 0)
+#     for(i in 1:length(unfinishedTargets)) {
+#       indexVector <- which(arcs[,2] == unfinishedTargets[i])
+#       if (length(indexVector) > 0) {
+#         for (j in 1:length(indexVector)) {
+#           currentAnc <- arcs[indexVector[j],1]
+#           newAncestors <- append(newAncestors, currentAnc)
+#         }
+#       }
+#     }
+#     finishedAncestors <- c(finishedAncestors, newAncestors)
+#     distances <- c(distances, rep(distances[unfinishedTargets]+1,length(newAncestors)))
+#     unfinishedTargets <- unique(newAncestors)
+#     cat("Ancestors found:", length(unique(finishedAncestors)), "\r")
+#   }
+#
+#   return(list(ancestors=sort(unique(finishedAncestors), decreasing = TRUE), distances=distances[sort(finishedAncestors, decreasing = TRUE)]))
+# }
+#
