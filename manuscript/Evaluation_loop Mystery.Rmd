@@ -224,6 +224,8 @@ for (i in max_runs) {
 # Call the function with appropriate edgelist and nodelist
 # Replace 'your_edgelist' and 'your_nodelist' with the actual data you want to pass to the function
   result_list[[i]] <- Evaluation_step(test_edges, test_node_calc)
+  test_edges <- result_list[[i]][[1]]
+  test_node_calc <- result_list[[i]][[2]]
 }
 ```
 
@@ -231,8 +233,8 @@ The loop runs and does all 3 iterations. But now let's look at the results. Let'
 
 ```{r}
 result_list[[1]][[2]][,"val_run1"]
-result_list[[2]][[2]][,"val_run1"]
-result_list[[3]][[2]][,"val_run1"]
+result_list[[2]][[2]][,"val_run1.y"]
+result_list[[3]][[2]][,"val_run1.x"]
 
 ```
 I have stared at this for hours now, and I cannot figure out what goes wrong :( Help!
