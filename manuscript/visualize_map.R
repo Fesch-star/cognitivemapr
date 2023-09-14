@@ -15,6 +15,7 @@ library(igraph)
 library(tidygraph)
 library(ggraph)
 library(visNetwork)
+library(cognitivemapr)
 
 #load data
 sumvalue_weighted_edges_leaders <- read.csv ("data/raw/sumvalue_weighted_edges_leaders.csv")
