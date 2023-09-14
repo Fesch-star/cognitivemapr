@@ -69,24 +69,3 @@ Evaluation_step <- function(edgelist, nodelist) {
   return(list(edgelist, nodelist))
 }
 
-# Below the suggestion by chatGPT - it indeed iterates the function and let you look back at the different steps, which is great. But the result is incorrect and does not correspond to running the evaluation_step function manually multiple times.
-# I did not manage to solve it.
-
-result_list <- vector("list", max_runs)
-
-for (i in 1:max_runs) {
-  # Call the function with appropriate edgelist and nodelist
-  # Replace 'your_edgelist' and 'your_nodelist' with the actual data you want to pass to the function
-  result_list[[i]] <- Evaluation_step(rutte_p2_edgelist, rutte_p2_node_calc)
-}
-
-# Access the results for each run
-for (i in 1:max_runs) {
-  edgelist_result <- result_list[[i]][[1]]
-  nodelist_result <- result_list[[i]][[2]]
-
-  # Perform any additional actions or analysis on edgelist_result and nodelist_result here
-
-  edgelist_result <- result_list[[i]][[i]]
-}
-
