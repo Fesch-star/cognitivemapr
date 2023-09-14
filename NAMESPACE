@@ -2,4 +2,8 @@
 
 export(calc_support_by_category_loop)
 export(calculate_degrees)
+export(evaluation_step)
 export(set_iterations)
+import(igraph)
+importFrom(igraph,diameter)
+importFrom(igraph,graph_from_data_frame)

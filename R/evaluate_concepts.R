@@ -1,5 +1,29 @@
-# Creating a function to conduct the evaluation analysis
-Evaluation_step <- function(edgelist, nodelist) {
+#' Conduct the evaluation analysis
+#' 
+#' This function is used to conduct the evaluation analysis of the nodes and
+#' edges in a CM.
+#' 
+#' @param edgelist an edgelist
+#' @param nodelist a nodelist
+#' @return Returns a list with the resulting edgelist and nodelist
+#' @export
+#' @examples
+#' # Load the data
+#' data("edgelist")
+#' data("nodelist")
+#' 
+#' # Run the evaluation analysis
+#' max_runs <- set_iterations(edgelist, nodelist)
+#' iterations <- length(max_runs)
+#' result_list <- vector("list", iterations)
+#' 
+#' for (i in max_runs) {
+#'    result_list <- Evaluation_step(edgelist, nodelist)
+#'    edgelist <- result_list[[i]][[1]]
+#'    nodelist <- result_list[[i]][[2]]
+#' }
+#' 
+evaluation_step <- function(edgelist, nodelist) {
 
 
   # Conduct the first evaluation calculations
