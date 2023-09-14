@@ -5,3 +5,6 @@
 ^pkgdown$
 ^CITATION\.cff$
 ^README\.Rmd$
+^todo$
+^manuscript$
+^man$
