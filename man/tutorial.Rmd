@@ -61,6 +61,7 @@ complexity of the map (mean degree) that may help compare the CM to
 others.
 
 ```{r}
+library(cognitivemapr)
 #running the function with the data of Mark Rutte, and storing it as a df
 rutte_p2_node_measures <- cognitivemapr::calculate_degrees(rutte_p2_edgelist, rutte_p2_nodelist)
 
