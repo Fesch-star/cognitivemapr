@@ -1,4 +1,4 @@
-#' calc_degrees_gow
+#' calculate_degrees
 #'
 #' The calc_degrees-gow function is used to analyse cognitive map (CM) data.
 #' It calculates various standard CM measures and draws a first CM graph.
@@ -73,7 +73,7 @@
 #'
 #' @export
 #'
-calc_degrees_goW <- function(edgelist, nodelist) {
+calculate_degrees <- function(edgelist, nodelist) {
 
 #transform edge & nodelist into a map
   map <- igraph::graph_from_data_frame(d = edgelist, vertices = nodelist, directed = TRUE)
