@@ -4,9 +4,10 @@
 #' @param node_calc An object of class "DataFrame". Description of parameter
 #' @param second An object of class "vector". Description of parameter
 #' @return Returns an object of class "Dataframe". Description of what the function returns
-#' @examples 
+#' @examples
 #' categories <- c("Intergovernmental", "Supranational", "bla")
 #' test_node_calc <- calc_support_by_category_loop(test_node_calc, categories)
+#' @export
 
 # TODO
 # The function needs to be made generic: choosing a generic name for columns of the input data
