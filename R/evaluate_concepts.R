@@ -36,7 +36,7 @@ evaluation_step <- function(edgelist, nodelist) {
 
   # Add up the xt1 scores per id/concept - then store this in the df xt1
   xt1 <- xt1 %>%
-    group_by(from) %>%
+    dplyr::group_by(from) %>%
     dplyr::summarise(val_xt1_sum = sum(val_xt1))
 
   # Make the val_xt values unweighted
@@ -52,13 +52,13 @@ evaluation_step <- function(edgelist, nodelist) {
 
   xt1_to_yt1 <- xt1
 
-  xt1_to_yt1 <- rename(xt1_to_yt1, to = from)
+  xt1_to_yt1 <- dplyr::rename(xt1_to_yt1, to = from)
 
-  xt1_to_yt1 <- rename(xt1_to_yt1, val_yt1 = val_xt1_sum)
+  xt1_to_yt1 <- dplyr::rename(xt1_to_yt1, val_yt1 = val_xt1_sum)
 
   # Join this to the original edgelist
   edgelist <- edgelist %>%
-    left_join(xt1_to_yt1, by = c("to" = "to"))
+    dplyr::left_join(xt1_to_yt1, by = c("to" = "to"))
 
   # Replace NA by value.y (so you basically keep the value.y in instances when y
   # only appears as an effect ('to') concept and thus has no new value
@@ -68,26 +68,26 @@ evaluation_step <- function(edgelist, nodelist) {
   # and check if they are consistent over the from/to columns.
   # For x, you need to take the values in column xt1
   # Change the names of the columns accordingly
-  xt1 <- rename(xt1, val_run1 = val_xt1_sum)
-  xt1 <- rename(xt1, id = from)
+  xt1 <- dplyr::rename(xt1, val_run1 = val_xt1_sum)
+  xt1 <- dplyr::rename(xt1, id = from)
 
   # Take the unique yt1 variables from the table with ids
   yt1 <- unique(edgelist[, c("to", "val_yt1")]) %>%
-    rename(val_run1 = val_yt1) %>%
-    rename(id = to)
+    dplyr::rename(val_run1 = val_yt1) %>%
+    dplyr::rename(id = to)
 
   # Merge xt2 and yt1 while retaining all other columns, collapse the overlap
   node_val_run1 <- merge(xt1, yt1, all = TRUE)
 
   # Bind node_val_run1 to nodelist
   nodelist <- nodelist %>%
-    left_join(node_val_run1, by = "id")
+    dplyr::left_join(node_val_run1, by = "id")
 
   # Rename some columns to prepare for the next run of the loop
   edgelist$value.x <- edgelist$val_xt1
   edgelist$value.y <- edgelist$val_yt1
 
-  edgelist <- select(edgelist, -c(val_xt1, val_yt1))
+  edgelist <- dplyr::select(edgelist, -c(val_xt1, val_yt1))
 
   # Return the resulting edge and nodelists with the new values
   return(list(edgelist, nodelist))

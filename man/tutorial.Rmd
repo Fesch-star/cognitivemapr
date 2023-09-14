@@ -128,7 +128,7 @@ result_list <- vector("list", iterations)
 for (i in max_runs) {
 # Call the function with appropriate edgelist and nodelist
 # Replace 'your_edgelist' and 'your_nodelist' with the actual data you want to pass to the function
-  result_list[[i]] <- cognitivemapr::evaluate_concepts(rutte_p2_edgelist, rutte_p2_nodelist)
+  result_list[[i]] <- cognitivemapr::evaluation_step(rutte_p2_edgelist, rutte_p2_nodelist)
   rutte_p2_edgelist <- result_list[[i]][[1]]
   rutte_p2_nodelist <- result_list[[i]][[2]]
 }
