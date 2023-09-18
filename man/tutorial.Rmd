@@ -24,10 +24,10 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Step 1: Install `cognitivemapr`
 
 ```{r, results='hide', warning=FALSE, message=FALSE}
-install.packages("devtools")
-library(devtools)
+#install.packages("devtools")
 
-devtools::install_github('https://github.com/Fesch-star/cognitivemapr')
+devtools::install_github('https://github.com/Fesch-star/cognitivemapr', ref="tutorial")
+help( , "cognitivemapr")
 ```
 
 ## Step 2: Read example data
@@ -119,17 +119,54 @@ an edgelist and nodelist as its input (if you want to add the evaluation
 to the dataframe with the basic CM measures as calculated above, **be
 sure to use the node_measures list**).
 
-**NOT WORKING, FIX FUNCTION AND CONTINUE FROM HERE** 
-**Function works (also if I run it manually a few times in a row), but the loop does not, I cannot get it to work***
-
 ```{r}
 #set index to 1
-index <- 1
+iterations <- length(max_runs)
 
-while (index < max_runs){
-  evaluate_concepts (rutte_p2_edgelist, rutte_p2_node_calc)
+result_list <- vector("list", iterations)
+
+for (i in max_runs) {
+# Call the function with appropriate edgelist and nodelist
+# Replace 'your_edgelist' and 'your_nodelist' with the actual data you want to pass to the function
+  result_list[[i]] <- cognitivemapr::evaluation_step(rutte_p2_edgelist, rutte_p2_nodelist)
+  rutte_p2_edgelist <- result_list[[i]][[1]]
+  rutte_p2_nodelist <- result_list[[i]][[2]]
 }
 ```
+
+
+```{r}
+result_list[[1]][[2]][,"val_run1"]
+result_list[[5]][[2]][,"val_run1.y"]
+result_list[[5]][[2]][,"val_run1.x"]
+```
+
+#### Continue here
+
+```{r}
+# Below the suggestion by chatGPT - it indeed iterates the function and let you look back at the different steps, which is great. But the result is incorrect and does not correspond to running the evaluation_step function manually multiple times.
+# I did not manage to solve it.
+max_runs <- 10
+result_list <- vector("list", max_runs)
+
+for (i in 1:max_runs) {
+  # Call the function with appropriate edgelist and nodelist
+  # Replace 'your_edgelist' and 'your_nodelist' with the actual data you want to pass to the function
+  result_list[[i]] <- Evaluation_step(rutte_p2_edgelist, rutte_p2_node_calc)
+}
+
+# Access the results for each run
+for (i in 1:max_runs) {
+  edgelist_result <- result_list[[i]][[1]]
+  nodelist_result <- result_list[[i]][[2]]
+
+  # Perform any additional actions or analysis on edgelist_result and nodelist_result here
+
+  edgelist_result <- result_list[[i]][[i]]
+}
+
+```
+
 
 ```{r}
 # to save the changes in edgelist and nodeslist under a relevant name, use the following code when running this function
