@@ -2,7 +2,7 @@
 #'
 #' Calculate the support for policy instruments
 #' @param node_calc An object of class "DataFrame". Description of parameter
-#' @param second An object of class "vector". Description of parameter
+#' @param categories An object of class "vector". Description of parameter
 #' @return Returns an object of class "Dataframe". Description of what the function returns
 #' @examples
 #' categories <- c("Intergovernmental", "Supranational", "bla")
@@ -18,7 +18,7 @@
 
 calc_support_by_category_loop <- function(node_calc, categories) {
   for (category in categories) {
-    node_calc[, category] <- case_when(node_calc$Int == category &
+    node_calc[, category] <- dplyr::case_when(node_calc$Int == category &
                                          node_calc$val_run1 > 0 ~ node_calc$w_degree,
                                        node_calc$Int == category &
                                          node_calc$val_run1 < 0 ~-(node_calc$w_degree))
