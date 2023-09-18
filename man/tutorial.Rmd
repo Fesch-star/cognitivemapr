@@ -137,8 +137,8 @@ for (i in max_runs) {
 
 ```{r}
 result_list[[1]][[2]][,"val_run1"]
-result_list[[2]][[2]][,"val_run1.y"]
-result_list[[3]][[2]][,"val_run1.x"]
+result_list[[5]][[2]][,"val_run1.y"]
+result_list[[5]][[2]][,"val_run1.x"]
 ```
 
 #### Continue here
