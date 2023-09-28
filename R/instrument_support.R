@@ -1,31 +1,51 @@
 #' Instrument Support
 #'
-#' Calculate the support for policy instruments
-#' @param node_calc An object of class "DataFrame". Description of parameter
-#' @param second An object of class "vector". Description of parameter
-#' @return Returns an object of class "Dataframe". Description of what the function returns
+#' Calculates to what extent the cognitive map signals support for certain types
+#' of policy instruments. More specifically, it determines the saliency of all
+#' concepts classified as a type of policy instrument which are valued positively
+#' as determined via the evaluate_concepts function. To be able to run this
+#' function, the functions calculate-degrees AND evaluate_concepts  should have
+#' been run first. Also the nodelist (node_measures) list this function takes,
+#' needs to contain a column with the name 'instruments' in which for each concept
+#' it is noted what type of policy instrument it represents. If a concept does
+#' not refer to a policy instrument, the cell should be left empty.
+#' The researcher can use any typology of policy instruments that is relevant to
+#' their research.
+#'
+#' @param node_measures An object of class "dataframe" including all measures
+#' returned when running the functions calculate_degrees & evaluate_concepts, as
+#' well as a column with the title "instruments" in which the concepts are
+#' classified as belonging to a pre-determined set of policy instrument type. If
+#' a concept does not refer to a policy instrument, the cell should be left empty.
+#' @param instruments An object of class "vector" containing all of the types of
+#' policy instruments that occur in the node_measures list. To derive such a vector
+#' run the following code:
+#' "instruments <- unique(node_measures$instruments) #deriving all instrument-types
+#' from the node_measures dataframe
+#' instruments <- na.omit(instruments) #omitting the empty cells (NULL category)
+#' from the analysis"
+#' @return Returns an object of class "dataframe" with a additional columns with
+#' the instrument types as column titles and the saliency scores for those concepts
+#' that are evaluated positively and that belong to these categories.
 #' @examples
-#' categories <- c("Intergovernmental", "Supranational", "bla")
-#' test_node_calc <- calc_support_by_category_loop(test_node_calc, categories)
+#' "instruments <- base::unique(rutte_p2_node_measures$instruments) #deriving all instrument-types
+#' from the node_measures dataframe
+#' instruments <- base::na.omit(instruments) #omitting the empty cells (NULL category)
+#' from the analysis"
+#' rutte_p2_node_measures <- instrument_support(rutte_p2_node_measures, instruments)
 #' @export
 
-# TODO
-# The function needs to be made generic: choosing a generic name for columns of the input data
-# instead of 'Int' - lets discuss what is a logical name. This also requires us
-# to change the column name in the example data (rutte_p2_nodelist), to keep this
-# working.
-# See below for questions regarding the loop that I created
 
-calc_support_by_category_loop <- function(node_calc, categories) {
-  for (category in categories) {
-    node_calc[, category] <- case_when(node_calc$Int == category &
-                                         node_calc$val_run1 > 0 ~ node_calc$w_degree,
-                                       node_calc$Int == category &
-                                         node_calc$val_run1 < 0 ~-(node_calc$w_degree))
-    
-    node_calc[category][is.na(node_calc[category])] <- 0
+instrument_support <- function(node_measures, instruments) {
+  base::for (instrument in instruments) {
+    node_measures[, instrument] <- dplyr::case_when(node_measures$Int == instrument &
+                                         node_measures$val_run1 > 0 ~ node_measures$w_degree,
+                                       node_measures$Int == instrument &
+                                         node_measures$val_run1 < 0 ~-(node_measures$w_degree))
+
+    node_measures[instrument][base::is.na(node_measures[instrument])] <- 0
   }
-  return(node_calc)
+  base::return(node_measures)
 }
 
 

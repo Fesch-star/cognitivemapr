@@ -1,8 +1,8 @@
-#' Set the maximum number of iterations
-#' 
-#' This function is used to set the maximum number of iterations for the
-#' evaluation of the nodes and edges in a CM. The maximum number of iterations
-#' is equal to the diameter of the CM.
+#' Set Iterations
+#' Helper function. Calculates the maximum number of iterations that the
+#' evaluate_concepts function needs to run in the for-loop to arrive at the
+#' correct evaluation of the concepts.
+#' The maximum number of iterations is equal to the diameter of the CM.
 #' @param edgelist an edgelist
 #' @param nodelist a nodelist
 #' @return Returns a vector with the maximum number of iterations
@@ -18,11 +18,10 @@ set_iterations <- function (edgelist, nodelist){
 #first draw map to be able to calculate diameter
 map <- igraph::graph_from_data_frame(d=edgelist, vertices=nodelist, directed = T)
 
-#determine diameter = the length of the longest geodesic
-diameter <- igraph::diameter(map, directed = TRUE, unconnected = TRUE)
-
-#return a vector with max number of runs.
-max_runs <- 1:diameter
+#determine diameter = the length of the longest geodesic, this equal the maximum
+#number of iterations that the evaluate_concepts functions need to run through the
+#for-loop
+max_runs <- igraph::diameter(map, directed = TRUE, unconnected = TRUE)
 
 return(max_runs)
 

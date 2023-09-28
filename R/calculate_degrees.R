@@ -1,11 +1,10 @@
 #' calculate_degrees
 #'
-#' The calc_degrees-gow function is used to analyse cognitive map (CM) data.
-#' It calculates various standard CM measures and draws a first CM graph.
+#' The calculate_degrees function is used to analyse cognitive map (CM) data.
+#' It calculates various standard CM measures.
 #' You need to run this function first before you can run the more
-#' complicated functions in this project: (calc_dims, draw_final_map, evaluation_step).
-#' For more information about this type of analysis, see the reference publication
-#' for this github repository (Van Esch & Snellens, forthcoming)
+#' complicated functions in this package: (instrument_support, paradigm_support
+#' evaluate_concepts).
 #'
 #' For each concept (node) in a map, the function calculates:
 #'
@@ -20,10 +19,9 @@
 #'
 #'   Their weighted equivalents
 #'
-#'     * weighted degree, also called saliency: the number of relations/edges
+#'     * weighted degree (also called saliency): the number of relations/edges
 #'         by which the concept/node is connected to others taking into account
-#'         the weight of the relations. This is calculated as the sum of the weights
-#'         of all relations by which the concept is connnected
+#'         the weight of the relations.
 #'
 #'     * indegree: the number of relations/edges feeding into a concept/node taking
 #'         into account their weight (sum of weights of all ingoing relations)
@@ -36,8 +34,8 @@
 #'
 #' @param edgelist
 #' The function takes an edgelist (dataframe) including all relations in a CM.
-#' The data needs to following column structure. The columns with an * include
-#' the meta-data and are optional. For other researchprojects, other types of
+#' The data needs to following column structure. The last two columns include
+#' the meta-data and are optional. For other research projects, other types of
 #' meta-data may be important.
 #'
 #'      * from: the 'cause'-node/concept id (corresponding to the id in the nodeslist)
@@ -47,28 +45,34 @@
 #'      * weight: the weight of the edge/relation (the number of times the relation
 #'         is mentioned in the raw data (speech/text/survey))
 #'
-#'      * map_id*: a unique id for the source (speech/text/respondent) the CM
+#'      * map_id#: a unique id for the source (speech/text/respondent) the CM
 #'         is derived from
 #'
-#'      * map_date*: the date of the source (speech/text/survey)the CM is derived
+#'      * map_date#: the date of the source (speech/text/survey)the CM is derived
 #'         from
 #'
 #' @param nodelist
 #' The function takes a nodelist (dataframe) including all nodes/concepts in the CM
-#' The data needs to following column structure. The columns with an * include
-#' the meta-data and are optional. For other researchprojects, other types of
-#' meta-data may be important:
+#' The data needs to following column structure. Other columns may be included
+#' containing categorization of the concepts in terms of - for instance - the
+#' paradigm they align with or the type of policy instrument the concept refers to.
+#' For different researchprojects, different types of categorizations may be relevant.
+#' In addition, researchers may want to add meta-data to the nodes:
 #'
 #'      * id: unique id (number) for the node/concept
 #'
 #'      * node_name: node name/concept in words
 #'
-#' @return The function returns a dataframe entitled "node_calc" with all calculated values as
+#'      * paradigms: a set of rivaling paradigms concepts may align with
+#'
+#'      * instruments: the type of policy instrument the concept refers to
+#'
+#' @return The function returns a dataframe entitled "node_measures" with all calculated values as
 #' well as the original data.
 #' For the function to return and store the following output a dataframe with the
 #' values, you need to insert the following code below the function in your script:
 #'
-#'       * node_calc_name_period <- calc_degrees_goW(edgelist, nodelist)
+#'       * node_measures_name_period <- calculate_degrees(edgelist, nodelist)
 #'
 #'
 #' @export
@@ -91,16 +95,16 @@ calculate_degrees <- function(edgelist, nodelist) {
 
 #link vectors with all the (weighted) degrees values to
 #the new node_calc df as columns
-  node_calc$indegree <- indeg
-  node_calc$outdegree <- outdeg
-  node_calc$degree <- deg
-  node_calc$w_indegree <- w_indeg
-  node_calc$w_outdegree <- w_outdeg
-  node_calc$w_degree <- w_deg
+  node_measures$indegree <- indeg
+  node_measures$outdegree <- outdeg
+  node_measures$degree <- deg
+  node_measures$w_indegree <- w_indeg
+  node_measures$w_outdegree <- w_outdeg
+  node_measures$w_degree <- w_deg
 
-#calculates go & goW and link it to the df node_calc as columns
-  node_calc <- dplyr::mutate(node_calc,
-          go = (node_calc$indegree - node_calc$outdegree) / node_calc$degree,
-          gow = (node_calc$w_indegree - node_calc$w_outdegree) / node_calc$w_degree)
-  base::return(node_calc) #returns the df node_calc with all calculated values
+#calculates go & goW and link it to the df node_measures as columns
+  node_measures <- dplyr::mutate(node_measures,
+          go = (node_measures$indegree - node_measures$outdegree) / node_measures$degree,
+          gow = (node_measures$w_indegree - node_measures$w_outdegree) / node_measures$w_degree)
+  base::return(node_measures) #returns the df node_measures with all calculated values
 }

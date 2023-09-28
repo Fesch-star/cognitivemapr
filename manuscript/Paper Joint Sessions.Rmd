@@ -678,7 +678,11 @@ above (Bonham, Shapiro, and Trumble 1979; Van Esch 2014).
 
 
 ```{r}
-# let's run the function for our example
+# derive the paradigms from the nodelist
+paradigm <- unique(rutte_p2_nodelist$eco)
+# if you want to get rid of the non-paradigmatic concepts run:
+paradigm <- na.omit(paradigm)
+# Now let's run the function for our example
 rutte_p2_node_calc <- calc_paradigm_support (rutte_p2_node_calc, "Ordoliberal", "Keynesian")
 
 # Make df to show a barplot with the results
