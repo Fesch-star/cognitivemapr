@@ -35,7 +35,6 @@
 #' rutte_p2_node_measures <- instrument_support(rutte_p2_node_measures, instruments)
 #' @export
 
-
 instrument_support <- function(node_measures, instruments) {
   base::for (instrument in instruments) {
     node_measures[, instrument] <- dplyr::case_when(node_measures$Int == instrument &
