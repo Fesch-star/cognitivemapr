@@ -45,7 +45,7 @@ select_speaker_period_make_lists <- function(name, start, eind){
     dplyr::rename(to = id)
 
    #Make the accompanying nodelist by limiting total nodelist to only the nodes that are feature in the edges selected above
-   nodes <- base::sort (unique (c(base::unique(edgelist$from), base::unique(edgelist$to)))) #derive from & to nodes from edgelist
+   nodes <- base::sort (base::unique (c(base::unique(edgelist$from), base::unique(edgelist$to)))) #derive from & to nodes from edgelist
 
    nodelist <- nodes_leaders_idecointvalinstr [c(nodes),] # limit total nodelist [nodes_leaders_idecointval] to nodes from this map
 
