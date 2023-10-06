@@ -36,7 +36,7 @@
 #' @export
 
 instrument_support <- function(node_measures, instruments) {
-  base::for (instrument in instruments) {
+  for (instrument in instruments) {
     node_measures[, instrument] <- dplyr::case_when(node_measures$instrument == instrument &
                                          node_measures$val_run1 > 0 ~ node_measures$w_degree,
                                        node_measures$instrument == instrument &
@@ -44,7 +44,7 @@ instrument_support <- function(node_measures, instruments) {
 
     node_measures[instrument][base::is.na(node_measures[instrument])] <- 0
   }
-  base::return(node_measures)
+  return(node_measures)
 }
 
 
