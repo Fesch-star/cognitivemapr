@@ -2,6 +2,6 @@ pandoc: 2.19.2
 pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
-  paper-joint-sessions-vignette: paper-joint-sessions-vignette.html
-last_built: 2023-10-18T09:52Z
+  cognitivemapr-Tutorial: cognitivemapr-Tutorial.html
+last_built: 2023-10-18T11:07Z
 
