@@ -82,7 +82,7 @@ crisis, while also debating the value of being pragmatic.
 ```{r}
 # order the dataframe by saliency
 rutte_p2_node_measures <- rutte_p2_node_measures[order(rutte_p2_node_measures$w_degree, decreasing = TRUE),]
-rutte_p2_node_measures[1:10,c("id", "node_name", "w_degree", "eco")]
+rutte_p2_node_measures[1:10,c("id", "node_name", "w_degree", "paradigms")]
 
 ```
 
