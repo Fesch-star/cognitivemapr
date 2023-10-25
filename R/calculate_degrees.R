@@ -91,7 +91,7 @@ calculate_degrees <- function(edgelist, nodelist) {
   w_deg <- igraph::strength(map, mode = "all") #weighted degrees (saliency in CM speech)
 
 #make new df to store the calculated values
-  node_calc <- nodelist
+  node_measures <- nodelist
 
 #link vectors with all the (weighted) degrees values to
 #the new node_calc df as columns
