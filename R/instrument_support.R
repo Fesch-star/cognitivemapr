@@ -28,10 +28,10 @@
 #' the instrument types as column titles and the saliency scores for those concepts
 #' that are evaluated positively and that belong to these categories.
 #' @examples
-#' "instruments <- base::unique(rutte_p2_node_measures$instruments) #deriving all instrument-types
+#' instruments <- base::unique(rutte_p2_node_measures$instruments) #deriving all instrument-types
 #' from the node_measures dataframe
 #' instruments <- base::na.omit(instruments) #omitting the empty cells (NULL category)
-#' from the analysis"
+#' from the analysis
 #' rutte_p2_node_measures <- instrument_support(rutte_p2_node_measures, instruments)
 #' @export
 
