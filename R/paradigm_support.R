@@ -35,11 +35,21 @@
 #' the paradigms as column titles and the saliency scores for those concepts
 #' that indicate a positive stance towards the paradigm.
 #' @examples
-#' "paradigms <- base::unique(rutte_p2_node_measures$paradigms) #deriving all instrument-types
-#' from the node_measures dataframe
+#' \dontrun{
+#' #' library(readr)
+#' load("./data/rutte_p2_edgelist.rda")
+#' load("./data/rutte_p2_nodelist.rda")
+#' rutte_p2_node_measures <- cognitivemapr::calculate_degrees(rutte_p2_edgelist, rutte_p2_nodelist)
+#'
+#' #first derive all instrument-types from the node_measures dataframe from the analysis
+#'
+#' paradigms <- base::unique(rutte_p2_node_measures$paradigms)
 #' paradigms <- base::na.omit(paradigms) #omitting the empty cells (NULL category)
-#' from the analysis"
+#' paradigm_a <-  #<TODO>
+#' paradigm_b <-  #<TODO>
+#'
 #' rutte_p2_node_measures <- paradigm_support(rutte_p2_node_measures, paradigm_a, paradigm_b)
+#' }
 #' @export
 
 

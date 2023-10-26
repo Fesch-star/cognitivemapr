@@ -106,5 +106,5 @@ calculate_degrees <- function(edgelist, nodelist) {
   node_measures <- dplyr::mutate(node_measures,
           go = (node_measures$indegree - node_measures$outdegree) / node_measures$degree,
           gow = (node_measures$w_indegree - node_measures$w_outdegree) / node_measures$w_degree)
-  base::return(node_measures) #returns the df node_measures with all calculated values
+  return(node_measures) #returns the df node_measures with all calculated values
 }

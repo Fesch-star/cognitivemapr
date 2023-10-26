@@ -1,0 +1,272 @@
+---
+title: "cognitivemapr Tutorial"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{cognitivemapr Tutorial}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Getting started
+
+## Step 1: Install `cognitivemapr`
+
+```{r, results='hide', warning=FALSE, message=FALSE}
+install.packages("devtools", repos = "https://cloud.r-project.org/")
+library(devtools)
+
+devtools::install_github("https://github.com/Fesch-star/cognitivemapr")
+```
+
+## Step 2: Read example data
+
+```{r, results='hide', warning=FALSE, message=FALSE}
+library(readr)
+
+load("../data/rutte_p2_edgelist.rda")
+load("../data/rutte_p2_nodelist.rda")
+
+
+```
+
+## Step 3: Display first rows
+
+```{r}
+head(rutte_p2_edgelist)
+head(rutte_p2_nodelist)
+```
+
+## Step 4: Calculating basic CM measures
+
+Running the `calc_degrees_goW` function using the data of Rutte shows that the function
+returns a dataframe in which all the original data on the nodes in the
+CM is combined with the basic measures. Running the summary shows some
+basic characterising and statistical information regarding the variables
+in the dataframe. This provides some first indication regarding the
+number of concepts in the CM, the difference in strenght of the concepts
+in the map (minimum, maximum, mean w_degree) as well as the overall
+complexity of the map (mean degree) that may help compare the CM to
+others.
+
+```{r}
+#running the function with the data of Mark Rutte, and storing it as a df
+rutte_p2_node_measures <- cognitivemapr::calculate_degrees(rutte_p2_edgelist, rutte_p2_nodelist)
+
+#provide summary statistics for all measures
+summary(rutte_p2_node_measures)
+```
+
+## Step 5: Sum of saliency
+In addition, the sum of saliency divided by two tells us of how many relations the CM
+consists, which is the most commonly used measure of the relative size
+of a CM in comparison to others.
+
+```{r}
+sum(rutte_p2_node_measures$w_degree)/2
+```
+
+## Step 6: Top 10 concepts
+At the concept level, the output of the calc_degrees_goW function also
+provides us with the first feel of the content of the CM. The table
+below, for instance shows the top 10 concepts in terms of saliency and
+economic paradigm (ordoliberal or keynesian) for the map of Rutte. The
+table provides a first indication that the Dutch prime minister was
+highly concerned about the Eurozone crisis, and was discussing several
+institutional and predominantly ordoliberal measures to tackle the
+crisis, while also debating the value of being pragmatic.
+
+```{r}
+# order the dataframe by saliency
+rutte_p2_node_measures <- rutte_p2_node_measures[order(rutte_p2_node_measures$w_degree, decreasing = TRUE),]
+rutte_p2_node_measures[1:10,c("id", "node_name", "w_degree", "paradigms")]
+
+```
+
+## Step 7: Set maximum number of iterations
+
+By analysing the relationships between the concepts
+in a path, scholars can establish if, and how concepts are peceived to
+be related: positively, negatively or ambiguously (Hart 1977). For
+instance, assuming that 'solving the crisis' is considered a positive
+goal, we can derive from **figure 1** that 'fiscal discipline' is valued
+positively as it contributes to 'solving the crisis', whereas 'wider
+yield spreads' is negatively evaluated.
+
+Running the function with the original edge and nodelist of the example dataset
+reveals the maximum number of runs for this CM to be 5.
+
+```{r}
+max_runs <- cognitivemapr::set_iterations(rutte_p2_edgelist, rutte_p2_nodelist)
+```
+
+## Step 8: 
+Conduct a single run through the cognitive map
+while adjusting and storing the changing evaluation values of the
+concepts using the `evaluation_step` function. The function takes
+an edgelist and nodelist as its input (if you want to add the evaluation
+to the dataframe with the basic CM measures as calculated above, **be
+sure to use the node_measures list**).
+
+```{r}
+#set index to 1
+iterations <- length(max_runs)
+
+result_list <- vector("list", iterations)
+
+for (i in 1:max_runs) {
+# Call the function with appropriate edgelist and nodelist
+# Replace 'your_edgelist' and 'your_nodelist' with the actual data you want to pass to the function
+  result_list[[i]] <- cognitivemapr::evaluation_step(rutte_p2_edgelist, rutte_p2_nodelist)
+  rutte_p2_edgelist <- result_list[[i]][[1]]
+  rutte_p2_nodelist <- result_list[[i]][[2]]
+}
+```
+
+
+```{r}
+#test of the current solution to running multiple iterations of the evaluate_concepts function:
+#result_list[[1]][[2]][,"val_run1"]
+#result_list[[2]][[2]][,"val_run1.y"]
+#result_list[[3]][[2]][,"val_run1.x"]
+#result_list[[4]][[2]][,"val_run1.x.x"]
+#result_list[[5]][[2]][,"val_run1.y.y"]
+
+
+result_list[[1]][[2]]
+result_list[[2]][[2]]
+result_list[[3]][[2]]
+result_list[[4]][[2]]
+result_list[[5]][[2]]
+
+#TEST RESULT FEMKE: Unfortunately, after the first iteration, the numbers keep on being the same. Like in the case of the Mystery document, the calculations are not iterated on the outcome of the previous run. Back to the drawing board :(
+```
+
+#### Continue here
+
+
+
+```{r}
+# to save the changes in edgelist and nodeslist under a relevant name, use the following code when running this function
+
+# name_period_edgelist <- evaluation_loop(edgelist, nodelist) [[1]] 
+
+# name_period_edge_calc <- evaluation_loop(edgelist, nodelist) [[2]]
+
+# name_period_nodecalc <- evaluation_loop(edgelist, nodelist)) [[3]] 
+```
+
+A CM analysis thus reveals both the nature, strength and complexity of
+ideas as well as whether they are valued positively or negatively.
+
+## Categorical analysis (calc_dims function)
+
+In the case of the Eurozone crisis, scholars have identified two
+competing paradigms underlying the policy debate: Keynesianism and
+Ordoliberalism. The Ordoliberal paradigm is characterised by a belief in
+the primacy of price stability which may be ensured by pursuing
+austerity and denouncing monetary financing. In contrast, for
+Keynesians, economic growth and employment take precedence and economic
+stimulation is advocated to promote these goals during economic
+downturns. Keynesians are also more favourable to monetary financing and
+for a central bank to act as a lender of last resort (Dullien and Guérot
+2012; Hall 2014). To capture the paradigmatic orthodoxy of Rutte and
+Knot's belief system, all concepts in their CM were classified as either
+Keynesian, Ordoliberal or neutral (Van Esch et al. 2018). The result of
+this analysis shows that during the period from May 2010 and July 2012
+both Rutte and Knot's belief system are more Ordoliberal than Keynesian
+(see figure 2). Other types of (automated) text analysis are capable of
+classifying text into broad categories in a similar fashion (Ban 2015).
+The nuance of the CM analyses, however, reveals that there are also
+considerable Keynesian elements in Rutte´s and Knot´s belief system,
+lending support to the thesis that paradigms are not incommensurable
+(Carstensen 2011b; Princen and Van Esch 2016). Moreover, due to the
+standardised way the CM technique works, we are also able to compare
+their scores to other leaders and conclude that internationally, the
+Dutch leaders have a relatively high leaning towards the Ordoliberalism
+(Van Esch et al. 2018). In a similar way, we could also analyse changes
+in ideas over time, thereby fulfilling the third requirement discussed
+above (Bonham, Shapiro, and Trumble 1979; Van Esch 2014).
+
+```{r}
+# plot the 10 most salient concepts
+plot(rutte_p2_node_measures$w_degree [1:10], rutte_p2_node_measures$gow [1:10], xlab = "Saliency", ylab = "Weighted Goal Orientation", pch =19, frame = FALSE, text(rutte_p2_node_measures$w_degree[1:10], rutte_p2_node_measures$gow[1:10], rutte_p2_node_measures$node_name[1:10], pos = 1, cex = 0.5)) 
+```
+
+In addition, the CM technique allows scholars to distinguish between
+different types of beliefs, For instance, it is also possible to
+establish instrumental beliefs with CM. One way of doing this is to
+inductively identify a range of possible policy-instruments relevant in
+the policy area under study. For this, we used a larger set of cognitive
+maps regarding the Eurozone crisis to derive seven relevant policy
+measures: Stronger EU fiscal regulation, structural reforms, monetary
+measures by the ECB, economic stimulation, fiscal support, financial
+market measures and EMU reforms (Van Esch et al. 2018). Comparing Rutte
+and Knot's maps shows that while they both lean towards an Ordoliberal
+approach, they differ in terms of their instrumental beliefs: Rutte
+favours implementing structural reforms and stronger fiscal regulation
+over making institutional reforms to EMU, fiscal support and economic
+stimulation. He does not discuss financial market measures and ECB
+measures (see figure 3). Knot favours interventions by the ECB over
+structural and EMU reforms and stronger EU fiscal regulation. In
+addition, he shows a similar limited support for providing fiscal aid as
+the PM and does not support economic stimulation or financial market
+measures. These findings thus allow us to compare the extent the
+instrumental ideas of Rutte and Knot influenced the Dutch management of
+the Eurozone crisis (see below).
+
+## Causal Power
+
+(HEB ik nog niet omgezet in R code) Finally, taking full advantage of
+its graphical nature, CM can be used to establish the causal strength of
+the policy instruments identified in a map. For this we combine the
+narrative analysis with the quantitative measures. We start by assuming
+that the higher the weight of the link between cause and effect, the
+stronger actors believe in its causal effect. In addition, we assume
+that the larger the distance between the cause and the effect (the more
+logical steps it takes to explain the relationship between instrument
+and goal), the weaker the presumed causal power of the instrument (cf.
+Septer, Dijkstra, and Stokman 2012; Shapiro and Bonham 1973). On the
+basis of this, we propose that the causal power (CP) of an instrument on
+a particular goal may be established as follows (Septer, Dijkstra, and
+Stokman 2012): First, for each subsequent concept in the antecedent
+path, its autonomous power (AP) may be determined following the
+calculation:
+
+AP = Ev*W*(0.9(D-1)); Whereby: Ev = Evaluation of the cause concept (-1,
+0, +1) W = Weight of the relation D = Distance/steps to the effect
+concept
+
+To calculate the total causal power of a policy instrument, the
+AP-scores of all concepts in the path are multiplied:
+
+CP = AP1 \* AP2 \* ... APi
+
+In figure 1, the causal power of the concept 'ESM' (D=2) runs via (W=2,
+EV=+1) the concept 'market trust' (D=1), which in turn positively feeds
+into (W=1, EV=+1) 'solving the crisis'. The causal power of ESM is thus
+calculated as follows:
+
+CP=(+1*2*(0.9 (2-1)) \* (+1*1*(0.9 (1-1)) = 1.8
+
+Scholars have used similar analyses to derive policy preferences in the
+domain of environmental and foreign policy decisions to identify
+conditions under which ideas affect policies and even to run simulations
+of policy making processes (Bonham, Shapiro, and Trumble 1979; Hart
+1976).
+
+## Upgraded visualisation
+
+(draw final map function)
+
+## (nog ergens overlap in maps? )
+
+# Making CM available for scholars without technical skills: the CM shiny app
+
+(HEB ik nog niet omgezet in R code)
+
+
+

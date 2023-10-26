@@ -11,6 +11,8 @@ contributors](https://img.shields.io/github/contributors/Fesch-star/cognitivemap
 commit](https://img.shields.io/github/last-commit/Fesch-star/cognitivemapr)
 <!-- badges: end -->
 
+# cognitivemapr <img src="man/figures/logo.png" align="right" height="128" />
+
 Cognitive Mapping is a method specifically designed to study belief
 systems as espoused by individuals or organisations and has several
 advantages over other methods. The goal of `cognitivemapr` is to reduce
@@ -30,15 +32,15 @@ devtools::install_github("Fesch-star/cognitivemapr")
 
 To run the code you need to install the following packages:
 
--   tidyverse - built under R version 4.0.5 v ggplot2 3.3.3 v purrr
-    0.3.4 v tibble 3.1.1 v dplyr 1.0.5 v tidyr 1.1.3 v stringr 1.4.0 v
-    readr 1.4.0 v forcats 0.5.1
+- tidyverse - built under R version 4.0.5 v ggplot2 3.3.3 v purrr 0.3.4
+  v tibble 3.1.1 v dplyr 1.0.5 v tidyr 1.1.3 v stringr 1.4.0 v readr
+  1.4.0 v forcats 0.5.1
 
--   igraph - built under R version 4.0.5
+- igraph - built under R version 4.0.5
 
--   tidygraph
+- tidygraph
 
--   ggraph
+- ggraph
 
 ## Example
 
