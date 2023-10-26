@@ -7,19 +7,30 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
 ```
+
+# Introduction
+
+<Add a short introduction here>
 
 # Getting started
 
 ## Step 1: Install `cognitivemapr`
 
-```{r, results='hide', warning=FALSE, message=FALSE}
+```{r eval=FALSE}
 install.packages("devtools", repos = "https://cloud.r-project.org/")
 library(devtools)
 
 devtools::install_github("https://github.com/Fesch-star/cognitivemapr")
+```
+
+```{r setup}
+library(cognitivemapr)
 ```
 
 ## Step 2: Read example data
