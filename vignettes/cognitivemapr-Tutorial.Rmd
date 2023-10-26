@@ -117,7 +117,7 @@ iterations <- length(max_runs)
 
 result_list <- vector("list", iterations)
 
-for (i in max_runs) {
+for (i in 1:max_runs) {
 # Call the function with appropriate edgelist and nodelist
 # Replace 'your_edgelist' and 'your_nodelist' with the actual data you want to pass to the function
   result_list[[i]] <- cognitivemapr::evaluation_step(rutte_p2_edgelist, rutte_p2_nodelist)
@@ -129,11 +129,11 @@ for (i in max_runs) {
 
 ```{r}
 #test of the current solution to running multiple iterations of the evaluate_concepts function:
-result_list[[1]][[2]][,"val_run1"]
-result_list[[2]][[2]][,"val_run1.y"]
-result_list[[3]][[2]][,"val_run1.x"]
-result_list[[4]][[2]][,"val_run1.x.x"]
-result_list[[5]][[2]][,"val_run1.y.y"]
+#result_list[[1]][[2]][,"val_run1"]
+#result_list[[2]][[2]][,"val_run1.y"]
+#result_list[[3]][[2]][,"val_run1.x"]
+#result_list[[4]][[2]][,"val_run1.x.x"]
+#result_list[[5]][[2]][,"val_run1.y.y"]
 
 
 result_list[[1]][[2]]
@@ -147,29 +147,6 @@ result_list[[5]][[2]]
 
 #### Continue here
 
-```{r}
-# Below the suggestion by chatGPT - it indeed iterates the function and let you look back at the different steps, which is great. But the result is incorrect and does not correspond to running the evaluation_step function manually multiple times.
-# I did not manage to solve it.
-max_runs <- 10
-result_list <- vector("list", max_runs)
-
-for (i in 1:max_runs) {
-  # Call the function with appropriate edgelist and nodelist
-  # Replace 'your_edgelist' and 'your_nodelist' with the actual data you want to pass to the function
-  result_list[[i]] <- Evaluation_step(rutte_p2_edgelist, rutte_p2_node_calc)
-}
-
-# Access the results for each run
-for (i in 1:max_runs) {
-  edgelist_result <- result_list[[i]][[1]]
-  nodelist_result <- result_list[[i]][[2]]
-
-  # Perform any additional actions or analysis on edgelist_result and nodelist_result here
-
-  edgelist_result <- result_list[[i]][[i]]
-}
-
-```
 
 
 ```{r}
@@ -216,7 +193,7 @@ above (Bonham, Shapiro, and Trumble 1979; Van Esch 2014).
 
 ```{r}
 # plot the 10 most salient concepts
-plot(rutte_p2_node_calc$w_degree [1:10], rutte_p2_node_calc$gow [1:10], xlab = "Saliency", ylab = "Weighted Goal Orientation", pch =19, frame = FALSE, text(rutte_p2_node_calc$w_degree[1:10], rutte_p2_node_calc$gow[1:10], rutte_p2_node_calc$node_name[1:10], pos = 1, cex = 0.5)) 
+plot(rutte_p2_node_measures$w_degree [1:10], rutte_p2_node_measures$gow [1:10], xlab = "Saliency", ylab = "Weighted Goal Orientation", pch =19, frame = FALSE, text(rutte_p2_node_measures$w_degree[1:10], rutte_p2_node_measures$gow[1:10], rutte_p2_node_measures$node_name[1:10], pos = 1, cex = 0.5)) 
 ```
 
 In addition, the CM technique allows scholars to distinguish between

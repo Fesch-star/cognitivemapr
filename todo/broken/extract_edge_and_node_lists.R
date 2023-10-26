@@ -34,7 +34,9 @@
 #' of the edge and value (pos/neg/zero) and metadata
 #'
 #'
-#' @examples x
+#' @examples
+#'
+#' @export
 select_speaker_period_make_lists <- function(name, start, eind){
   edgelist <- dplyr::select(dplyr::filter(sumvalue_weighted_edges_leaders, speaker == name &
                            map_date > start & map_date <= eind),

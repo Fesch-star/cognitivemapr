@@ -40,9 +40,15 @@ The researcher can use any typology of policy instruments that is relevant to
 their research.
 }
 \examples{
-"instruments <- base::unique(rutte_p2_node_measures$instruments) #deriving all instrument-types
-from the node_measures dataframe
-instruments <- base::na.omit(instruments) #omitting the empty cells (NULL category)
-from the analysis"
+# deriving all instrument-typesfrom the node_measures dataframe
+\dontrun{
+library(readr)
+load("./data/rutte_p2_edgelist.rda")
+load("./data/rutte_p2_nodelist.rda")
+instruments <- base::unique(rutte_p2_node_measures$instruments)
+# omitting the empty cells (NULL category) from the analysis
+instruments <- base::na.omit(instruments)
+rutte_p2_node_measures <- cognitivemapr::calculate_degrees(rutte_p2_edgelist, rutte_p2_nodelist)
 rutte_p2_node_measures <- instrument_support(rutte_p2_node_measures, instruments)
+}
 }
