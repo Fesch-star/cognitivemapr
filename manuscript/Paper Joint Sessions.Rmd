@@ -172,38 +172,25 @@ research.
 ## Preparing the data
 
 The cognitivemapr package requires you to compile your CM data into two
-csv.files with several mandatory variables included. In addition the
-exact order of the mandatory columns should be maintained (except for
-the value.x and value.y in the edgelist).
+csv.files with several mandatory variables included.You will need to compile two files: An edgelist that contains the directed relations in you cognitive map (and some supplemental information) as well as a nodelist that contains information about the concepts in your cognitive map (with some supplemental information). You can compile these in excel and then save as a csv file. Sheets 2 and 3 of this excel book contain a format that you may use to compile your edge and nodelists. Sheets 4 and 5 contain an example of a Edge and Nodelist
 
-1.  An edgelist with all the relations in a cognitive map, with the
-    following mandatory columns:
+An edgelist lists all the relations in a cognitive map  below each other in separate rows. It has the following mandatory columns, the column with an * also need to be kept in the indicated column and order. Alle column titels need to be listed without quotation marks and are case-sensitive.
+    1)* The first column needs to be called "from" (all column titels are without the quotations marks and are case-sensitive) and contain the id of cause-concept (often a unique number)
+    2)* The second column needs to be called "to" and containing the id of the "effect"-concept (ofen an unique number)
+    3)* The third column needs to be called "weight" and contain the number of times the (exact same) relation appears in your data
+    4)* The fourth column needs to be called "edge_value" and contain a number (1, 0, -1) indicating whether the relation is positive (a strenghtens b: 1), negative (a weakens b:-1) or non-existent (a does not affect b: 0)
+    5) One of the other columns needs to be called "value.x" and contains a number indicating the intrinsic value of the cause concept (in the "from" column. Or in other words, if the concept is in itself a positive or negative thing. -1 = negative (war); 1 = positive (peace). It is advisable to use the 'negative' category sparsely. 
+    6) One of the other columns needs to be called "value.y" and contains a number indicating the intrinsic value of the effect concept (in the "to" column. Or in other words, if the concept is in itself a positive or negative thing. -1 = negative (war); 1 = positive (peace). It is advisable to use the 'negative' category sparsely. 
+   7-…) Further columns may contain other information about the relation or meta-data on the source (speaker/document) from which the edgelist was derived, like the name or date of the source-material. This information will not be used for the analysis but will be retained in the output of the analysis, so it may be used later on for identification and filtering of the results of the analysis.
 
-    -   "from": containing the id of "cause"-concept
+A nodelist includes all unique concepts a cogntive map below each other in separate rows, it has the following mandatory columns:
+   1)* The first column needs to be called "id" (all column titels are without the quotation marks and are case-sensitive) containing the id of the concept. This needs to be consistent with the id's used in the edgelist
+   2)* The second column needs to be called "node_name" and lists the name of the concept.
+   3) One of the ther columns needs to be called "value" and contains a number indicating the intrinsic value of the  concept. This column needs to correspond to the value.x and value.y column in the edgelist. -1 = negative (war); 1 = positive (peace). It is advisable to use the 'negative' category sparsely. 
+   4) One of the other columns needs to be called "paradigms" and contains information about whether the concept is associated to a (policy) paradigm or not. You can only include two different paradigms and these need to be seen as rivalling (like Keynesianism and Ordoliberalism). The column needs to contain the name of the paradigm the concept is associated with or be left empty when the concept is not linked to either paradigm. The column can be left completely empty if you are not interested in analysing your cognitive map in terms of paradigms. 
+  5) One of the other columns needs to be called "instruments" and contains information about whether the concept refers to a type of (policy) instrument or not. You can only include as many different instruments as you like. These categories need to be seen exclusive (you can only list one instrument per concept). The column needs to contain the name of the instrument the concept is associated with or be left empty when the concept does not refer to an instrument. The column can be left completely empty if you are not interested in analysing your cognitive map in terms of (policy) instruments. The column can also be used for categorising your concept in other ways (as theme's for instance), but you cannot change the column name into something other than "instruments". 
+  6-…) Further columns may contain other information or meta-data about the concept. This information will not be used for the analysis but will be retained in the output of the analysis, so it may be used later on for identification and filtering of the results of the analysis.
 
-    -   "to": containing the id of the "effect"-concept
-
-    -   "edge_value": whether the relation is positive, negative or
-        non-existent
-
-    -   "weight": the number of times the (exact same) relation appears
-        in your data
-
-    -   "value.x": the value of the cause ('from') concept: -1 =
-        negative, 0 = ambiguous, 1 = positive (see nodelist)
-
-    -   "value.y": the value of the effect ('to') concept: -1 =
-        negative, 0 = ambiguous, 1 = positive (see nodelist)
-
-2.  A nodelist with all the unique concepts a cogntive map, with the
-    following mandatory columns:
-
-    -   "id": the id of the concept
-
-    -   "value": whether the concept is inherently negative (-1),
-        positive (1) or ambiguous (0)[^2]
-        
-***ADD INSTRUCTION ON HOW TO PREP DATA FOR PARADIGM & CATEGORY CALCS***
 
 [^2]: This should be consistent to the values (value.x / value.y) in the
     edgelist. We would advise to be reticent in assigning concepts a
