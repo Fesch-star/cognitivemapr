@@ -66,8 +66,6 @@ evaluation_step <- function(edgelist, nodelist) {
   node_val_run1 <- merge(xt1, yt1, all = TRUE)
 
   # Bind node_val_run1 to nodelist
-
-
   nodelist <- dplyr::select(nodelist, -which(names(nodelist) %in% c('val_run1'))) %>%
     dplyr::left_join(node_val_run1, by = "id")
 
