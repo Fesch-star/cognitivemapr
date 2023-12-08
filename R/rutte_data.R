@@ -1,4 +1,4 @@
-#' rutte_p2_edgelist
+#' Example edgelist: rutte_p2_edgelist
 #'
 #' A dataset ...
 #'
@@ -18,7 +18,7 @@
 #' @references \url{data_blah.com}
 "rutte_p2_edgelist"
 
-#' rutte_p2_nodelist
+#' Example nodelist: rutte_p2_nodelist
 #'
 #' A dataset ...
 #'

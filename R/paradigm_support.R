@@ -1,4 +1,5 @@
-#' Paradigm Support
+#'  Calculates the level of support for two rivaling paradigms
+#'
 #' Calculates to what extent the cognitive map signals support for a set of two
 #' commensurable policy paradigms. More specifically, it determines the saliency of all
 #' concepts classified as aligning with one of the two paradigms which are valued

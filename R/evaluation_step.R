@@ -1,4 +1,5 @@
-#' Conduct an evaluation step
+#' Performs one iteration through the CM to determine the (normative) value
+#' of the nodes in the CM
 #'
 #' This function runs a single evaluation step
 #'

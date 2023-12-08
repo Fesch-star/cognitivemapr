@@ -1,4 +1,4 @@
-#' Instrument Support
+#' Calculates the level of support for different policy instruments
 #'
 #' Calculates to what extent the cognitive map signals support for certain types
 #' of policy instruments. More specifically, it determines the saliency of all

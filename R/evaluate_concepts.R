@@ -1,4 +1,5 @@
-#' Conduct the evaluation analysis
+#' Determines the (normative) value of the nodes in a map, by running through
+#' the entire map a number of times
 #'
 #' This function is used to determine to what extent the nodes (concepts) in a CM
 #' are considered to be positive (are supported), negative (not supported) or
