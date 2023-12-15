@@ -4,7 +4,7 @@
 #' edited nodelist so that the value of the concepts in both lists align with
 #' each other.You only need to run this function if you changed the default
 #' value of any of the concepts in the nodelist after running the
-#' 'prepare_lists_from_edgelist' function manually. You do not need to run it
+#' prepare_lists_from_edgelist' function manually. You do not need to run it
 #' when you only added information in the paradigm or instruments columns of
 #' the nodelist
 #'
@@ -12,7 +12,7 @@
 #' function and the nodelist return by the same function with changes in the value
 #' column. Categorizing concepts as paradigmatic or as instruments is optional,
 #' but required to run the functions paradigm_support and instrument_support
-#' functions - see more instruction in the documentation of these functions).
+#' functions - see more instructions in the documentation of these functions).
 #'
 #' Run the following lines of code to save the edge and nodelist
 #' speaker_edgelist <- align_edge_nodelist (edgelist, nodelist)[[1]]
@@ -49,8 +49,6 @@ edgelist <- dplyr::left_join(edgelist, nodes, by = c("from" = "id"))
 #then for the 'to' concepts
 edgelist <- dplyr::left_join(edgelist, nodes, by = c("to" = "id"))
 
-#beware it renames the first(from) id to id.x and the second(to)id to id.y
-
-#return the edgelist and a nodelist to which paradigms and instruments can be addedrut
+#return the edgelist and a nodelist
 base::return (list(edgelist, nodelist))
 }

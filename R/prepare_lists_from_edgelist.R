@@ -12,7 +12,7 @@
 #' "edge_value": sign/value of the relation: can be 1 (positive relation),
 #'            -1 (negative relation), or 0 (non-existent relation). If left empty
 #'            the function will set it by default to 1 (positive)
-#'  in addition any number of columns with meta-data may be added.
+#' in addition any number of columns with meta-data may be added.
 #'
 #' The function replaces the concepts in the edgelist with id's that
 #' correspond to those in the nodelist and reorders the columns, to match the
@@ -20,18 +20,18 @@
 #' weight and edge-value in the edgelist have values, and sets these values to
 #' the default of 1 (weight = 1, edge_value = positive)if they were left empty.
 #' It assumes all the concepts in the edgelist are in principle normatively positive
-#' or neutral by adding two columns: value_x (value of concepts in 'from' column)
-#' and value_y (value of concepts in 'to'  column) and sets all values to 1 (=positive)
+#' or neutral by adding two columns: value.x (value of concepts in 'from' column)
+#' and value.y (value of concepts in 'to'  column) and sets all values to 1 (=positive)
 #'
-#' It derives a nodelist from the edgelist with all unique concepts an an id to
+#' It derives a nodelist from the edgelist with all unique concepts and an id to
 #' link the edge and nodelists. It adds three  columns to the nodelist,
 #' a column 'value' which is set to 1 (concept has a positive or neutral value)
-#' as default. This value may be changed manually in excel if needed after
+#' by default. This value may be changed manually in excel if needed after
 #' running this function. It also adds two empty columns named "paradigms" and
 #' "instruments", for the researcher to fill in manually via excel after running
 #' the function. Categorizing concepts as paradigmatic or as instruments is optional,
 #' but required to run the functions paradigm_support and instrument_support
-#' functions - see more instruction in the documentation of these functions).
+#' functions - see more instructions in the documentation of these functions).
 #'
 #' Run the following lines of code to save the edge and nodelist
 #' speaker_edgelist <- prepare_lists_from_edgelist (edgelist)[[1]]
@@ -104,7 +104,7 @@ edgelist <- dplyr::rename(edgelist, to = id.y)
 #is in the edgelist, use the dplyr select function with the option 'everything()'
 edgelist <- dplyr::select(edgelist, from, to, weight, everything())
 
-#safety check: if weight and edge-value are left open, replace with a value 1,
+#safety check: if weight and edge-value are left empty, replace with a value 1,
 #so the map reads that all edges are included once with a positive sign
 edgelist <- dplyr::mutate(edgelist, weight = ifelse(is.na(weight), 1, weight))
 edgelist <- dplyr::mutate(edgelist, edge_value = ifelse(is.na(edge_value), 1, edge_value))
