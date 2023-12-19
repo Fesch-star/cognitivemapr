@@ -2,7 +2,8 @@
 % Please edit documentation in R/evaluate_concepts.R
 \name{evaluate_concepts}
 \alias{evaluate_concepts}
-\title{Conduct the evaluation analysis}
+\title{Determines the (normative) value of the nodes in a map, by running through
+the entire map a number of times}
 \usage{
 evaluate_concepts(edgelist, nodelist)
 }

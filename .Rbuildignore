@@ -1,3 +1,5 @@
+^renv$
+^renv\.lock$
 ^cognitivemapr\.Rproj$
 ^\.Rproj\.user$
 ^_pkgdown\.yml$

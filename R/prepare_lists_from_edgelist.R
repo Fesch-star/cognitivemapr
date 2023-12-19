@@ -33,28 +33,23 @@
 #' but required to run the functions paradigm_support and instrument_support
 #' functions - see more instructions in the documentation of these functions).
 #'
-#' Run the following lines of code to save the edge and nodelist
-#' speaker_edgelist <- prepare_lists_from_edgelist (edgelist)[[1]]
-#' speaker_nodelist <- prepare_lists_from_edgelist (edgelist)[[2]]
-#'
-#' You may store the nodelist as csv and fill in the value, paradigms and
-#' instruments column via excel by running the following code:
-#' write.csv(df,file='/.../new_file.csv',fileEncoding = "UTF-8")
-#'
-#'
 #' @param edgelist an edgelist
-#' @param nodelist a nodelist, if you want to run the paradigm_support and
-#' instrument_support functions, you must fill in the designated columns in the
-#' nodelist after running this function
 #' @return Returns a list with the resulting edgelist and nodelist
 #' @export
 #' @examples
+#' \dontrun{
 #' # INCOMPLETE
 #' # Load the data
 #' data("edgelist")
 #'
-#' Run the prepare_lists_from_edgelist function
+#' # Run the following lines of code to save the edge and nodelist
+#' speaker_edgelist <- prepare_lists_from_edgelist(edgelist)[[1]]
+#' speaker_nodelist <- prepare_lists_from_edgelist(edgelist)[[2]]
 #'
+#' # You may store the nodelist as csv and fill in the value, paradigms and
+#' # instruments column via excel by running the following code:
+#' write.csv(df,file='/.../new_file.csv',fileEncoding = "UTF-8")
+#'}
 prepare_lists_from_edgelist <- function(edgelist){
 
 #list only unique concepts in from-column

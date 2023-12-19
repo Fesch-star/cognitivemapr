@@ -2,23 +2,7 @@
 % Please edit documentation in R/paradigm_support.R
 \name{paradigm_support}
 \alias{paradigm_support}
-\title{Paradigm Support
-Calculates to what extent the cognitive map signals support for a set of two
-commensurable policy paradigms. More specifically, it determines the saliency of all
-concepts classified as aligning with one of the two paradigms which are valued
-positively as determined via the evaluate_concepts function. As incommensurability
-suggests that there is a zero-sum relation between the paradigms, negative valued
-concepts belonging to paradigm a will be interpreted as support for paradigm b.
-As such the function lists the saliency value of negatively valued concepts as
-a positive score for the rival paradigm.
-To be able to run this function, the functions calculate-degrees AND
-evaluate_concepts should have been run first. Also the nodelist (node_measures)
-list this function takes needs to contain a column with the name 'paradigms'
-in which for each concept it is noted with which of the two paradigms it aligns.
-If a concept does speak to either of the rival paradigms, the cell should be
-left empty.
-The researcher can use any rivaling set of paradigms that is relevant to
-their research as long as no more or less than two are included.}
+\title{Calculates the level of support for two rivaling paradigms}
 \usage{
 paradigm_support(node_measures, paradigm_a, paradigm_b)
 }
@@ -47,7 +31,6 @@ the paradigms as column titles and the saliency scores for those concepts
 that indicate a positive stance towards the paradigm.
 }
 \description{
-Paradigm Support
 Calculates to what extent the cognitive map signals support for a set of two
 commensurable policy paradigms. More specifically, it determines the saliency of all
 concepts classified as aligning with one of the two paradigms which are valued

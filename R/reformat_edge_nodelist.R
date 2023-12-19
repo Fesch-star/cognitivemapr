@@ -51,23 +51,23 @@
 #' to run all functions in the cognitivemapr package in the proper order, and
 #' retains all meta-data that was included in the original lists.
 #'
-#' Run the following lines of code to save the edge and nodelist
-#' speaker_edgelist <- reformat_edge_nodelist (edgelist, nodelist)[[1]]
-#' speaker_nodelist <- reformat_edge_nodelist (edgelist, nodelist)[[2]]
-#'
-#'
 #' @param edgelist an edgelist
 #' @param nodelist a nodelist,
 #' @return Returns a list with the resulting edgelist and nodelist
 #' @export
 #' @examples
+#' \dontrun{
 #' # INCOMPLETE
 #' # Load the data
 #' data("edgelist")
 #'
+#' # Run the following lines of code to save the edge and nodelist
+#' speaker_edgelist <- reformat_edge_nodelist(edgelist, nodelist)[[1]]
+#' speaker_nodelist <- reformat_edge_nodelist(edgelist, nodelist)[[2]]
+#'
+#' }
 #'
 reformat_edge_nodelist <- function(edgelist, nodelist){
-
 
 #safety check: if column 'value'in the nodelist is left empty, replace with value 1,
 #1, so all concepts are seen as neutral or positive
