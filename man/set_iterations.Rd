@@ -2,11 +2,7 @@
 % Please edit documentation in R/set_iterations.R
 \name{set_iterations}
 \alias{set_iterations}
-\title{Set Iterations
-Helper function. Calculates the maximum number of iterations that the
-evaluate_concepts function needs to run in the for-loop to arrive at the
-correct evaluation of the concepts.
-The maximum number of iterations is equal to the diameter of the CM.}
+\title{Sets the number of iterations for the evaluate concepts function}
 \usage{
 set_iterations(edgelist, nodelist)
 }
@@ -19,11 +15,10 @@ set_iterations(edgelist, nodelist)
 Returns a vector with the maximum number of iterations
 }
 \description{
-Set Iterations
-Helper function. Calculates the maximum number of iterations that the
-evaluate_concepts function needs to run in the for-loop to arrive at the
-correct evaluation of the concepts.
-The maximum number of iterations is equal to the diameter of the CM.
+Helper function. Calculates the number of iterations that the
+evaluate_concepts function needs to run in the for-loop to determine the
+(normative) value of the concepts.
+The number of iterations is set to the diameter of the CM.
 }
 \examples{
 set_iterations(rutte_p2_edgelist, rutte_p2_nodelist)

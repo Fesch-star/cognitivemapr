@@ -14,26 +14,23 @@
 #' but required to run the functions paradigm_support and instrument_support
 #' functions - see more instructions in the documentation of these functions).
 #'
-#' Run the following lines of code to save the edge and nodelist
-#' speaker_edgelist <- align_edge_nodelist (edgelist, nodelist)[[1]]
-#' speaker_nodelist <- align_edge_nodelist (edgelist, nodelist)[[2]]
-#'
-#' You may store the nodelist as csv and fill in the value, paradigms and
-#' instruments column via excel by running the following code:
-#' write.csv(df,file='/.../new_file.csv',fileEncoding = "UTF-8")
-#'
-#'
 #' @param edgelist an edgelist
-#' @param edgelist an nodelist
+#' @param nodelist an nodelist
 #' @return Returns an edgelist and nodelist
 #' @export
 #' @examples
-#' # INCOMPLETE
+#' \dontrun{
 #' # Load the data
 #' data("edgelist", "nodelist")
 #'
-#' Run the align_edge_nodelist function
+#' speaker_edgelist <- align_edge_nodelist(edgelist, nodelist)[[1]]
+#' speaker_nodelist <- align_edge_nodelist(edgelist, nodelist)[[2]]
 #'
+#' # You may store the nodelist as csv and fill in the value, paradigms and
+#' # instruments column via excel by running the following code:
+#' write.csv(df,file='/.../new_file.csv',fileEncoding = "UTF-8")
+#'
+#'}
 align_edge_nodelist <- function(edgelist, nodelist){
 
 #drop the old value.x and value.y columns

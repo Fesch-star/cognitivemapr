@@ -2,7 +2,7 @@
 % Please edit documentation in R/instrument_support.R
 \name{instrument_support}
 \alias{instrument_support}
-\title{Instrument Support}
+\title{Calculates the level of support for different policy instruments}
 \usage{
 instrument_support(node_measures, instruments)
 }
