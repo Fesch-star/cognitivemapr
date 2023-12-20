@@ -1,8 +1,9 @@
-#' Set Iterations
-#' Helper function. Calculates the maximum number of iterations that the
-#' evaluate_concepts function needs to run in the for-loop to arrive at the
-#' correct evaluation of the concepts.
-#' The maximum number of iterations is equal to the diameter of the CM.
+#' Sets the number of iterations for the evaluate concepts function
+#'
+#' Helper function. Calculates the number of iterations that the
+#' evaluate_concepts function needs to run in the for-loop to determine the
+#' (normative) value of the concepts.
+#' The number of iterations is set to the diameter of the CM.
 #' @param edgelist an edgelist
 #' @param nodelist a nodelist
 #' @return Returns a vector with the maximum number of iterations

@@ -3,7 +3,7 @@
 \docType{data}
 \name{rutte_p2_edgelist}
 \alias{rutte_p2_edgelist}
-\title{rutte_p2_edgelist}
+\title{Example edgelist: rutte_p2_edgelist}
 \format{
 A dataframe with 106 rows and 10 variables
 \describe{

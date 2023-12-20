@@ -11,13 +11,12 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat
 VignetteBuilder: knitr
 Depends: 
     R (>= 2.10)
 LazyData: true
 Imports: 
     dplyr,
-    ggraph,
-    igraph,
-    tidygraph
+    igraph

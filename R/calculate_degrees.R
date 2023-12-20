@@ -1,4 +1,4 @@
-#' calculate_degrees
+#' Calculates various standard CM measures (types of degrees)
 #'
 #' The calculate_degrees function is used to analyse cognitive map (CM) data.
 #' It calculates various standard CM measures.

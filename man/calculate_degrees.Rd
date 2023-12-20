@@ -2,7 +2,7 @@
 % Please edit documentation in R/calculate_degrees.R
 \name{calculate_degrees}
 \alias{calculate_degrees}
-\title{calculate_degrees}
+\title{Calculates various standard CM measures (types of degrees)}
 \usage{
 calculate_degrees(edgelist, nodelist)
 }

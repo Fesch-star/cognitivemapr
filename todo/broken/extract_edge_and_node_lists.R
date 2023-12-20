@@ -13,7 +13,7 @@
 #'
 #' This is a helper function to select a particular set of edges & nodes from
 #' the bigger edgelist [sumvalue_weighted_edges_leaders] and
-#' nodelist [nodes_leaders_idecointval] that are part of the H2020 Transcrisis
+#' nodelist [nodes_leaders_idecointvalinstr] that are part of the H2020 Transcrisis
 #' research project of F.A.W.J. van Esch (Van Esch etal 2018). This database
 #' will be made public at a later date.
 #' You select the edges by (speaker)name and period and the function
