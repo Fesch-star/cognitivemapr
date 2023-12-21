@@ -25,7 +25,10 @@ Authors@R:
         comment = c(ORCID = "YOUR-ORCID-ID")
     )
     )
-Description: What the package does (one paragraph).
+Description: Cognitive Mapping is a method specifically designed to study belief
+systems as espoused by individuals or organisations and has several
+advantages over other methods. The goal of `cognitivemapr` is to reduce
+the initial investment currently needed to start using the method.
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
