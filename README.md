@@ -5,10 +5,11 @@
 
 <!-- badges: start -->
 
-![GitHub
-contributors](https://img.shields.io/github/contributors/Fesch-star/cognitivemapr)
+![builds](https://github.com/Fesch-star/cognitivemapr/actions/workflows/check-standard.yaml/badge.svg)
 ![GitHub last
 commit](https://img.shields.io/github/last-commit/Fesch-star/cognitivemapr)
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
 <!-- badges: end -->
 
 # cognitivemapr <img src="man/figures/logo.png" align="right" height="128" />
@@ -20,65 +21,38 @@ the initial investment currently needed to start using the method.
 
 ## Installation
 
-You can install the development version of cognitivemapr from
-[GitHub](https://github.com/) with:
+You can install the development version of cognitivemapr with the `devtools` package:
 
 ``` r
-# install.packages("devtools")
+install.packages("devtools")
 devtools::install_github("Fesch-star/cognitivemapr")
 ```
 
 ## Dependencies
 
-To run the code you need to install the following packages:
+Installing the package (above) will install the package dependencies:
 
-- tidyverse - built under R version 4.0.5 v ggplot2 3.3.3 v purrr 0.3.4
-  v tibble 3.1.1 v dplyr 1.0.5 v tidyr 1.1.3 v stringr 1.4.0 v readr
-  1.4.0 v forcats 0.5.1
+- `knitr`
+- `readr`
+- `rmarkdown`
+- `testthat`
+- `dplyr`
+- `igraph`
+- `tibble`
 
-- igraph - built under R version 4.0.5
+## Tutorial
 
-- tidygraph
-
-- ggraph
-
-## Example
-
-This is a basic example which shows you how to solve a common problem:
-
-``` r
-library(cognitivemapr)
-## basic example code
-```
-
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
-
-``` r
-summary(cars)
-```
-
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this. You could also
-use GitHub Actions to re-render `README.Rmd` every time you push. An
-example workflow can be found here:
-<https://github.com/r-lib/actions/tree/v1/examples>.
-
-You can also embed plots, for example:
-
-<img src="man/figures/README-pressure-1.png" width="100%" />
-
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
+A tutorial can be found in the `vignettes` folder or on the [website](https://fesch-star.github.io/cognitivemapr/articles/cognitivemapr-Tutorial.html).
 
 ## Contributing
+
+We are very happy with any suggestions or contributions to improve the package. Read the [contributing guidelines](/CONTRIBUTING.md) for instructions.
 
 ## Authors & Acknowledgements
 
 ## License
 
-This project is licensed under the terms of the [GPL-3.0
-License](/LICENSE.md)
+This project is licensed under the terms of the [GPL-3.0 License](/LICENSE.md)
 
 ## Citation
 
