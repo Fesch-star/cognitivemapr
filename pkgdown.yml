@@ -1,0 +1,10 @@
+pandoc: 2.19.2
+pkgdown: 2.0.7
+pkgdown_sha: ~
+articles:
+  cognitivemapr-Tutorial: cognitivemapr-Tutorial.html
+last_built: 2023-12-21T09:34Z
+urls:
+  reference: https://fesch-start.github.io/cognitivemapr/reference
+  article: https://fesch-start.github.io/cognitivemapr/articles
+
