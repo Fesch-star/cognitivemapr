@@ -3,14 +3,7 @@
 on:
   push:
     branches: [main]
-    paths:
-      - 'R/**'
-
-  pull_request:
-    branches: [main]
-    paths:
-      - 'R/**'
-  workflow_dispatch:
+    paths: ["R/**"]
 
 name: Document
 
