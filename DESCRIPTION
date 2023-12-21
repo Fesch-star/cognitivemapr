@@ -1,9 +1,14 @@
 Package: cognitivemapr
-Title: What the Package Does (One Line, Title Case)
+Title: cognitivemapr: Functions for Cognitive Mapping Analysis
 Version: 0.0.0.9000
 Authors@R: 
-    person("Femke", "van Esch", , "first.last@example.com", role = c("aut", "cre"),
+    person("Femke", "van Esch", , "f.a.w.j.vanesch@uu.nl", role = c("aut", "cre"),
            comment = c(ORCID = "YOUR-ORCID-ID"))
+    person("Jelle", "Treep", , "h.j.treep@uu.nl", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0003-3196-7954"))
+    person("Neha", "Moopen", , "n.moopen@uu.nn", role = c("ctb"),
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+
 Description: What the package does (one paragraph).
 License: GPL (>= 3)
 Encoding: UTF-8
