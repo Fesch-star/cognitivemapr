@@ -74,7 +74,9 @@ Let's look at the results per iteration, which are summed up in the val_run1 col
 Showing the values that the function should spit out after each iteration:
 
 ```{r}
-test_node3[, c(14,15,16)]
+test_node1$val_run1
+test_node2$val_run1
+test_node3$val_run1
 ```
 Showing that in fact, the edgelist behaves as it should:
 
@@ -88,35 +90,32 @@ Now let's test the last version of the evaluate concepts function in which Jelle
 I get an error when trying to run this automatically "Error: 'evaluate_concepts' is not an exported object from 'namespace:cognitivemapr'"
 So lets do this in the oldfashion way, and call the function manually and then run it
 
+first let's see if set iterations works okay, does not seem to do so. The set iterations function is also not found, so I load it manually.
 ```{r}
-test_edge_all <- evaluate_concepts(test_edges, test_node_calc)[[1]]
-test_node_all <- evaluate_concepts(test_edges, test_node_calc)[[2]]
+iterations <- set_iterations(test_edges, test_node_calc)
+iterations
+
+result_list <- vector("list", iterations)
+rm(result_list)
+```
+This does return 3, which is correct, and the first step in evaluate concepts also creates an empty list of 3, which is correct
+
+```{r}
+
+result_list <-  evaluate_concepts(test_edges, test_node_calc)
+
 ```
 
-The loop runs and does all 3 iterations. But now let's look at the results. Let's take the val_run column of the nodelists that is returned after each iteration. Which shows that although 3 edgelists and 3 nodeslist have been returned, and in the Environment i has run up to 3 (so 3 iterations should have been made), the calculations seem to get stuck at the first iteration (the calculations are done in that first step, because val_run1 does not exist as a column in the original node_calc_data frame.
+The loop runs and does all 3 iterations. But now let's look at the results. Let's take the val_run column of the nodelists that is returned after each iteration. Which shows that although 3 edgelists and 3 nodeslist have been returned so 3 iterations have been made), the calculations now work!! I display the results of each run, with the results of the manual runs in between. The pair of rows show the same result. Yeah!
 
 ```{r}
 result_list[[1]][[2]][,"val_run1"]
-result_list[[2]][[2]][,"val_run1.y"]
-result_list[[3]][[2]][,"val_run1.x"]
+test_node1$val_run1
+
+result_list[[2]][[2]][,"val_run1"]
+test_node2$val_run1
+
+result_list[[3]][[2]][,"val_run1"]
+test_node3$val_run1
 
 ```
-I have stared at this for hours now, and I cannot figure out what goes wrong :( Help!
-
-
-Below is superfluous stuff that I want to keep
-
-```{r}
-# Access the results for each run
-for (i in max_runs) {
-  edgelist_result <- result_list[[i]][[1]]
-  nodelist_result <- result_list[[i]][[2]]
-
-# Perform any additional actions or analysis on edgelist_result and nodelist_result here
-
-  edgelist_result <- result_list[[i]][[i]]
-}
-```
-
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
