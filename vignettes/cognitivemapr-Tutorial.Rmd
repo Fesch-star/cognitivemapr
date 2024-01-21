@@ -3,8 +3,11 @@ title: "cognitivemapr Tutorial"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{cognitivemapr Tutorial}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 ```{r, include = FALSE}
@@ -53,15 +56,15 @@ head(rutte_p2_nodelist)
 
 ## Step 4: Calculating basic CM measures
 
-Running the `calc_degrees_goW` function using the data of Rutte shows that the function
-returns a dataframe in which all the original data on the nodes in the
-CM is combined with the basic measures. Running the summary shows some
-basic characterising and statistical information regarding the variables
-in the dataframe. This provides some first indication regarding the
-number of concepts in the CM, the difference in strenght of the concepts
-in the map (minimum, maximum, mean w_degree) as well as the overall
-complexity of the map (mean degree) that may help compare the CM to
-others.
+Running the `calc_degrees_goW` function using the data of Rutte shows
+that the function returns a dataframe in which all the original data on
+the nodes in the CM is combined with the basic measures. Running the
+summary shows some basic characterising and statistical information
+regarding the variables in the dataframe. This provides some first
+indication regarding the number of concepts in the CM, the difference in
+strenght of the concepts in the map (minimum, maximum, mean w_degree) as
+well as the overall complexity of the map (mean degree) that may help
+compare the CM to others.
 
 ```{r}
 #running the function with the data of Mark Rutte, and storing it as a df
@@ -72,15 +75,17 @@ summary(rutte_p2_node_measures)
 ```
 
 ## Step 5: Sum of saliency
-In addition, the sum of saliency divided by two tells us of how many relations the CM
-consists, which is the most commonly used measure of the relative size
-of a CM in comparison to others.
+
+In addition, the sum of saliency divided by two tells us of how many
+relations the CM consists, which is the most commonly used measure of
+the relative size of a CM in comparison to others.
 
 ```{r}
 sum(rutte_p2_node_measures$w_degree)/2
 ```
 
 ## Step 6: Top 10 concepts
+
 At the concept level, the output of the calc_degrees_goW function also
 provides us with the first feel of the content of the CM. The table
 below, for instance shows the top 10 concepts in terms of saliency and
@@ -97,57 +102,121 @@ rutte_p2_node_measures[1:10,c("id", "node_name", "w_degree", "paradigms")]
 
 ```
 
-## Step 7: Set maximum number of iterations
+## Step 7: Calculating the evaluation of concepts from the CM
 
-By analysing the relationships between the concepts
-in a path, scholars can establish if, and how concepts are peceived to
-be related: positively, negatively or ambiguously (Hart 1977). For
-instance, assuming that 'solving the crisis' is considered a positive
-goal, we can derive from **figure 1** that 'fiscal discipline' is valued
-positively as it contributes to 'solving the crisis', whereas 'wider
-yield spreads' is negatively evaluated.
+By analysing the relationships between the concepts in a path, scholars
+can establish if, and how concepts are perceived within the context of
+the CM: positively, negatively or ambiguously (Hart 1977). For instance,
+assuming that 'solving the crisis' is considered a positive goal, we can
+derive from **figure 1** that 'fiscal discipline' is valued positively
+as it contributes positively to 'solving the crisis', whereas 'wider
+yield spreads' is negatively evaluated as it contributes negatively to
+'fiscal discipline. The relation between 'pro-European attitude' and the
+positive goal solving the crisis is seen as non-existent (represented by
+a 0 sign for the relation. As this concept does not have any other
+outgoing paths, 'pro_European attitude' is evaluated as ambiguous within
+the context of this map .
 
-Running the function with the original edge and nodelist of the example dataset
-reveals the maximum number of runs for this CM to be 5.
+![](images/figure%201%20rutte%20map%20exerpt.png)
+
+Running the function 'evaluation_step' establishes the evaluation of the
+concepts in the map by analysing their outgoing relations in this
+fashion, taking into account the sign and weight of the relation as well
+as the value of the concepts these outgoing relations feed into. To run
+this function the nodelist that was returned from the function
+calculate_degrees needs to be used (in the full CM for Rutte the concepts in figure 1 have more relations than displayed in the figure and thus their
+evaluation as show in the next step may be different).
+
+```{r}
+rutte_p2_evaluation_run1 <- evaluation_step(rutte_p2_edgelist, rutte_p2_node_measures)
+rutte_p2_evaluation_run1[[2]][39, c("id", "node_name","val_run1")]
+```
+
+However, by running this function once, the analysis does not take into
+account that the evaluation of the concepts may change as a result of
+this calculation. Running the evaluation_step function on the concepts
+in figure 1, once would result in a negative evaluation for the concept
+'high credit rating' for at the start of the analysis, the concept
+'wider yield spread' was still assumed to be positive. However, running
+the function once, has changed the evaluation of the concept to
+negative. As at the end of this step 'high credit rating' has a negative
+effect on this (now) negative concept, we would actually assume Rutte to
+feel 'high credit rating' to be a good thing (as it limits its negative
+effect on fiscal discipline and therefore on solving the crisis).
+
+## Step 8: Set maximum number of iterations
+
+This means that to arrive at the true evaluation of all concepts in the
+map, we need to run the evaluation_step function multiple times. As we
+want to be sure that we have reiterated across all concepts in all paths
+in the CM, we need to iterate the function the same number of times as
+the number of steps in the longest path in the CM. The set_iterations
+calculates this number of iterations. Running this function for the example data for Rutte shows that the number of iterations for this map should be 5.
 
 ```{r}
 max_runs <- cognitivemapr::set_iterations(rutte_p2_edgelist, rutte_p2_nodelist)
+max_runs
 ```
 
-## Step 8: 
-Conduct a single run through the cognitive map
-while adjusting and storing the changing evaluation values of the
-concepts using the `evaluation_step` function. The function takes
-an edgelist and nodelist as its input (if you want to add the evaluation
-to the dataframe with the basic CM measures as calculated above, **be
-sure to use the node_measures list**).
+## Step 9: Calculating the evaluation of concepts holistically
+
+This logic is incorporated in the 'evaluate_concepts' function, which runs the evaluation_step function the appropriate number of times while adjusting and
+storing the changing evaluation values of the concepts. The function takes an edgelist and the node_measures list that was returned from the calculate_degrees function above.
 
 ```{r}
-result_list <- cognitivemapr::evaluate_concepts(rutte_p2_edgelist, rutte_p2_nodelist)
+# test the function on Rutte (ff 3x)
+
+
+test_edge1 <- cognitivemapr::evaluation_step(rutte_p2_edgelist, rutte_p2_node_measures)[[1]]
+test_node1 <- cognitivemapr::evaluation_step(rutte_p2_edgelist, rutte_p2_node_measures)[[2]]
+
+test_edge2 <- cognitivemapr::evaluation_step(rutte_p2_edgelist, rutte_p2_node_measures)[[1]]
+test_node2 <- cognitivemapr::evaluation_step(rutte_p2_edgelist, rutte_p2_node_measures)[[2]]
+
+test_edge3 <- cognitivemapr::evaluation_step(rutte_p2_edgelist, rutte_p2_node_measures)[[1]]
+test_node3 <- cognitivemapr::evaluation_step(rutte_p2_edgelist, rutte_p2_node_measures)[[2]]
 ```
 
+```{r}
+result_list <- evaluate_concepts(rutte_p2_edgelist, rutte_p2_node_measures)
+```
 
 ```{r}
 #test of the current solution to running multiple iterations of the evaluate_concepts function:
-#result_list[[1]][[2]][,"val_run1"]
-#result_list[[2]][[2]][,"val_run1.y"]
-#result_list[[3]][[2]][,"val_run1.x"]
-#result_list[[4]][[2]][,"val_run1.x.x"]
-#result_list[[5]][[2]][,"val_run1.y.y"]
+run1 <- result_list[[1]][[2]][,c("node_name","val_run1")]
+run2 <- result_list[[2]][[2]][,c("node_name","val_run1")]
+run3 <- result_list[[3]][[2]][,c("node_name","val_run1")]
+run4 <- result_list[[4]][[2]][,c("node_name","val_run1")]
+run5 <- result_list[[5]][[2]][,c("node_name","val_run1")]
+
+run1$val_run1
+test_node1$val_run1
+run2$val_run1
+test_node2$val_run1
+run3$val_run1
+test_node3$val_run1
+
+results1 = ifelse (run1$val_run1 == test_node1$val_run1, 'same', "different")
+results2 = ifelse (run2$val_run1 == test_node2$val_run1, 'same', "different")
+results3 = ifelse (run3$val_run1 == test_node3$val_run1, 'same', "different")
 
 
-result_list[[1]][[2]]
-result_list[[2]][[2]]
-result_list[[3]][[2]]
-result_list[[4]][[2]]
-result_list[[5]][[2]]
+results1 = ifelse (run1$val_run1 == run2$val_run1, 'same', "different")
+results2 = ifelse (run2$val_run1 == run3$val_run1, 'same', "different")
+results3 = ifelse (run3$val_run1 == run4$val_run1, 'same', "different")
+results4 = ifelse (run4$val_run1 == run5$val_run1, 'same', "different")
 
-#TEST RESULT FEMKE: Unfortunately, after the first iteration, the numbers keep on being the same. Like in the case of the Mystery document, the calculations are not iterated on the outcome of the previous run. Back to the drawing board :(
+
+results1
+results2
+results3
+
+
+  
+
 ```
 
 #### Continue here
-
-
 
 ```{r}
 # to save the changes in edgelist and nodeslist under a relevant name, use the following code when running this function
@@ -267,6 +336,3 @@ of policy making processes (Bonham, Shapiro, and Trumble 1979; Hart
 # Making CM available for scholars without technical skills: the CM shiny app
 
 (HEB ik nog niet omgezet in R code)
-
-
-
