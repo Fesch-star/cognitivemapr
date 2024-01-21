@@ -218,122 +218,177 @@ crisis, while also debating the value of being pragmatic.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>   405 Market trust                       5 <span style="color: #BB0000;">NA</span></span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="step-7-set-maximum-number-of-iterations">Step 7: Set maximum number of iterations<a class="anchor" aria-label="anchor" href="#step-7-set-maximum-number-of-iterations"></a>
+<h3 id="step-7-calculating-the-evaluation-of-concepts-from-the-cm">Step 7: Calculating the evaluation of concepts from the CM<a class="anchor" aria-label="anchor" href="#step-7-calculating-the-evaluation-of-concepts-from-the-cm"></a>
 </h3>
 <p>By analysing the relationships between the concepts in a path,
-scholars can establish if, and how concepts are peceived to be related:
-positively, negatively or ambiguously (Hart 1977). For instance,
-assuming that ‘solving the crisis’ is considered a positive goal, we can
-derive from <strong>figure 1</strong> that ‘fiscal discipline’ is valued
-positively as it contributes to ‘solving the crisis’, whereas ‘wider
-yield spreads’ is negatively evaluated.</p>
-<p>Running the function with the original edge and nodelist of the
-example dataset reveals the maximum number of runs for this CM to be
-5.</p>
+scholars can establish if, and how concepts are perceived within the
+context of the CM: positively, negatively or ambiguously (Hart 1977).
+For instance, assuming that ‘solving the crisis’ is considered a
+positive goal, we can derive from <strong>figure 1</strong> that ‘fiscal
+discipline’ is valued positively as it contributes positively to
+‘solving the crisis’, whereas ‘wider yield spreads’ is negatively
+evaluated as it contributes negatively to ‘fiscal discipline. The
+relation between ’pro-European attitude’ and the positive goal solving
+the crisis is seen as non-existent (represented by a 0 sign for the
+relation. As this concept does not have any other outgoing paths,
+‘pro_European attitude’ is evaluated as ambiguous within the context of
+this map .</p>
+<p><img src="images/figure%201%20rutte%20map%20exerpt.png"></p>
+<p>Running the function ‘evaluation_step’ establishes the evaluation of
+the concepts in the map by analysing their outgoing relations in this
+fashion, taking into account the sign and weight of the relation as well
+as the value of the concepts these outgoing relations feed into. To run
+this function the nodelist that was returned from the function
+calculate_degrees needs to be used (in the full CM for Rutte the
+concepts in figure 1 have more relations than displayed in the figure
+and thus their evaluation as show in the next step may be
+different).</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">max_runs</span> <span class="op">&lt;-</span> <span class="fu">cognitivemapr</span><span class="fu">::</span><span class="fu"><a href="../reference/set_iterations.html">set_iterations</a></span><span class="op">(</span><span class="va">rutte_p2_edgelist</span>, <span class="va">rutte_p2_nodelist</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">rutte_p2_evaluation_run1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/evaluation_step.html">evaluation_step</a></span><span class="op">(</span><span class="va">rutte_p2_edgelist</span>, <span class="va">rutte_p2_node_measures</span><span class="op">)</span></span>
+<span><span class="va">rutte_p2_evaluation_run1</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">39</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"node_name"</span>,<span class="st">"val_run1"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 3</span></span></span>
+<span><span class="co">#&gt;      id node_name          val_run1</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>   339 High credit rating       -<span style="color: #BB0000;">1</span></span></span></code></pre></div>
+<p>However, by running this function once, the analysis does not take
+into account that the evaluation of the concepts may change as a result
+of this calculation. Running the evaluation_step function on the
+concepts in figure 1, once would result in a negative evaluation for the
+concept ‘high credit rating’ for at the start of the analysis, the
+concept ‘wider yield spread’ was still assumed to be positive. However,
+running the function once, has changed the evaluation of the concept to
+negative. As at the end of this step ‘high credit rating’ has a negative
+effect on this (now) negative concept, we would actually assume Rutte to
+feel ‘high credit rating’ to be a good thing (as it limits its negative
+effect on fiscal discipline and therefore on solving the crisis).</p>
 </div>
 <div class="section level3">
-<h3 id="step-8">Step 8:<a class="anchor" aria-label="anchor" href="#step-8"></a>
+<h3 id="step-8-set-maximum-number-of-iterations">Step 8: Set maximum number of iterations<a class="anchor" aria-label="anchor" href="#step-8-set-maximum-number-of-iterations"></a>
 </h3>
-<p>Conduct a single run through the cognitive map while adjusting and
-storing the changing evaluation values of the concepts using the
-<code>evaluation_step</code> function. The function takes an edgelist
-and nodelist as its input (if you want to add the evaluation to the
-dataframe with the basic CM measures as calculated above, <strong>be
-sure to use the node_measures list</strong>).</p>
+<p>This means that to arrive at the true evaluation of all concepts in
+the map, we need to run the evaluation_step function multiple times. As
+we want to be sure that we have reiterated across all concepts in all
+paths in the CM, we need to iterate the function the same number of
+times as the number of steps in the longest path in the CM. The
+set_iterations calculates this number of iterations. Running this
+function for the example data for Rutte shows that the number of
+iterations for this map should be 5.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">result_list</span> <span class="op">&lt;-</span> <span class="fu">cognitivemapr</span><span class="fu">::</span><span class="fu"><a href="../reference/evaluate_concepts.html">evaluate_concepts</a></span><span class="op">(</span><span class="va">rutte_p2_edgelist</span>, <span class="va">rutte_p2_nodelist</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">max_runs</span> <span class="op">&lt;-</span> <span class="fu">cognitivemapr</span><span class="fu">::</span><span class="fu"><a href="../reference/set_iterations.html">set_iterations</a></span><span class="op">(</span><span class="va">rutte_p2_edgelist</span>, <span class="va">rutte_p2_nodelist</span><span class="op">)</span></span>
+<span><span class="va">max_runs</span></span>
+<span><span class="co">#&gt; [1] 5</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="step-9-calculating-the-evaluation-of-concepts-holistically">Step 9: Calculating the evaluation of concepts holistically<a class="anchor" aria-label="anchor" href="#step-9-calculating-the-evaluation-of-concepts-holistically"></a>
+</h3>
+<p>This logic is incorporated in the ‘evaluate_concepts’ function, which
+runs the evaluation_step function the appropriate number of times while
+adjusting and storing the changing evaluation values of the concepts.
+The function takes an edgelist and the node_measures list that was
+returned from the calculate_degrees function above.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># test the function on Rutte (ff 3x)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">test_edge1</span> <span class="op">&lt;-</span> <span class="fu">cognitivemapr</span><span class="fu">::</span><span class="fu"><a href="../reference/evaluation_step.html">evaluation_step</a></span><span class="op">(</span><span class="va">rutte_p2_edgelist</span>, <span class="va">rutte_p2_node_measures</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="va">test_node1</span> <span class="op">&lt;-</span> <span class="fu">cognitivemapr</span><span class="fu">::</span><span class="fu"><a href="../reference/evaluation_step.html">evaluation_step</a></span><span class="op">(</span><span class="va">rutte_p2_edgelist</span>, <span class="va">rutte_p2_node_measures</span><span class="op">)</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">test_edge2</span> <span class="op">&lt;-</span> <span class="fu">cognitivemapr</span><span class="fu">::</span><span class="fu"><a href="../reference/evaluation_step.html">evaluation_step</a></span><span class="op">(</span><span class="va">rutte_p2_edgelist</span>, <span class="va">rutte_p2_node_measures</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="va">test_node2</span> <span class="op">&lt;-</span> <span class="fu">cognitivemapr</span><span class="fu">::</span><span class="fu"><a href="../reference/evaluation_step.html">evaluation_step</a></span><span class="op">(</span><span class="va">rutte_p2_edgelist</span>, <span class="va">rutte_p2_node_measures</span><span class="op">)</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">test_edge3</span> <span class="op">&lt;-</span> <span class="fu">cognitivemapr</span><span class="fu">::</span><span class="fu"><a href="../reference/evaluation_step.html">evaluation_step</a></span><span class="op">(</span><span class="va">rutte_p2_edgelist</span>, <span class="va">rutte_p2_node_measures</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="va">test_node3</span> <span class="op">&lt;-</span> <span class="fu">cognitivemapr</span><span class="fu">::</span><span class="fu"><a href="../reference/evaluation_step.html">evaluation_step</a></span><span class="op">(</span><span class="va">rutte_p2_edgelist</span>, <span class="va">rutte_p2_node_measures</span><span class="op">)</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">result_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/evaluate_concepts.html">evaluate_concepts</a></span><span class="op">(</span><span class="va">rutte_p2_edgelist</span>, <span class="va">rutte_p2_node_measures</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#test of the current solution to running multiple iterations of the evaluate_concepts function:</span></span>
-<span><span class="co">#result_list[[1]][[2]][,"val_run1"]</span></span>
-<span><span class="co">#result_list[[2]][[2]][,"val_run1.y"]</span></span>
-<span><span class="co">#result_list[[3]][[2]][,"val_run1.x"]</span></span>
-<span><span class="co">#result_list[[4]][[2]][,"val_run1.x.x"]</span></span>
-<span><span class="co">#result_list[[5]][[2]][,"val_run1.y.y"]</span></span>
+<span><span class="va">run1</span> <span class="op">&lt;-</span> <span class="va">result_list</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"node_name"</span>,<span class="st">"val_run1"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">run2</span> <span class="op">&lt;-</span> <span class="va">result_list</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"node_name"</span>,<span class="st">"val_run1"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">run3</span> <span class="op">&lt;-</span> <span class="va">result_list</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"node_name"</span>,<span class="st">"val_run1"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">run4</span> <span class="op">&lt;-</span> <span class="va">result_list</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"node_name"</span>,<span class="st">"val_run1"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">run5</span> <span class="op">&lt;-</span> <span class="va">result_list</span><span class="op">[[</span><span class="fl">5</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"node_name"</span>,<span class="st">"val_run1"</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">run1</span><span class="op">$</span><span class="va">val_run1</span></span>
+<span><span class="co">#&gt;  [1]  1  1  1  1  1  1  1  0 -1  1  1  1  1  1 -1  1  1  1  1  1  1  1  1  1  1</span></span>
+<span><span class="co">#&gt; [26]  1  1  1  1  0  1  0  1  1  1  1  1  0 -1  1  0  1  1  1  1  1  1  1  1 -1</span></span>
+<span><span class="co">#&gt; [51]  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  0  1</span></span>
+<span><span class="co">#&gt; [76]  1  1  1  1  1  1  1  1  1</span></span>
+<span><span class="va">test_node1</span><span class="op">$</span><span class="va">val_run1</span></span>
+<span><span class="co">#&gt;  [1]  1  1  1  1  1  1  1  0 -1  1  1  1  1  1 -1  1  1  1  1  1  1  1  1  1  1</span></span>
+<span><span class="co">#&gt; [26]  1  1  1  1  0  1  0  1  1  1  1  1  0 -1  1  0  1  1  1  1  1  1  1  1 -1</span></span>
+<span><span class="co">#&gt; [51]  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  0  1</span></span>
+<span><span class="co">#&gt; [76]  1  1  1  1  1  1  1  1  1</span></span>
+<span><span class="va">run2</span><span class="op">$</span><span class="va">val_run1</span></span>
+<span><span class="co">#&gt;  [1]  1  1  1  1  1  1  1  0 -1  1  1  1  1  1 -1  1  1  1  1  1  1  1  1  1  1</span></span>
+<span><span class="co">#&gt; [26]  1  1  1  1  0  1  0  1  1  1  1  1  0  0  1  0  1  1  0  1  1  1  1  1 -1</span></span>
+<span><span class="co">#&gt; [51]  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  0  1  1  0  1</span></span>
+<span><span class="co">#&gt; [76]  1  1  1  1  1  1  1  1  1</span></span>
+<span><span class="va">test_node2</span><span class="op">$</span><span class="va">val_run1</span></span>
+<span><span class="co">#&gt;  [1]  1  1  1  1  1  1  1  0 -1  1  1  1  1  1 -1  1  1  1  1  1  1  1  1  1  1</span></span>
+<span><span class="co">#&gt; [26]  1  1  1  1  0  1  0  1  1  1  1  1  0 -1  1  0  1  1  1  1  1  1  1  1 -1</span></span>
+<span><span class="co">#&gt; [51]  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  0  1</span></span>
+<span><span class="co">#&gt; [76]  1  1  1  1  1  1  1  1  1</span></span>
+<span><span class="va">run3</span><span class="op">$</span><span class="va">val_run1</span></span>
+<span><span class="co">#&gt;  [1]  1  1  1  1  1  1  1  0 -1  1  1  1  1  1 -1  1  1  1  1  1  1  1  1  1  1</span></span>
+<span><span class="co">#&gt; [26]  1  1  1  1  0  1  0  1  1  1  1  1  0  0  1  0  1  1  0  1  1  1  1  1 -1</span></span>
+<span><span class="co">#&gt; [51]  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  0  1  1  0  1</span></span>
+<span><span class="co">#&gt; [76]  1  1  1  1  1  1  1  1  1</span></span>
+<span><span class="va">test_node3</span><span class="op">$</span><span class="va">val_run1</span></span>
+<span><span class="co">#&gt;  [1]  1  1  1  1  1  1  1  0 -1  1  1  1  1  1 -1  1  1  1  1  1  1  1  1  1  1</span></span>
+<span><span class="co">#&gt; [26]  1  1  1  1  0  1  0  1  1  1  1  1  0 -1  1  0  1  1  1  1  1  1  1  1 -1</span></span>
+<span><span class="co">#&gt; [51]  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  0  1</span></span>
+<span><span class="co">#&gt; [76]  1  1  1  1  1  1  1  1  1</span></span>
+<span></span>
+<span><span class="va">results1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span> <span class="op">(</span><span class="va">run1</span><span class="op">$</span><span class="va">val_run1</span> <span class="op">==</span> <span class="va">test_node1</span><span class="op">$</span><span class="va">val_run1</span>, <span class="st">'same'</span>, <span class="st">"different"</span><span class="op">)</span></span>
+<span><span class="va">results2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span> <span class="op">(</span><span class="va">run2</span><span class="op">$</span><span class="va">val_run1</span> <span class="op">==</span> <span class="va">test_node2</span><span class="op">$</span><span class="va">val_run1</span>, <span class="st">'same'</span>, <span class="st">"different"</span><span class="op">)</span></span>
+<span><span class="va">results3</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span> <span class="op">(</span><span class="va">run3</span><span class="op">$</span><span class="va">val_run1</span> <span class="op">==</span> <span class="va">test_node3</span><span class="op">$</span><span class="va">val_run1</span>, <span class="st">'same'</span>, <span class="st">"different"</span><span class="op">)</span></span>
 <span></span>
 <span></span>
-<span><span class="va">result_list</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 84 × 7</span></span></span>
-<span><span class="co">#&gt;       id node_name                    paradigms int   value instruments val_run1</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>     8 60% debt ratio               Ordolibe… <span style="color: #BB0000;">NA</span>        1 <span style="color: #BB0000;">NA</span>                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>    21 Attractiveness to business   <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>        1 <span style="color: #BB0000;">NA</span>                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>    25 Automatic sanctions          Ordolibe… Supr…     1 Stronger E…        1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>    39 benefit of all               <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>        1 <span style="color: #BB0000;">NA</span>                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>    40 Benefit of debt-states       <span style="color: #BB0000;">NA</span>        Inte…     1 <span style="color: #BB0000;">NA</span>                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>    48 Benefit of the people        <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>        1 <span style="color: #BB0000;">NA</span>                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>    76 Common market                <span style="color: #BB0000;">NA</span>        Supr…     1 <span style="color: #BB0000;">NA</span>                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>    80 Compliance                   <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>        1 <span style="color: #BB0000;">NA</span>                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>    81 Compliance with SGP norms    Ordolibe… Inte…     1 <span style="color: #BB0000;">NA</span>                 0</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>    85 conditional financial assis… Ordolibe… Inte…     1 Fiscal Sup…        1</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 74 more rows</span></span></span>
-<span><span class="va">result_list</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 84 × 7</span></span></span>
-<span><span class="co">#&gt;       id node_name                    paradigms int   value instruments val_run1</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>     8 60% debt ratio               Ordolibe… <span style="color: #BB0000;">NA</span>        1 <span style="color: #BB0000;">NA</span>                 0</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>    21 Attractiveness to business   <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>        1 <span style="color: #BB0000;">NA</span>                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>    25 Automatic sanctions          Ordolibe… Supr…     1 Stronger E…        1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>    39 benefit of all               <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>        1 <span style="color: #BB0000;">NA</span>                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>    40 Benefit of debt-states       <span style="color: #BB0000;">NA</span>        Inte…     1 <span style="color: #BB0000;">NA</span>                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>    48 Benefit of the people        <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>        1 <span style="color: #BB0000;">NA</span>                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>    76 Common market                <span style="color: #BB0000;">NA</span>        Supr…     1 <span style="color: #BB0000;">NA</span>                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>    80 Compliance                   <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>        1 <span style="color: #BB0000;">NA</span>                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>    81 Compliance with SGP norms    Ordolibe… Inte…     1 <span style="color: #BB0000;">NA</span>                 0</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>    85 conditional financial assis… Ordolibe… Inte…     1 Fiscal Sup…        1</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 74 more rows</span></span></span>
-<span><span class="va">result_list</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 84 × 7</span></span></span>
-<span><span class="co">#&gt;       id node_name                    paradigms int   value instruments val_run1</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>     8 60% debt ratio               Ordolibe… <span style="color: #BB0000;">NA</span>        1 <span style="color: #BB0000;">NA</span>                 0</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>    21 Attractiveness to business   <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>        1 <span style="color: #BB0000;">NA</span>                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>    25 Automatic sanctions          Ordolibe… Supr…     1 Stronger E…        1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>    39 benefit of all               <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>        1 <span style="color: #BB0000;">NA</span>                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>    40 Benefit of debt-states       <span style="color: #BB0000;">NA</span>        Inte…     1 <span style="color: #BB0000;">NA</span>                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>    48 Benefit of the people        <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>        1 <span style="color: #BB0000;">NA</span>                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>    76 Common market                <span style="color: #BB0000;">NA</span>        Supr…     1 <span style="color: #BB0000;">NA</span>                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>    80 Compliance                   <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>        1 <span style="color: #BB0000;">NA</span>                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>    81 Compliance with SGP norms    Ordolibe… Inte…     1 <span style="color: #BB0000;">NA</span>                 0</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>    85 conditional financial assis… Ordolibe… Inte…     1 Fiscal Sup…        1</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 74 more rows</span></span></span>
-<span><span class="va">result_list</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 84 × 7</span></span></span>
-<span><span class="co">#&gt;       id node_name                    paradigms int   value instruments val_run1</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>     8 60% debt ratio               Ordolibe… <span style="color: #BB0000;">NA</span>        1 <span style="color: #BB0000;">NA</span>                 0</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>    21 Attractiveness to business   <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>        1 <span style="color: #BB0000;">NA</span>                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>    25 Automatic sanctions          Ordolibe… Supr…     1 Stronger E…        1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>    39 benefit of all               <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>        1 <span style="color: #BB0000;">NA</span>                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>    40 Benefit of debt-states       <span style="color: #BB0000;">NA</span>        Inte…     1 <span style="color: #BB0000;">NA</span>                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>    48 Benefit of the people        <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>        1 <span style="color: #BB0000;">NA</span>                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>    76 Common market                <span style="color: #BB0000;">NA</span>        Supr…     1 <span style="color: #BB0000;">NA</span>                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>    80 Compliance                   <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>        1 <span style="color: #BB0000;">NA</span>                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>    81 Compliance with SGP norms    Ordolibe… Inte…     1 <span style="color: #BB0000;">NA</span>                 0</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>    85 conditional financial assis… Ordolibe… Inte…     1 Fiscal Sup…        1</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 74 more rows</span></span></span>
-<span><span class="va">result_list</span><span class="op">[[</span><span class="fl">5</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 84 × 7</span></span></span>
-<span><span class="co">#&gt;       id node_name                    paradigms int   value instruments val_run1</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>     8 60% debt ratio               Ordolibe… <span style="color: #BB0000;">NA</span>        1 <span style="color: #BB0000;">NA</span>                 0</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>    21 Attractiveness to business   <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>        1 <span style="color: #BB0000;">NA</span>                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>    25 Automatic sanctions          Ordolibe… Supr…     1 Stronger E…        1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>    39 benefit of all               <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>        1 <span style="color: #BB0000;">NA</span>                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>    40 Benefit of debt-states       <span style="color: #BB0000;">NA</span>        Inte…     1 <span style="color: #BB0000;">NA</span>                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>    48 Benefit of the people        <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>        1 <span style="color: #BB0000;">NA</span>                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>    76 Common market                <span style="color: #BB0000;">NA</span>        Supr…     1 <span style="color: #BB0000;">NA</span>                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>    80 Compliance                   <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>        1 <span style="color: #BB0000;">NA</span>                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>    81 Compliance with SGP norms    Ordolibe… Inte…     1 <span style="color: #BB0000;">NA</span>                 0</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>    85 conditional financial assis… Ordolibe… Inte…     1 Fiscal Sup…        1</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 74 more rows</span></span></span>
+<span><span class="va">results1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span> <span class="op">(</span><span class="va">run1</span><span class="op">$</span><span class="va">val_run1</span> <span class="op">==</span> <span class="va">run2</span><span class="op">$</span><span class="va">val_run1</span>, <span class="st">'same'</span>, <span class="st">"different"</span><span class="op">)</span></span>
+<span><span class="va">results2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span> <span class="op">(</span><span class="va">run2</span><span class="op">$</span><span class="va">val_run1</span> <span class="op">==</span> <span class="va">run3</span><span class="op">$</span><span class="va">val_run1</span>, <span class="st">'same'</span>, <span class="st">"different"</span><span class="op">)</span></span>
+<span><span class="va">results3</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span> <span class="op">(</span><span class="va">run3</span><span class="op">$</span><span class="va">val_run1</span> <span class="op">==</span> <span class="va">run4</span><span class="op">$</span><span class="va">val_run1</span>, <span class="st">'same'</span>, <span class="st">"different"</span><span class="op">)</span></span>
+<span><span class="va">results4</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span> <span class="op">(</span><span class="va">run4</span><span class="op">$</span><span class="va">val_run1</span> <span class="op">==</span> <span class="va">run5</span><span class="op">$</span><span class="va">val_run1</span>, <span class="st">'same'</span>, <span class="st">"different"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">#TEST RESULT FEMKE: Unfortunately, after the first iteration, the numbers keep on being the same. Like in the case of the Mystery document, the calculations are not iterated on the outcome of the previous run. Back to the drawing board :(</span></span></code></pre></div>
+<span></span>
+<span><span class="va">results1</span></span>
+<span><span class="co">#&gt;  [1] "same"      "same"      "same"      "same"      "same"      "same"     </span></span>
+<span><span class="co">#&gt;  [7] "same"      "same"      "same"      "same"      "same"      "same"     </span></span>
+<span><span class="co">#&gt; [13] "same"      "same"      "same"      "same"      "same"      "same"     </span></span>
+<span><span class="co">#&gt; [19] "same"      "same"      "same"      "same"      "same"      "same"     </span></span>
+<span><span class="co">#&gt; [25] "same"      "same"      "same"      "same"      "same"      "same"     </span></span>
+<span><span class="co">#&gt; [31] "same"      "same"      "same"      "same"      "same"      "same"     </span></span>
+<span><span class="co">#&gt; [37] "same"      "same"      "different" "same"      "same"      "same"     </span></span>
+<span><span class="co">#&gt; [43] "same"      "different" "same"      "same"      "same"      "same"     </span></span>
+<span><span class="co">#&gt; [49] "same"      "same"      "same"      "same"      "same"      "same"     </span></span>
+<span><span class="co">#&gt; [55] "same"      "same"      "same"      "same"      "same"      "same"     </span></span>
+<span><span class="co">#&gt; [61] "same"      "same"      "same"      "same"      "same"      "same"     </span></span>
+<span><span class="co">#&gt; [67] "same"      "same"      "same"      "same"      "different" "same"     </span></span>
+<span><span class="co">#&gt; [73] "same"      "same"      "same"      "same"      "same"      "same"     </span></span>
+<span><span class="co">#&gt; [79] "same"      "same"      "same"      "same"      "same"      "same"</span></span>
+<span><span class="va">results2</span></span>
+<span><span class="co">#&gt;  [1] "same" "same" "same" "same" "same" "same" "same" "same" "same" "same"</span></span>
+<span><span class="co">#&gt; [11] "same" "same" "same" "same" "same" "same" "same" "same" "same" "same"</span></span>
+<span><span class="co">#&gt; [21] "same" "same" "same" "same" "same" "same" "same" "same" "same" "same"</span></span>
+<span><span class="co">#&gt; [31] "same" "same" "same" "same" "same" "same" "same" "same" "same" "same"</span></span>
+<span><span class="co">#&gt; [41] "same" "same" "same" "same" "same" "same" "same" "same" "same" "same"</span></span>
+<span><span class="co">#&gt; [51] "same" "same" "same" "same" "same" "same" "same" "same" "same" "same"</span></span>
+<span><span class="co">#&gt; [61] "same" "same" "same" "same" "same" "same" "same" "same" "same" "same"</span></span>
+<span><span class="co">#&gt; [71] "same" "same" "same" "same" "same" "same" "same" "same" "same" "same"</span></span>
+<span><span class="co">#&gt; [81] "same" "same" "same" "same"</span></span>
+<span><span class="va">results3</span></span>
+<span><span class="co">#&gt;  [1] "same" "same" "same" "same" "same" "same" "same" "same" "same" "same"</span></span>
+<span><span class="co">#&gt; [11] "same" "same" "same" "same" "same" "same" "same" "same" "same" "same"</span></span>
+<span><span class="co">#&gt; [21] "same" "same" "same" "same" "same" "same" "same" "same" "same" "same"</span></span>
+<span><span class="co">#&gt; [31] "same" "same" "same" "same" "same" "same" "same" "same" "same" "same"</span></span>
+<span><span class="co">#&gt; [41] "same" "same" "same" "same" "same" "same" "same" "same" "same" "same"</span></span>
+<span><span class="co">#&gt; [51] "same" "same" "same" "same" "same" "same" "same" "same" "same" "same"</span></span>
+<span><span class="co">#&gt; [61] "same" "same" "same" "same" "same" "same" "same" "same" "same" "same"</span></span>
+<span><span class="co">#&gt; [71] "same" "same" "same" "same" "same" "same" "same" "same" "same" "same"</span></span>
+<span><span class="co">#&gt; [81] "same" "same" "same" "same"</span></span></code></pre></div>
 <div class="section level5">
 <h5 id="continue-here">Continue here<a class="anchor" aria-label="anchor" href="#continue-here"></a>
 </h5>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># to save the changes in edgelist and nodeslist under a relevant name, use the following code when running this function</span></span>
 <span></span>
 <span><span class="co"># name_period_edgelist &lt;- evaluation_loop(edgelist, nodelist) [[1]] </span></span>
@@ -375,10 +430,10 @@ Dutch leaders have a relatively high leaning towards the Ordoliberalism
 (Van Esch et al. 2018). In a similar way, we could also analyse changes
 in ideas over time, thereby fulfilling the third requirement discussed
 above (Bonham, Shapiro, and Trumble 1979; Van Esch 2014).</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># plot the 10 most salient concepts</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">rutte_p2_node_measures</span><span class="op">$</span><span class="va">w_degree</span> <span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>, <span class="va">rutte_p2_node_measures</span><span class="op">$</span><span class="va">gow</span> <span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>, xlab <span class="op">=</span> <span class="st">"Saliency"</span>, ylab <span class="op">=</span> <span class="st">"Weighted Goal Orientation"</span>, pch <span class="op">=</span><span class="fl">19</span>, frame <span class="op">=</span> <span class="cn">FALSE</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/text.html" class="external-link">text</a></span><span class="op">(</span><span class="va">rutte_p2_node_measures</span><span class="op">$</span><span class="va">w_degree</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>, <span class="va">rutte_p2_node_measures</span><span class="op">$</span><span class="va">gow</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>, <span class="va">rutte_p2_node_measures</span><span class="op">$</span><span class="va">node_name</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>, pos <span class="op">=</span> <span class="fl">1</span>, cex <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div>
-<p><img src="cognitivemapr-Tutorial_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
+<p><img src="cognitivemapr-Tutorial_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
 <p>In addition, the CM technique allows scholars to distinguish between
 different types of beliefs, For instance, it is also possible to
 establish instrumental beliefs with CM. One way of doing this is to
