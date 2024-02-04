@@ -32,7 +32,7 @@ Description: Cognitive Mapping is a method specifically designed to study belief
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 Suggests: 
     knitr,
     readr,
@@ -46,4 +46,3 @@ VignetteBuilder: knitr
 Depends: 
     R (>= 3.5)
 LazyData: true
-

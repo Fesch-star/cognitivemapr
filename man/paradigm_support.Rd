@@ -55,12 +55,12 @@ load("./data/rutte_p2_edgelist.rda")
 load("./data/rutte_p2_nodelist.rda")
 rutte_p2_node_measures <- cognitivemapr::calculate_degrees(rutte_p2_edgelist, rutte_p2_nodelist)
 
-#first derive all instrument-types from the node_measures dataframe from the analysis
+#first derive all paradigm-types from the node_measures dataframe from the analysis
 
 paradigms <- base::unique(rutte_p2_node_measures$paradigms)
-paradigms <- base::na.omit(paradigms) #omitting the empty cells (NULL category)
-paradigm_a <-  #<TODO>
-paradigm_b <-  #<TODO>
+paradigms <- stats::na.omit(paradigms) #omitting the empty cells (NULL category)
+paradigm_a <- paradigms[1]
+paradigm_b <- paradigms[2]
 
 rutte_p2_node_measures <- paradigm_support(rutte_p2_node_measures, paradigm_a, paradigm_b)
 }
