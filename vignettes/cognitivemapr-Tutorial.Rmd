@@ -115,7 +115,9 @@ yield spreads' is negatively evaluated as it contributes negatively to
 positive goal solving the crisis is seen as non-existent (represented by
 a 0 sign for the relation. As this concept does not have any other
 outgoing paths, 'pro_European attitude' is evaluated as ambiguous within
-the context of this map .
+the context of this map.
+
+## change the figure to one showing the true evaluations & rewrite the text
 
 ![](images/figure%201%20rutte%20map%20exerpt.png)
 
@@ -128,8 +130,13 @@ calculate_degrees needs to be used (in the full CM for Rutte the concepts in fig
 evaluation as show in the next step may be different).
 
 ```{r}
-rutte_p2_evaluation_run1 <- evaluation_step(rutte_p2_edgelist, rutte_p2_node_measures)
-rutte_p2_evaluation_run1[[2]][39, c("id", "node_name","val_run1")]
+
+test_edge1 <- cognitivemapr::evaluation_step(rutte_p2_edgelist, rutte_p2_node_measures)[[1]]
+test_node1 <- cognitivemapr::evaluation_step(rutte_p2_edgelist, rutte_p2_node_measures)[[2]]
+
+test_node1[c("38"), c("id", "node_name","val_run1")] # make more elegant: how can I
+# refer to a value in a row to show the row?
+
 ```
 
 However, by running this function once, the analysis does not take into
@@ -137,21 +144,24 @@ account that the evaluation of the concepts may change as a result of
 this calculation. Running the evaluation_step function on the concepts
 in figure 1, once would result in a negative evaluation for the concept
 'high credit rating' for at the start of the analysis, the concept
-'wider yield spread' was still assumed to be positive. However, running
-the function once, has changed the evaluation of the concept to
-negative. As at the end of this step 'high credit rating' has a negative
-effect on this (now) negative concept, we would actually assume Rutte to
-feel 'high credit rating' to be a good thing (as it limits its negative
-effect on fiscal discipline and therefore on solving the crisis).
+'wider yield spread' was still assumed to be positive. However, by evaluating its outgoing relations to it's immediate neighbouring concepts, has changed the evaluation of the concept 'wider yield spread' to ambiguous (0). This would in turrn change the evaluation of the concept 'high credit rating' to ambiguous. Running the
+evaluate_step function again on the output of the first run, shows that indeed 'high credit rating' now has a value of 0.
+
+```{r}
+test_edge2 <- cognitivemapr::evaluation_step(test_edge1, test_node1)[[1]]
+test_node2 <- cognitivemapr::evaluation_step(test_edge1, test_node1)[[2]]
+
+test_node2[c("38"), c("id", "node_name","val_run1")] # make more elegant: how can I
+# refer to a value in a row to show the row?
+```
 
 ## Step 8: Set maximum number of iterations
 
-This means that to arrive at the true evaluation of all concepts in the
-map, we need to run the evaluation_step function multiple times. As we
+This means that to arrive at the accurate evaluation of the concepts in the
+map, we need to run the evaluation_step function multiple times. We
 want to be sure that we have reiterated across all concepts in all paths
-in the CM, we need to iterate the function the same number of times as
-the number of steps in the longest path in the CM. The set_iterations
-calculates this number of iterations. Running this function for the example data for Rutte shows that the number of iterations for this map should be 5.
+in the CM, which means that at maximum we need to iterate through the function the same number of times as the number of steps of the longest path in the CM (this presumes the CM is not cyclical, if a CM is cyclical the evaluate_concepts function
+randomly stops the cycle at this point, fixing the evaluation of the concepts to the result of the last iteration. We will work on a more elegant solution in the next version of the Package). The set_iterations calculates this number of iterations. Running this function for the example data for Rutte shows that the number of iterations for this map should be 5.
 
 ```{r}
 max_runs <- cognitivemapr::set_iterations(rutte_p2_edgelist, rutte_p2_nodelist)
@@ -160,120 +170,127 @@ max_runs
 
 ## Step 9: Calculating the evaluation of concepts holistically
 
-This logic is incorporated in the 'evaluate_concepts' function, which runs the evaluation_step function the appropriate number of times while adjusting and
+The set_iterations function is incorporated in the 'evaluate_concepts' function, which runs the evaluation_step function the appropriate number of times while adjusting and
 storing the changing evaluation values of the concepts. The function takes an edgelist and the node_measures list that was returned from the calculate_degrees function above.
 
 ```{r}
-# test the function on Rutte (ff 3x)
+result_list <- cognitivemapr::evaluate_concepts(rutte_p2_edgelist, rutte_p2_node_measures)
 
-
-test_edge1 <- cognitivemapr::evaluation_step(rutte_p2_edgelist, rutte_p2_node_measures)[[1]]
-test_node1 <- cognitivemapr::evaluation_step(rutte_p2_edgelist, rutte_p2_node_measures)[[2]]
-
-test_edge2 <- cognitivemapr::evaluation_step(rutte_p2_edgelist, rutte_p2_node_measures)[[1]]
-test_node2 <- cognitivemapr::evaluation_step(rutte_p2_edgelist, rutte_p2_node_measures)[[2]]
-
-test_edge3 <- cognitivemapr::evaluation_step(rutte_p2_edgelist, rutte_p2_node_measures)[[1]]
-test_node3 <- cognitivemapr::evaluation_step(rutte_p2_edgelist, rutte_p2_node_measures)[[2]]
 ```
+
+[improve the functions along the lines of what Thomas did for the software: 1) make it stop when a balance is reached 2) for cyclical graphs, let the researcher chose what values to take for the unstable concepts]
+
+If we print the top of the node_measures list resulting from the final iteration, 
+it shows how conducting a CM analysis in this fashion reveals both the nature, strength and complexity of Rutte's ideas as well as whether they are valued positively or negatively.
 
 ```{r}
-result_list <- evaluate_concepts(rutte_p2_edgelist, rutte_p2_node_measures)
+head(result_list[[5]][[2]])
 ```
+## Graphical analysis
 
-```{r}
-#test of the current solution to running multiple iterations of the evaluate_concepts function:
-run1 <- result_list[[1]][[2]][,c("node_name","val_run1")]
-run2 <- result_list[[2]][[2]][,c("node_name","val_run1")]
-run3 <- result_list[[3]][[2]][,c("node_name","val_run1")]
-run4 <- result_list[[4]][[2]][,c("node_name","val_run1")]
-run5 <- result_list[[5]][[2]][,c("node_name","val_run1")]
+However in order to reap the full benefits of CM analysis and grasp the relations between Rutte's ideas as well as reveal the argumentation and narrative underlying
+his belief system, the CM is best analysed visually in its graphical form.
 
-run1$val_run1
-test_node1$val_run1
-run2$val_run1
-test_node2$val_run1
-run3$val_run1
-test_node3$val_run1
+[Include a simple visualisation function - with values but not dimensions]
 
-results1 = ifelse (run1$val_run1 == test_node1$val_run1, 'same', "different")
-results2 = ifelse (run2$val_run1 == test_node2$val_run1, 'same', "different")
-results3 = ifelse (run3$val_run1 == test_node3$val_run1, 'same', "different")
-
-
-results1 = ifelse (run1$val_run1 == run2$val_run1, 'same', "different")
-results2 = ifelse (run2$val_run1 == run3$val_run1, 'same', "different")
-results3 = ifelse (run3$val_run1 == run4$val_run1, 'same', "different")
-results4 = ifelse (run4$val_run1 == run5$val_run1, 'same', "different")
-
-
-results1
-results2
-results3
-
-
-  
-
-```
-
-#### Continue here
-
-```{r}
-# to save the changes in edgelist and nodeslist under a relevant name, use the following code when running this function
-
-# name_period_edgelist <- evaluation_loop(edgelist, nodelist) [[1]] 
-
-# name_period_edge_calc <- evaluation_loop(edgelist, nodelist) [[2]]
-
-# name_period_nodecalc <- evaluation_loop(edgelist, nodelist)) [[3]] 
-```
-
-A CM analysis thus reveals both the nature, strength and complexity of
-ideas as well as whether they are valued positively or negatively.
 
 ## Categorical analysis (calc_dims function)
 
-In the case of the Eurozone crisis, scholars have identified two
-competing paradigms underlying the policy debate: Keynesianism and
-Ordoliberalism. The Ordoliberal paradigm is characterised by a belief in
-the primacy of price stability which may be ensured by pursuing
-austerity and denouncing monetary financing. In contrast, for
-Keynesians, economic growth and employment take precedence and economic
-stimulation is advocated to promote these goals during economic
-downturns. Keynesians are also more favourable to monetary financing and
-for a central bank to act as a lender of last resort (Dullien and Guérot
-2012; Hall 2014). To capture the paradigmatic orthodoxy of Rutte and
-Knot's belief system, all concepts in their CM were classified as either
-Keynesian, Ordoliberal or neutral (Van Esch et al. 2018). The result of
-this analysis shows that during the period from May 2010 and July 2012
-both Rutte and Knot's belief system are more Ordoliberal than Keynesian
-(see figure 2). Other types of (automated) text analysis are capable of
-classifying text into broad categories in a similar fashion (Ban 2015).
-The nuance of the CM analyses, however, reveals that there are also
-considerable Keynesian elements in Rutte´s and Knot´s belief system,
-lending support to the thesis that paradigms are not incommensurable
-(Carstensen 2011b; Princen and Van Esch 2016). Moreover, due to the
-standardised way the CM technique works, we are also able to compare
-their scores to other leaders and conclude that internationally, the
-Dutch leaders have a relatively high leaning towards the Ordoliberalism
-(Van Esch et al. 2018). In a similar way, we could also analyse changes
-in ideas over time, thereby fulfilling the third requirement discussed
-above (Bonham, Shapiro, and Trumble 1979; Van Esch 2014).
+The potential of the CM analysis may be expanded even further by making use of the theoretical notion that there are different types of ideas. Two types of ideas often used in the literature are paradigms and instrumental ideas. Paradigms are often seen as 'ideas on steriods'(ref Hall), they encompass xx. Traditionally, rivalling paradigms are also perceived as incommensurable. 
+The example data for this package is derived from a speech concerning the Eurozone crisis. In this domain, scholars have identified two competing paradigms that underly the policy debate: (neo)Keynesianism and Ordoliberalism (Dullien and Guérot
+2012; Hall 2014). To capture the paradigmatic orthodoxy of Rutte's belief system, all concepts in his CM were classified as either Keynesian, Ordoliberal or neutral. Applying the 'paradigm_support' function calculates the support by calculating the relative weighted degree (or saliency in CM terms) of all the Ordoliberal and Keynesian concepts in the map. Reflecting the idea that competing paradigms are incommensurable, when an Ordoliberal concept is evaluated negatively, its saliency (weighted degree) score is added to the support for the Keynesian paradigm and vice versa. Ambiguously evaluated concepts are omitted from the analysis. 
+In order to run the paradigm_support function, first the calculate_degrees function as well as the evaluate_concepts functions need to be ran first. As such, we will use the nodelist that resulted from the last iteration of the evaluate_concepts function as the input for the paradigm support function. In addition we need to derive the names of the paradigms present in the data. 
 
 ```{r}
+# store the result of the last iteration of evaluate_concepts as the new 'node_measures' df
+
+rutte_p2_node_measures <- result_list[[5]][[2]]
+
+# Derive all paradigm names from this dataframe, and store them in a list
+
+paradigms <- base::unique(rutte_p2_node_measures$paradigms)
+paradigms <- stats::na.omit(paradigms) # omitting the empty cells (NULL category)
+paradigm_a <- paradigms[1]
+paradigm_b <- paradigms[2]
+
+```
+
+Then run the paradigm_support function with these parameters, and store this in a renewed node_measures df
+
+```{r}
+# run the paradigm support function on this analysed data
+
+rutte_p2_node_measures <- paradigm_support(rutte_p2_node_measures, paradigm_a, paradigm_b)
+
+#gives an error, tried to rewrite function into the following, but gives the same error. Working offline, so need to work on it again.
+
+
+paradigm_support <- function(node_measures, paradigm_a, paradigm_b){
+
+  #if a paradigm concept is evaluated positively (> 0), add their w_degree to a new paradigm_a column in the node_measures df'
+  node_measures[, paradigm_a] <- dplyr::case_when (node_measures$paradigms == paradigm_a &
+                                           node_measures$val_run1 > 0 ~ node_measures$w_degree,
+                                         #if a paradigm_b concept is evaluated negatively, add their w_degree the paradigm_a column
+                                         node_measures$paradigms == paradigm_b &
+                                           node_measures$val_run1 < 0 ~ node_measures$w_degree)
+  #all other concepts are assigned a zero score in the paradigm_a column by nan <- 0
+  node_measures$paradigm_a[base::is.na(node_measures$paradigm_a)] <- 0
+
+
+  #same process for paradigm_b
+  node_measures[, paradigm_b] <- dplyr::case_when (node_measures$paradigms == paradigm_b &
+                                           node_measures$val_run1 > 0 ~ node_measures$w_degree,
+                                         node_measures$paradigms == paradigm_a &
+                                           node_measures$val_run1 < 0 ~ node_measures$w_degree)
+
+  node_measures$paradigm_b[base::is.na(node_measures$paradigm_b)] <- 0 #nan omzetten in 0
+
+  base::return <- node_measures
+
+
+}
+
+```
+
+
+When summing up all the scores in the columns of both paradigms (displayed as a percentage of the total saliency of the CM), it is clear that this CM of Rutte signals a strong support for the Ordoliberal paradigm and limited support for the Keynesian paradigm.
+
+```{r}
+# voor nu vb met andere colommen, later omzetten naar paradigm_a & paradigm_b
+
+w_indegree <- sum(rutte_p2_node_measures$w_degree)
+support_par1 <- sum(rutte_p2_node_measures$indegree)
+support_par2 <- sum(rutte_p2_node_measures$w_indegree)
+  
+support <- c((support_par1/w_degree),(support_par2/w_degree))
+
+data.frame(paradigms, support)
+
+rm(w_indegree)
+
+```
+
+
+```{r}
+# Laten staan, even bedenken hoe je dit nuttig in kunt zetten
 # plot the 10 most salient concepts
 plot(rutte_p2_node_measures$w_degree [1:10], rutte_p2_node_measures$gow [1:10], xlab = "Saliency", ylab = "Weighted Goal Orientation", pch =19, frame = FALSE, text(rutte_p2_node_measures$w_degree[1:10], rutte_p2_node_measures$gow[1:10], rutte_p2_node_measures$node_name[1:10], pos = 1, cex = 0.5)) 
 ```
 
-In addition, the CM technique allows scholars to distinguish between
-different types of beliefs, For instance, it is also possible to
-establish instrumental beliefs with CM. One way of doing this is to
-inductively identify a range of possible policy-instruments relevant in
-the policy area under study. For this, we used a larger set of cognitive
-maps regarding the Eurozone crisis to derive seven relevant policy
-measures: Stronger EU fiscal regulation, structural reforms, monetary
+In a similar way, but without the added complexity of integrating the idea of incommensurability in the analysis, the instrument_support function helps calculate the support for different types of policy instruments embedded in the CM. In order to use this function, the concepts in the CM need to be categorised as belonging to a certain type of policy instrument. In de example data for this package seven policy
+instruments are distinguished: Stronger EU fiscal regulation, structural reforms, monetary
 measures by the ECB, economic stimulation, fiscal support, financial
-market measures and EMU reforms (Van Esch et al. 2018). Comparing Rutte
+market measures and EMU reforms (Van Esch & snellens 2024). 
+
+```{r}
+
+```
+
+
+
+
+
+Comparing Rutte
 and Knot's maps shows that while they both lean towards an Ordoliberal
 approach, they differ in terms of their instrumental beliefs: Rutte
 favours implementing structural reforms and stronger fiscal regulation

@@ -90,19 +90,17 @@ Now let's test the last version of the evaluate concepts function in which Jelle
 I get an error when trying to run this automatically "Error: 'evaluate_concepts' is not an exported object from 'namespace:cognitivemapr'"
 So lets do this in the oldfashion way, and call the function manually and then run it
 
-first let's see if set iterations works okay, does not seem to do so. The set iterations function is also not found, so I load it manually.
+first let's see if set iterations works okay.
 ```{r}
-iterations <- set_iterations(test_edges, test_node_calc)
+iterations <- cognitivemapr::set_iterations(test_edges, test_node_calc)
 iterations
 
-result_list <- vector("list", iterations)
-rm(result_list)
 ```
 This does return 3, which is correct, and the first step in evaluate concepts also creates an empty list of 3, which is correct
 
 ```{r}
 
-result_list <-  evaluate_concepts(test_edges, test_node_calc)
+result_list <-  cognitivemapr::evaluate_concepts(test_edges, test_node_calc)
 
 ```
 
@@ -119,3 +117,97 @@ result_list[[3]][[2]][,"val_run1"]
 test_node3$val_run1
 
 ```
+
+now let's run the test on Ruttep2
+
+
+load the data
+
+```{r, results='hide', warning=FALSE, message=FALSE}
+library(readr)
+
+load("../data/rutte_p2_edgelist.rda")
+load("../data/rutte_p2_nodelist.rda")
+
+```
+
+run the calculate_degrees function
+
+```{r}
+#running the function with the data of Mark Rutte, and storing it as a df
+rutte_p2_node_measures <- cognitivemapr::calculate_degrees(rutte_p2_edgelist, rutte_p2_nodelist)
+
+```
+
+```{r}
+#run the evaluate_step function 5 times
+
+test_edge1 <- cognitivemapr::evaluation_step(rutte_p2_edgelist, rutte_p2_node_measures)[[1]]
+test_node1 <- cognitivemapr::evaluation_step(rutte_p2_edgelist, rutte_p2_node_measures)[[2]]
+
+test_edge2 <- cognitivemapr::evaluation_step(test_edge1, test_node1)[[1]]
+test_node2 <- cognitivemapr::evaluation_step(test_edge1, test_node1)[[2]]
+
+test_edge3 <- cognitivemapr::evaluation_step(test_edge2, test_node2)[[1]]
+test_node3 <- cognitivemapr::evaluation_step(test_edge2, test_node2)[[2]]
+
+test_edge4 <- cognitivemapr::evaluation_step(test_edge3, test_node3)[[1]]
+test_node4 <- cognitivemapr::evaluation_step(test_edge3, test_node3)[[2]]
+
+test_edge5 <- cognitivemapr::evaluation_step(test_edge4, test_node4)[[1]]
+test_node5 <- cognitivemapr::evaluation_step(test_edge4, test_node4)[[2]]
+```
+
+
+Let's look at the results
+```{r}
+test_node1$val_run1
+test_node2$val_run1
+test_node3$val_run1
+test_node4$val_run1
+test_node5$val_run1
+```
+Okay, I thought it would keep changing 5 times, but it stabilises after 2 runs
+
+Now test the evaluate_concepts function, which has the 5 iterations built into it
+```{r}
+result_list <- cognitivemapr::evaluate_concepts(rutte_p2_edgelist, rutte_p2_node_measures)
+```
+
+
+Let's compare the results:
+```{r}
+# test of the current solution to running multiple iterations of the evaluate_concepts function:
+# store the results of all the 5 iterations seperately
+run1 <- result_list[[1]][[2]][,c("node_name","val_run1")]
+run2 <- result_list[[2]][[2]][,c("node_name","val_run1")]
+run3 <- result_list[[3]][[2]][,c("node_name","val_run1")]
+run4 <- result_list[[4]][[2]][,c("node_name","val_run1")]
+run5 <- result_list[[5]][[2]][,c("node_name","val_run1")]
+
+
+# compare the results for each iteration but with true/false (why does it not compare whole lists?)
+
+results1 = ifelse (run1$val_run1 == test_node1$val_run1, 'same', "different")
+results2 = ifelse (run2$val_run1 == test_node2$val_run1, 'same', "different")
+results3 = ifelse (run3$val_run1 == test_node3$val_run1, 'same', "different")
+results4 = ifelse (run3$val_run1 == test_node4$val_run1, 'same', "different")
+results5 = ifelse (run3$val_run1 == test_node5$val_run1, 'same', "different")
+
+#show on screen
+
+results1
+results2
+results3
+results4
+results5
+
+```
+
+
+
+
+
+
+
+
