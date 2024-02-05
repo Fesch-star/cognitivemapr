@@ -218,13 +218,13 @@ rutte_p2_node_measures <- result_list[[5]][[2]]
 # Derive all paradigm names from this dataframe, and store them in a list
 
 paradigms <- base::unique(rutte_p2_node_measures$paradigms)
-paradigms <- stats::na.omit (paradigms) # omitting the empty cells (NULL category)
+paradigms <- stats::na.omit (paradigms) # omitting the NULL category
 paradigm_a <- paradigms[1]
 paradigm_b <- paradigms[2]
 
 ```
 
-Then run the paradigm_support function with these parameters, and store this in a renewed node_measures df
+Then run the paradigm_support function with these parameters, and store this in the node_measures dataframe
 
 ```{r}
 # run the paradigm support function on this analysed data
@@ -233,57 +233,68 @@ rutte_p2_node_measures <- cognitivemapr::paradigm_support(rutte_p2_node_measures
 
 ```
 
-
 When summing up all the scores in the columns of both paradigms (displayed as a percentage of the total saliency of the CM), it is clear that this CM of Rutte signals a strong support for the Ordoliberal paradigm and limited support for the Keynesian paradigm.
 
 ```{r}
-# voor nu vb met andere colommen, later omzetten naar paradigm_a & paradigm_b
+# calculate the total saliency (weighted degree) of the CM
+w_degree <- sum(rutte_p2_node_measures$w_degree)
 
-w_indegree <- sum(rutte_p2_node_measures$w_degree)
-support_par1 <- sum(rutte_p2_node_measures$indegree)
-support_par2 <- sum(rutte_p2_node_measures$w_indegree)
-  
-support <- c((support_par1/w_degree),(support_par2/w_degree))
+# make an empty df with names of instruments as ?
 
-data.frame(paradigms, support)
+par_support<- vector(mode="numeric")
 
-rm(w_indegree)
+# calculate the support for each instrument
+for (paradigm in paradigms) {
+  score <- sum(rutte_p2_node_measures[paradigm]/w_degree)
+  par_support <- append(par_support, score)
+}
+
+# show the results in a dataframe
+data.frame(paradigms, par_support)
+
+```
+
+In a similar way, but without the added complexity of  the idea of incommensurability in the analysis, the instrument_support function calculates the support for different types of policy instruments embedded in the CM. In order to use this function, the concepts in the CM need to be categorised as belonging to a certain type of policy instrument. In de example data for this package seven policy instruments are distinguished: Stronger EU fiscal regulation, structural reforms, monetary measures by the ECB, economic stimulation, fiscal support, financial market measures and EMU reforms (Van Esch & snellens 2024). In this case, the calculation simply lists whether the concepts belonging to the different categories are evaluated positively or negatively taking the saliency (weighted degree) of the concept into account and stores the values in the node_measures dataframe.
+To execute the function, we first need to derive all instrument-names included in the data and store it in a vector.
+
+```{r}
+# Derive all instrument names from the dataframe, and store them in a list
+
+instruments <- base::unique(rutte_p2_node_measures$instruments)
+instruments <- stats::na.omit (instruments) # omitting the NULL category
 
 ```
 
 
 ```{r}
-# Laten staan, even bedenken hoe je dit nuttig in kunt zetten
-# plot the 10 most salient concepts
-plot(rutte_p2_node_measures$w_degree [1:10], rutte_p2_node_measures$gow [1:10], xlab = "Saliency", ylab = "Weighted Goal Orientation", pch =19, frame = FALSE, text(rutte_p2_node_measures$w_degree[1:10], rutte_p2_node_measures$gow[1:10], rutte_p2_node_measures$node_name[1:10], pos = 1, cex = 0.5)) 
-```
-
-In a similar way, but without the added complexity of integrating the idea of incommensurability in the analysis, the instrument_support function helps calculate the support for different types of policy instruments embedded in the CM. In order to use this function, the concepts in the CM need to be categorised as belonging to a certain type of policy instrument. In de example data for this package seven policy
-instruments are distinguished: Stronger EU fiscal regulation, structural reforms, monetary
-measures by the ECB, economic stimulation, fiscal support, financial
-market measures and EMU reforms (Van Esch & snellens 2024). 
-
-```{r}
+rutte_p2_node_measures <- cognitvemapr::instrument_support(rutte_p2_node_measures, instruments)
 
 ```
 
-
-
-
-
-Comparing Rutte
-and Knot's maps shows that while they both lean towards an Ordoliberal
-approach, they differ in terms of their instrumental beliefs: Rutte
+When summing up all the scores in the columns of all the instruments (as a percentage of the total saliency of the CM), it shows that Rutte
 favours implementing structural reforms and stronger fiscal regulation
 over making institutional reforms to EMU, fiscal support and economic
-stimulation. He does not discuss financial market measures and ECB
-measures (see figure 3). Knot favours interventions by the ECB over
-structural and EMU reforms and stronger EU fiscal regulation. In
-addition, he shows a similar limited support for providing fiscal aid as
-the PM and does not support economic stimulation or financial market
-measures. These findings thus allow us to compare the extent the
-instrumental ideas of Rutte and Knot influenced the Dutch management of
-the Eurozone crisis (see below).
+stimulation. The policy instruments financial market measures and ECB
+measures that were originally included in the empirical research are absent from Rutte's CM altogether. An analysis along these lines would allow us to compare the extent the instrumental ideas of Rutte influenced the Dutch management of
+the Eurozone crisis.
+
+```{r}
+# make an empty df with names of instruments as ?
+
+instr_support<- vector(mode="numeric")
+
+# calculate the support for each instrument
+for (instrument in instruments) {
+  score <- sum(rutte_p2_node_measures[instrument]/w_degree)
+  instr_support <- append(instr_support, score)
+}
+
+# show the results in a dataframe
+data.frame(instruments, instr_support)
+
+```
+
+In essence, the instrument_support function conducts a rather straightforward categorical analysis. So while for the example data categorising the concepts in the CM in terms of type of policy instrument may be relevant, scholars can use this function to conduct categorical analyses using any other type of categorisation relevant to their research. In contrast to the paradigm_support function also the number of categories is flexible. 
 
 ## Causal Power
 
@@ -330,6 +341,15 @@ of policy making processes (Bonham, Shapiro, and Trumble 1979; Hart
 (draw final map function)
 
 ## (nog ergens overlap in maps? )
+
+
+
+```{r}
+# Laten staan, even bedenken hoe je dit nuttig in kunt zetten
+# plot the 10 most salient concepts
+plot(rutte_p2_node_measures$w_degree [1:10], rutte_p2_node_measures$gow [1:10], xlab = "Saliency", ylab = "Weighted Goal Orientation", pch =19, frame = FALSE, text(rutte_p2_node_measures$w_degree[1:10], rutte_p2_node_measures$gow[1:10], rutte_p2_node_measures$node_name[1:10], pos = 1, cex = 0.5)) 
+```
+
 
 # Making CM available for scholars without technical skills: the CM shiny app
 
