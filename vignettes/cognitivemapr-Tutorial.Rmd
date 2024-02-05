@@ -134,8 +134,12 @@ evaluation as show in the next step may be different).
 test_edge1 <- cognitivemapr::evaluation_step(rutte_p2_edgelist, rutte_p2_node_measures)[[1]]
 test_node1 <- cognitivemapr::evaluation_step(rutte_p2_edgelist, rutte_p2_node_measures)[[2]]
 
-test_node1[c("38"), c("id", "node_name","val_run1")] # make more elegant: how can I
-# refer to a value in a row to show the row?
+# find out the rownumber for the data on node with node_name "High credit rating' 
+rownr <- which(grepl("High credit rating", rutte_p2_node_measures$node_name))
+
+# show concept and evaluation
+
+test_node1[c(rownr), c("id", "node_name","val_run1")] 
 
 ```
 
@@ -151,7 +155,12 @@ evaluate_step function again on the output of the first run, shows that indeed '
 test_edge2 <- cognitivemapr::evaluation_step(test_edge1, test_node1)[[1]]
 test_node2 <- cognitivemapr::evaluation_step(test_edge1, test_node1)[[2]]
 
-test_node2[c("38"), c("id", "node_name","val_run1")] # make more elegant: how can I
+# find out the rownumber for the data on node with node_name "High credit rating' 
+rownr <- which(grepl("High credit rating", rutte_p2_node_measures$node_name))
+
+# show concept and evaluation
+
+test_node2[c(rownr), c("id", "node_name","val_run1")] # make more elegant: how can I
 # refer to a value in a row to show the row?
 ```
 
@@ -209,7 +218,7 @@ rutte_p2_node_measures <- result_list[[5]][[2]]
 # Derive all paradigm names from this dataframe, and store them in a list
 
 paradigms <- base::unique(rutte_p2_node_measures$paradigms)
-paradigms <- stats::na.omit(paradigms) # omitting the empty cells (NULL category)
+paradigms <- stats::na.omit (paradigms) # omitting the empty cells (NULL category)
 paradigm_a <- paradigms[1]
 paradigm_b <- paradigms[2]
 
@@ -220,35 +229,7 @@ Then run the paradigm_support function with these parameters, and store this in 
 ```{r}
 # run the paradigm support function on this analysed data
 
-rutte_p2_node_measures <- paradigm_support(rutte_p2_node_measures, paradigm_a, paradigm_b)
-
-#gives an error, tried to rewrite function into the following, but gives the same error. Working offline, so need to work on it again.
-
-
-paradigm_support <- function(node_measures, paradigm_a, paradigm_b){
-
-  #if a paradigm concept is evaluated positively (> 0), add their w_degree to a new paradigm_a column in the node_measures df'
-  node_measures[, paradigm_a] <- dplyr::case_when (node_measures$paradigms == paradigm_a &
-                                           node_measures$val_run1 > 0 ~ node_measures$w_degree,
-                                         #if a paradigm_b concept is evaluated negatively, add their w_degree the paradigm_a column
-                                         node_measures$paradigms == paradigm_b &
-                                           node_measures$val_run1 < 0 ~ node_measures$w_degree)
-  #all other concepts are assigned a zero score in the paradigm_a column by nan <- 0
-  node_measures$paradigm_a[base::is.na(node_measures$paradigm_a)] <- 0
-
-
-  #same process for paradigm_b
-  node_measures[, paradigm_b] <- dplyr::case_when (node_measures$paradigms == paradigm_b &
-                                           node_measures$val_run1 > 0 ~ node_measures$w_degree,
-                                         node_measures$paradigms == paradigm_a &
-                                           node_measures$val_run1 < 0 ~ node_measures$w_degree)
-
-  node_measures$paradigm_b[base::is.na(node_measures$paradigm_b)] <- 0 #nan omzetten in 0
-
-  base::return <- node_measures
-
-
-}
+rutte_p2_node_measures <- cognitivemapr::paradigm_support(rutte_p2_node_measures, paradigm_a, paradigm_b)
 
 ```
 
