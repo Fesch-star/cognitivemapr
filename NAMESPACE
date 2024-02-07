@@ -2,6 +2,7 @@
 
 export(align_edge_nodelist)
 export(calculate_degrees)
+export(draw_cm)
 export(evaluate_concepts)
 export(evaluation_step)
 export(instrument_support)
