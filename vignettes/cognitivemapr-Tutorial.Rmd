@@ -163,7 +163,7 @@ rownr <- which(grepl("High credit rating", rutte_p2_node_measures$node_name))
 test_node2[c(rownr), c("id", "node_name","val_run1")] 
 
 # delete the test data, so not to crowd the environment
-rm(test_edge1,test_edge2, test_node1, test_node2)
+rm(test_edge1,test_edge2, test_node1, test_node2, rownr)
 ```
 
 ### Step 4.1: Set maximum number of iterations
@@ -202,7 +202,7 @@ head(result_list[[5]][[2]])
 However in order to reap the full benefits of CM analysis and grasp the relations between Rutte's ideas as well as reveal the argumentation and narrative underlying his belief system, the CM is best analysed visually in its graphical form. 
 
 ```{r}
-
+cm_rutte <- cognitivemapr::draw_cm(rutte_p2_edgelist, rutte_p2_nodelist)
 ```
 
 
