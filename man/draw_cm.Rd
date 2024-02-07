@@ -23,7 +23,8 @@ nodelist or the node_measures list.
 }
 \examples{
 \dontrun{
-# Load the data
-data("edgelist", "nodelist")
+# draw the CM graph
+cm_rutte_p2 <- draw_cm(rutte_p2_edgelist, rutte_p2_nodelist)
+
 }
 }
