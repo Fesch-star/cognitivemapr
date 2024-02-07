@@ -63,7 +63,7 @@ paradigm_support <- function(node_measures, paradigm_a, paradigm_b){
                                          node_measures$paradigms == paradigm_b &
                                            node_measures$val_run1 < 0 ~ node_measures$w_degree)
   #all other concepts are assigned a zero score in the paradigm_a column by nan <- 0
-  node_measures[paradigm_a][is.na(node_measures[paradigm_a])] <- 0
+  node_measures[paradigm_a][base::is.na(node_measures[paradigm_a])] <- 0
 
 
   #same process for paradigm_b
@@ -72,7 +72,7 @@ paradigm_support <- function(node_measures, paradigm_a, paradigm_b){
                                          node_measures$paradigms == paradigm_a &
                                            node_measures$val_run1 < 0 ~ node_measures$w_degree)
 
-  node_measures[paradigm_b][is.na(node_measures[paradigm_b])] <- 0 #nan omzetten in 0
+  node_measures[paradigm_b][base::is.na(node_measures[paradigm_b])] <- 0 #nan omzetten in 0
 
-  return <- node_measures
+  base::return <- node_measures
 }

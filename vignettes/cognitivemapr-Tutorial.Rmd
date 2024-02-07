@@ -47,14 +47,14 @@ load("../data/rutte_p2_nodelist.rda")
 
 ```
 
-## Step 3: Display first rows
+### Step 2.1: Display first rows
 
 ```{r}
 head(rutte_p2_edgelist)
 head(rutte_p2_nodelist)
 ```
 
-## Step 4: Calculating basic CM measures
+## Step 3: Calculating basic CM measures
 
 Running the `calc_degrees_goW` function using the data of Rutte shows
 that the function returns a dataframe in which all the original data on
@@ -74,7 +74,7 @@ rutte_p2_node_measures <- cognitivemapr::calculate_degrees(rutte_p2_edgelist, ru
 summary(rutte_p2_node_measures)
 ```
 
-## Step 5: Sum of saliency
+### Step 3.1: Sum of saliency
 
 In addition, the sum of saliency divided by two tells us of how many
 relations the CM consists, which is the most commonly used measure of
@@ -84,7 +84,7 @@ the relative size of a CM in comparison to others.
 sum(rutte_p2_node_measures$w_degree)/2
 ```
 
-## Step 6: Top 10 concepts
+### Step 3.2: Top 10 concepts
 
 At the concept level, the output of the calc_degrees_goW function also
 provides us with the first feel of the content of the CM. The table
@@ -102,7 +102,7 @@ rutte_p2_node_measures[1:10,c("id", "node_name", "w_degree", "paradigms")]
 
 ```
 
-## Step 7: Calculating the evaluation of concepts from the CM
+## Step 4: Calculating the evaluation of concepts
 
 By analysing the relationships between the concepts in a path, scholars
 can establish if, and how concepts are perceived within the context of
@@ -160,11 +160,13 @@ rownr <- which(grepl("High credit rating", rutte_p2_node_measures$node_name))
 
 # show concept and evaluation
 
-test_node2[c(rownr), c("id", "node_name","val_run1")] # make more elegant: how can I
-# refer to a value in a row to show the row?
+test_node2[c(rownr), c("id", "node_name","val_run1")] 
+
+# delete the test data, so not to crowd the environment
+rm(test_edge1,test_edge2, test_node1, test_node2)
 ```
 
-## Step 8: Set maximum number of iterations
+### Step 4.1: Set maximum number of iterations
 
 This means that to arrive at the accurate evaluation of the concepts in the
 map, we need to run the evaluation_step function multiple times. We
@@ -173,11 +175,11 @@ in the CM, which means that at maximum we need to iterate through the function t
 randomly stops the cycle at this point, fixing the evaluation of the concepts to the result of the last iteration. We will work on a more elegant solution in the next version of the Package). The set_iterations calculates this number of iterations. Running this function for the example data for Rutte shows that the number of iterations for this map should be 5.
 
 ```{r}
-max_runs <- cognitivemapr::set_iterations(rutte_p2_edgelist, rutte_p2_nodelist)
-max_runs
+cognitivemapr::set_iterations(rutte_p2_edgelist, rutte_p2_nodelist)
+
 ```
 
-## Step 9: Calculating the evaluation of concepts holistically
+### Step 4.2: Calculating the evaluation of concepts holistically
 
 The set_iterations function is incorporated in the 'evaluate_concepts' function, which runs the evaluation_step function the appropriate number of times while adjusting and
 storing the changing evaluation values of the concepts. The function takes an edgelist and the node_measures list that was returned from the calculate_degrees function above.
@@ -195,19 +197,24 @@ it shows how conducting a CM analysis in this fashion reveals both the nature, s
 ```{r}
 head(result_list[[5]][[2]])
 ```
-## Graphical analysis
+## Step 5: Graphical analysis
 
-However in order to reap the full benefits of CM analysis and grasp the relations between Rutte's ideas as well as reveal the argumentation and narrative underlying
-his belief system, the CM is best analysed visually in its graphical form.
+However in order to reap the full benefits of CM analysis and grasp the relations between Rutte's ideas as well as reveal the argumentation and narrative underlying his belief system, the CM is best analysed visually in its graphical form. 
 
-[Include a simple visualisation function - with values but not dimensions]
+```{r}
+
+```
 
 
-## Categorical analysis (calc_dims function)
+
+## Step 6: Categorical analysis: Paradigms and policy instruments
 
 The potential of the CM analysis may be expanded even further by making use of the theoretical notion that there are different types of ideas. Two types of ideas often used in the literature are paradigms and instrumental ideas. Paradigms are often seen as 'ideas on steriods'(ref Hall), they encompass xx. Traditionally, rivalling paradigms are also perceived as incommensurable. 
 The example data for this package is derived from a speech concerning the Eurozone crisis. In this domain, scholars have identified two competing paradigms that underly the policy debate: (neo)Keynesianism and Ordoliberalism (Dullien and Guérot
 2012; Hall 2014). To capture the paradigmatic orthodoxy of Rutte's belief system, all concepts in his CM were classified as either Keynesian, Ordoliberal or neutral. Applying the 'paradigm_support' function calculates the support by calculating the relative weighted degree (or saliency in CM terms) of all the Ordoliberal and Keynesian concepts in the map. Reflecting the idea that competing paradigms are incommensurable, when an Ordoliberal concept is evaluated negatively, its saliency (weighted degree) score is added to the support for the Keynesian paradigm and vice versa. Ambiguously evaluated concepts are omitted from the analysis. 
+
+### Step 6.1: Paradigm Support
+
 In order to run the paradigm_support function, first the calculate_degrees function as well as the evaluate_concepts functions need to be ran first. As such, we will use the nodelist that resulted from the last iteration of the evaluate_concepts function as the input for the paradigm support function. In addition we need to derive the names of the paradigms present in the data. 
 
 ```{r}
@@ -254,6 +261,8 @@ data.frame(paradigms, par_support)
 
 ```
 
+### Step 6.2: Instrument Support
+
 In a similar way, but without the added complexity of  the idea of incommensurability in the analysis, the instrument_support function calculates the support for different types of policy instruments embedded in the CM. In order to use this function, the concepts in the CM need to be categorised as belonging to a certain type of policy instrument. In de example data for this package seven policy instruments are distinguished: Stronger EU fiscal regulation, structural reforms, monetary measures by the ECB, economic stimulation, fiscal support, financial market measures and EMU reforms (Van Esch & snellens 2024). In this case, the calculation simply lists whether the concepts belonging to the different categories are evaluated positively or negatively taking the saliency (weighted degree) of the concept into account and stores the values in the node_measures dataframe.
 To execute the function, we first need to derive all instrument-names included in the data and store it in a vector.
 
@@ -296,7 +305,7 @@ data.frame(instruments, instr_support)
 
 In essence, the instrument_support function conducts a rather straightforward categorical analysis. So while for the example data categorising the concepts in the CM in terms of type of policy instrument may be relevant, scholars can use this function to conduct categorical analyses using any other type of categorisation relevant to their research. In contrast to the paradigm_support function also the number of categories is flexible. 
 
-## Causal Power
+## Step 7: Causal Power
 
 (HEB ik nog niet omgezet in R code) Finally, taking full advantage of
 its graphical nature, CM can be used to establish the causal strength of
