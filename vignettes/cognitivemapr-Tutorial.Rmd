@@ -197,12 +197,13 @@ it shows how conducting a CM analysis in this fashion reveals both the nature, s
 ```{r}
 head(result_list[[5]][[2]])
 ```
-## Step 5: Graphical analysis
+## Step 5: Simple graphical visualisation
 
-However in order to reap the full benefits of CM analysis and grasp the relations between Rutte's ideas as well as reveal the argumentation and narrative underlying his belief system, the CM is best analysed visually in its graphical form. 
+However in order to reap the full benefits of CM analysis and grasp the relations between Rutte's ideas as well as reveal the argumentation and narrative underlying his belief system, the CM is best analysed visually in its graphical form. The draw_cm function creates a first simple visual graph of the CM on the basis of the edge and nodelist. In step 7 of this tutorial a function is introduced that produces a more encompassing visualisation with several interactive features is introduced.
 
 ```{r}
-cm_rutte <- cognitivemapr::draw_cm(rutte_p2_edgelist, rutte_p2_nodelist)
+draw_cm(rutte_p2_edgelist, rutte_p2_nodelist)
+
 ```
 
 
@@ -259,6 +260,9 @@ for (paradigm in paradigms) {
 # show the results in a dataframe
 data.frame(paradigms, par_support)
 
+#delete temporary values
+rm(paradigm, score)
+
 ```
 
 ### Step 6.2: Instrument Support
@@ -276,7 +280,7 @@ instruments <- stats::na.omit (instruments) # omitting the NULL category
 
 
 ```{r}
-rutte_p2_node_measures <- cognitvemapr::instrument_support(rutte_p2_node_measures, instruments)
+rutte_p2_node_measures <- cognitivemapr::instrument_support(rutte_p2_node_measures, instruments)
 
 ```
 
@@ -301,9 +305,21 @@ for (instrument in instruments) {
 # show the results in a dataframe
 data.frame(instruments, instr_support)
 
+#remove temporary values
+rm(instrument, score)
+
 ```
 
 In essence, the instrument_support function conducts a rather straightforward categorical analysis. So while for the example data categorising the concepts in the CM in terms of type of policy instrument may be relevant, scholars can use this function to conduct categorical analyses using any other type of categorisation relevant to their research. In contrast to the paradigm_support function also the number of categories is flexible. 
+
+## Step 7:: Interactive visualisation of the CM
+
+
+
+
+
+
+(draw final map function)
 
 ## Step 7: Causal Power
 
@@ -345,9 +361,7 @@ conditions under which ideas affect policies and even to run simulations
 of policy making processes (Bonham, Shapiro, and Trumble 1979; Hart
 1976).
 
-## Upgraded visualisation
 
-(draw final map function)
 
 ## (nog ergens overlap in maps? )
 
