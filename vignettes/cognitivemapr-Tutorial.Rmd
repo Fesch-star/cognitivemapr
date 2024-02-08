@@ -202,7 +202,18 @@ head(result_list[[5]][[2]])
 However in order to reap the full benefits of CM analysis and grasp the relations between Rutte's ideas as well as reveal the argumentation and narrative underlying his belief system, the CM is best analysed visually in its graphical form. The draw_cm function creates a first simple visual graph of the CM on the basis of the edge and nodelist. In step 7 of this tutorial a function is introduced that produces a more encompassing visualisation with several interactive features is introduced.
 
 ```{r}
-draw_cm(rutte_p2_edgelist, rutte_p2_nodelist)
+cognitivemapr::draw_cm(rutte_p2_edgelist, rutte_p2_nodelist)
+simple_cm <- draw_cm(rutte_p2_edgelist, rutte_p2_nodelist)
+
+# I cannot seem to store this [JELLE?!]
+pdf("simpel_cm.pdf")
+plot(simple_cm)
+dev.off()
+
+# Save the graph as PNG
+png("my_graph.png", width = 800, height = 800)
+plot(graph)
+dev.off()
 
 ```
 
@@ -292,8 +303,7 @@ measures that were originally included in the empirical research are absent from
 the Eurozone crisis.
 
 ```{r}
-# make an empty df with names of instruments as ?
-
+# make an empty vector to store the data in
 instr_support<- vector(mode="numeric")
 
 # calculate the support for each instrument
@@ -314,12 +324,25 @@ In essence, the instrument_support function conducts a rather straightforward ca
 
 ## Step 7:: Interactive visualisation of the CM
 
+As argued above, to conduct a narrative analysis of the CM, the most convenient way is to make a visual representation of the CM. Using the visNetworks package, it is possible to draw more sophisticated CMs that include information about the paradigms and instruments and that are more easy to read. In addition, with this package a CM can be made interactive, allowing the user to move the concepts, zoom in and out. In addition, it creates containers for the different instrument types so the instrument-concepts can be shown both individually, or collapsed into their category. In order to use such features, the edgelist and node_measures lists must be reformatted to work with the VisNetworks package. The prep_cm_visualisation function will conduct this reformatting.
 
+```{r}
+# run the prep_cm_visualisation function
+interact_cm_lists <- prep_cm_visualisation(rutte_p2_edgelist,rutte_p2_node_measures)
 
+# extract and store the new edge and node_measures list
+interact_edgelist <- interact_cm_lists[[1]]
+interact_node_measures <- interact_cm_lists[[2]]
+```
 
+Subsequently, the interactive_cm function will produce such an interactive CM for the researcher to analyse.
 
+```{r}
+interactive_cm_rutte_p2 <- interactive_visual_cm(interact_edgelist,interact_nodelist)
 
-(draw final map function)
+#krijg dit weer niet goed gereturned
+```
+
 
 ## Step 7: Causal Power
 
@@ -335,7 +358,7 @@ and goal), the weaker the presumed causal power of the instrument (cf.
 Septer, Dijkstra, and Stokman 2012; Shapiro and Bonham 1973). On the
 basis of this, we propose that the causal power (CP) of an instrument on
 a particular goal may be established as follows (Septer, Dijkstra, and
-Stokman 2012): First, for each subsequent concept in the antecedent
+Stokman 2012: First, for each subsequent concept in the antecedent
 path, its autonomous power (AP) may be determined following the
 calculation:
 

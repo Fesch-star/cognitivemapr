@@ -28,4 +28,5 @@ plot(cm, mode = "fruchtermanreingold", edge.arrow.size=.08, edge.curved=.2, edge
      vertex.label.color = dplyr::case_when (nodelist$value > 0 ~ "blue",
                                      nodelist$value < 0 ~ "red",
                                      nodelist$value == 0 ~ "black"), vertex.label.cex=.15)
+base::return(cm)
 }
