@@ -206,6 +206,7 @@ cognitivemapr::draw_cm(rutte_p2_edgelist, rutte_p2_nodelist)
 simple_cm <- draw_cm(rutte_p2_edgelist, rutte_p2_nodelist)
 
 # I cannot seem to store this [JELLE?!]
+# !!! hij heeft iets opgeslagen in het vignette, maar hoe en waarom??
 pdf("simpel_cm.pdf")
 plot(simple_cm)
 dev.off()
