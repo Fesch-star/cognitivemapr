@@ -22,10 +22,10 @@
 
 interactive_visual_cm <- function(edgelist, node_measures) {
 
-# make a list of instrument names, include the neutrals so you can show the relations
-# between the instrument categories
+# make a list of instrument and paradigm names
 
 linstr <- base::unique(node_measures$instruments)
+lparad <- base::unique(node_measures$paradigms)
 
 # prepare df for the legends for both nodes and edges,
 # edges first
@@ -34,7 +34,7 @@ ledges <- base::data.frame(color = c("green", "red", "black"),
 
 # then for the nodes
 lnodes <- base::data.frame(shape = c("square", "triangleDown","dot"),
-                             label = c("Ordoliberal", "Keynesian", "Neutral"))
+                             label = c(lparad))
 
 # derive the name of the edgelist to use as a subtitle
 subtitle <- deparse(substitute(edgelist))
@@ -50,7 +50,7 @@ interactive_cm <- visNetwork::visNetwork(node_measures, edgelist, width = "100%"
             nodesIdSelection = TRUE) %>%
   visNetwork::visLegend(addEdges = ledges, addNodes = lnodes, useGroups = FALSE) %>%
   visNetwork::visIgraphLayout(layout = "layout_nicely") %>%
-  visNetwork::visClusteringByGroup(groups = linstr) %>%
+  visNetwork::visClusteringByGroup(groups = linstr, shape = "ellipse", label = "Group : ", ) %>%
   visNetwork::visInteraction(dragNodes = TRUE,
                  dragView = TRUE,
                  zoomView = TRUE,

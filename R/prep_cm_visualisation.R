@@ -34,15 +34,8 @@ node_measures <- dplyr::mutate(node_measures, value = w_degree/5 + 1)
 # so it is possible to distinguish all categories and the neutral by colour in
 # the visualisation
 
-node_measures$paradigms [node_measures$paradigms==""] <- "Neutral"
-node_measures$instruments [node_measures$instruments==""] <- "Neutral"
-
-# use shapes to distinguish the paradigms, this requires a column for shapes
-# first derive the paradigm names from the df
-paradigms <- base::unique(node_measures$paradigms)
-paradigms <- base::is.na(paradigms) <- "Neutral" # relabeling the NULL category
-paradigm_a <- paradigms[1]
-paradigm_b <- paradigms[2]
+node_measures$paradigms <- node_measures$paradigms %>% tidyr::replace_na("Neutral")
+node_measures$instruments <- node_measures$instruments %>% tidyr::replace_na("Neutral")
 
 # create a new column with associated shapes
 node_measures <- node_measures %>%
@@ -51,21 +44,10 @@ node_measures <- node_measures %>%
       paradigms == paradigm_b ~ "triangleDown",
       paradigms == "Neutral" ~ "dot"))
 
-# to be able to cluster the types of instruments together in the visualisation,
-# group them together.
+# to be able to cluster the types of instruments in the visualisation, copy their
+# value into a new column called group.
 node_measures <- node_measures %>%
   dplyr::mutate(group = instruments)
-
-# containers turned out really big, let's reschale
-instruments <- node_measures %>% dplyr::group_by(instruments) %>%
-  dplyr::summarise(sum=base::sum(w_degree),
-                   .groups = 'drop')
-
-# you want to use a hierarchical lay-out based on Gow later, so rename this column
-# to "level" (requirement of visNetworks)
-
-node_measures <- node_measures %>%
-  rename(level = gow)
 
 # There are also changes needed to the column names of the edgelist
 # the function 'title' in the visNetworks packages provides the label of the edge
