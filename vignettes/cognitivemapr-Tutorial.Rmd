@@ -202,19 +202,8 @@ head(result_list[[5]][[2]])
 However in order to reap the full benefits of CM analysis and grasp the relations between Rutte's ideas as well as reveal the argumentation and narrative underlying his belief system, the CM is best analysed visually in its graphical form. The draw_cm function creates a first simple visual graph of the CM on the basis of the edge and nodelist. In step 7 of this tutorial a function is introduced that produces a more encompassing visualisation with several interactive features is introduced.
 
 ```{r}
-cognitivemapr::draw_cm(rutte_p2_edgelist, rutte_p2_nodelist)
-simple_cm <- draw_cm(rutte_p2_edgelist, rutte_p2_nodelist)
-
-# I cannot seem to store this [JELLE?!]
-# !!! hij heeft iets opgeslagen in het vignette, maar hoe en waarom??
-pdf("simpel_cm.pdf")
-plot(simple_cm)
-dev.off()
-
-# Save the graph as PNG
-png("my_graph.png", width = 800, height = 800)
-plot(graph)
-dev.off()
+#run the function
+simple_cm_rutte_p2 <- cognitivemapr::draw_cm(rutte_p2_edgelist, rutte_p2_nodelist)
 
 ```
 
@@ -332,16 +321,16 @@ As argued above, to conduct a narrative analysis of the CM, the most convenient 
 interact_cm_lists <- prep_cm_visualisation(rutte_p2_edgelist,rutte_p2_node_measures)
 
 # extract and store the new edge and node_measures list
-interact_edgelist <- interact_cm_lists[[1]]
-interact_node_measures <- interact_cm_lists[[2]]
+rutte_p2_edgelist <- interact_cm_lists[[1]]
+rutte_p2_node_measures <- interact_cm_lists[[2]]
+
 ```
 
-Subsequently, the interactive_cm function will produce such an interactive CM for the researcher to analyse.
+Subsequently, the interactive_visual_cm function will produce  the interactive CM for the researcher to analyse. In order for the r
 
 ```{r}
-interactive_cm_rutte_p2 <- interactive_visual_cm(interact_edgelist,interact_nodelist)
+interactive_cm_rutte_p2 <- cognitivemapr::interactive_visual_cm(rutte_p2_edgelist, rutte_p2_node_measures)
 
-#krijg dit weer niet goed gereturned
 ```
 
 

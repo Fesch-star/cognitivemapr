@@ -14,7 +14,7 @@
 #' \dontrun{
 #' #
 #'
-#' to save the graph run: cognitive_map %>% visSave(file = "results/cognitive_map.html")
+#'
 #'}
 prep_cm_visualisation <- function(edgelist, node_measures) {
 
@@ -37,13 +37,14 @@ node_measures <- dplyr::mutate(node_measures, value = w_degree/5 + 1)
 node_measures$paradigms [node_measures$paradigms==""] <- "Neutral"
 node_measures$instruments [node_measures$instruments==""] <- "Neutral"
 
-# Rather than coloring, I would like to use shapes to distinghuish the paradigms,
-# this requires a column for shapes [winging it with the list]
+# use shapes to distinguish the paradigms, this requires a column for shapes
+# first derive the paradigm names from the df
 paradigms <- base::unique(node_measures$paradigms)
-paradigms <- base::is.na(paradigms) <- "Neutral" # relabelling the NULL category
+paradigms <- base::is.na(paradigms) <- "Neutral" # relabeling the NULL category
 paradigm_a <- paradigms[1]
 paradigm_b <- paradigms[2]
 
+# create a new column with associated shapes
 node_measures <- node_measures %>%
   dplyr::mutate(shape = dplyr::case_when(
       paradigms == paradigm_a ~ "square",
@@ -52,7 +53,6 @@ node_measures <- node_measures %>%
 
 # to be able to cluster the types of instruments together in the visualisation,
 # group them together.
-
 node_measures <- node_measures %>%
   dplyr::mutate(group = instruments)
 
@@ -60,6 +60,12 @@ node_measures <- node_measures %>%
 instruments <- node_measures %>% dplyr::group_by(instruments) %>%
   dplyr::summarise(sum=base::sum(w_degree),
                    .groups = 'drop')
+
+# you want to use a hierarchical lay-out based on Gow later, so rename this column
+# to "level" (requirement of visNetworks)
+
+node_measures <- node_measures %>%
+  rename(level = gow)
 
 # There are also changes needed to the column names of the edgelist
 # the function 'title' in the visNetworks packages provides the label of the edge

@@ -13,9 +13,23 @@
 #' @examples
 #' \dontrun{
 #' # draw the CM graph
-#' cm_rutte_p2 <- draw_cm(rutte_p2_edgelist, rutte_p2_nodelist)
+#' cognitivemapr::draw_cm(rutte_p2_edgelist, rutte_p2_nodelist)
 #'
+#' # to store the cm as a png or pdf (other formats are possible), use the
+#' following code:
+#'
+#' # Save as PDF
+#' grDevices::pdf(pdf_file)
+#' cognitivemapr::draw_cm(rutte_p2_edgelist, rutte_p2_nodelist)
+#' grDevices::dev.off()
+#'
+#' # Save as PNG
+#' grDevices::png(png_file, width = 800, height = 800)
+#' cognitivemapr::draw_cm(rutte_p2_edgelist, rutte_p2_nodelist)
+#' grDevices::dev.off()
+#' #'
 #' }
+#'
 draw_cm <- function(edgelist, nodelist){
 
 cm <- igraph::graph_from_data_frame(d=edgelist, vertices=nodelist, directed = T)# make map from df

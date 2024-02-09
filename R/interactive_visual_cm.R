@@ -36,10 +36,13 @@ ledges <- base::data.frame(color = c("green", "red", "black"),
 lnodes <- base::data.frame(shape = c("square", "triangleDown","dot"),
                              label = c("Ordoliberal", "Keynesian", "Neutral"))
 
+# derive the name of the edgelist to use as a subtitle
+subtitle <- deparse(substitute(edgelist))
+
 interactive_cm <- visNetwork::visNetwork(node_measures, edgelist, width = "100%", height = "600px",
            main = "Cognitive Map",
-           submain = "subtitle",
-           footer = "footer") %>%
+           submain = subtitle,
+           footer = "click on the containers to reveal the concept names per instrument category") %>%
   visNetwork::visNodes(color = "lightblue") %>%
   visNetwork::visEdges(shadow = TRUE,
           arrows =list(to = list(enabled = TRUE, scaleFactor = 2))) %>%
@@ -54,7 +57,7 @@ interactive_cm <- visNetwork::visNetwork(node_measures, edgelist, width = "100%"
                  navigationButtons = TRUE) %>%
   visNetwork::visLayout(randomSeed = 12) # to have always the same network
 
-interactive_cm %>% visNetwork::visSave(file = "img/interactive_cm.html")
+interactive_cm %>% visNetwork::visSave(file = "interactive_cm.html")
 
 return(interactive_cm)
 }
