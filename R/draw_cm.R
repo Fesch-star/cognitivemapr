@@ -32,15 +32,15 @@
 #'
 draw_cm <- function(edgelist, nodelist){
 
-cm <- igraph::graph_from_data_frame(d=edgelist, vertices=nodelist, directed = T)# make map from df
+  cm <- igraph::graph_from_data_frame(d=edgelist, vertices=nodelist, directed = T)# make map from df
 
-plot(cm, mode = "fruchtermanreingold", edge.arrow.size=.08, edge.curved=.2, edge.width=.18, #draw pretty graph
-     edge.color = dplyr::case_when (edgelist$edge_value>0 ~ "green",
-                             edgelist$edge_value<0 ~ "red",
-                             edgelist$edge_value==0 ~ "black"),
-     vertex.size =0.4, vertex.shape= "none",vertex.label=nodelist$node_name,
-     vertex.label.color = dplyr::case_when (nodelist$value > 0 ~ "blue",
-                                     nodelist$value < 0 ~ "red",
-                                     nodelist$value == 0 ~ "black"), vertex.label.cex=.15)
-base::return(cm)
+  plot(cm, mode = "fruchtermanreingold", edge.arrow.size=.08, edge.curved=.2, edge.width=.18, #draw pretty graph
+       edge.color = dplyr::case_when (edgelist$edge_value>0 ~ "green",
+                                      edgelist$edge_value<0 ~ "red",
+                                      edgelist$edge_value==0 ~ "black"),
+       vertex.size =0.4, vertex.shape= "none",vertex.label=nodelist$node_name,
+       vertex.label.color = dplyr::case_when (nodelist$value > 0 ~ "blue",
+                                              nodelist$value < 0 ~ "red",
+                                              nodelist$value == 0 ~ "black"), vertex.label.cex=.15)
+  return(cm)
 }

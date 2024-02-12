@@ -69,48 +69,48 @@
 #'
 reformat_edge_nodelist <- function(edgelist, nodelist){
 
-#safety check: if column 'value'in the nodelist is left empty, replace with value 1,
-#1, so all concepts are seen as neutral or positive
-nodelist <- dplyr::mutate(nodelist, value = ifelse(is.na(value), 1, value))
+  #safety check: if column 'value'in the nodelist is left empty, replace with value 1,
+  #1, so all concepts are seen as neutral or positive
+  nodelist <- dplyr::mutate(nodelist, value = ifelse(is.na(value), 1, value))
 
-# add id's to the nodelist
-nodelist <- tibble::rowid_to_column(nodelist, "id")
+  # add id's to the nodelist
+  nodelist <- tibble::rowid_to_column(nodelist, "id")
 
-#add id and value for the corresponding concepts from the nodelist to the edgelist
-#isolate only the columns needed from nodelist
-nodes <- dplyr:: select(nodelist, c(id, node_name, value))
+  #add id and value for the corresponding concepts from the nodelist to the edgelist
+  #isolate only the columns needed from nodelist
+  nodes <- dplyr:: select(nodelist, c(id, node_name, value))
 
-#first for the 'from' concepts
-edgelist <- dplyr::left_join(edgelist, nodes, by = c("from" = "node_name"))
+  #first for the 'from' concepts
+  edgelist <- dplyr::left_join(edgelist, nodes, by = c("from" = "node_name"))
 
-#then for the 'to' concepts
-edgelist <- dplyr::left_join(edgelist, nodes, by = c("to" = "node_name"))
+  #then for the 'to' concepts
+  edgelist <- dplyr::left_join(edgelist, nodes, by = c("to" = "node_name"))
 
-#beware that the function renames the id and value of the cause to id.x and value.x
-# and the id and value of the effect to id.y and value.y
+  #beware that the function renames the id and value of the cause to id.x and value.x
+  # and the id and value of the effect to id.y and value.y
 
-#drop the concept names from edgelist: so drop the from and to columns
-edgelist <- dplyr::select(edgelist, -c(from,to))
+  #drop the concept names from edgelist: so drop the from and to columns
+  edgelist <- dplyr::select(edgelist, -c(from,to))
 
-#rename id.x to 'from'
-edgelist <- dplyr::rename(edgelist, from = id.x)
+  #rename id.x to 'from'
+  edgelist <- dplyr::rename(edgelist, from = id.x)
 
-#rename id.y to 'to'
-edgelist <- dplyr::rename(edgelist, to = id.y)
+  #rename id.y to 'to'
+  edgelist <- dplyr::rename(edgelist, to = id.y)
 
-#do NOT rename value.x and value.y, these names are used in later functions
+  #do NOT rename value.x and value.y, these names are used in later functions
 
-#to put the from and to and weight columns in the first three columns in edgelist
-#(needed to turn it into a CM later) when we do not know what kind and how much meta-data
-#is in the edgelist, use the dplyr select function with the option 'everything()'
-edgelist <- dplyr::select(edgelist, from, to, weight, edge_value, value.x, value.y, everything())
+  #to put the from and to and weight columns in the first three columns in edgelist
+  #(needed to turn it into a CM later) when we do not know what kind and how much meta-data
+  #is in the edgelist, use the dplyr select function with the option 'everything()'
+  edgelist <- dplyr::select(edgelist, from, to, weight, edge_value, value.x, value.y, everything())
 
-#safety check: if weight and edge-value are left empty, replace with a value 1,
-#so the map reads that all edges are included once with a positive sign
-edgelist <- dplyr::mutate(edgelist, weight = ifelse(is.na(weight), 1, weight))
-edgelist <- dplyr::mutate(edgelist, edge_value = ifelse(is.na(edge_value), 1, edge_value))
+  #safety check: if weight and edge-value are left empty, replace with a value 1,
+  #so the map reads that all edges are included once with a positive sign
+  edgelist <- dplyr::mutate(edgelist, weight = ifelse(is.na(weight), 1, weight))
+  edgelist <- dplyr::mutate(edgelist, edge_value = ifelse(is.na(edge_value), 1, edge_value))
 
 
-#return the edgelist and a nodelist to which paradigms and instruments can be added rut
-base::return (list(edgelist, nodelist))
+  #return the edgelist and a nodelist to which paradigms and instruments can be added rut
+  return (list(edgelist, nodelist))
 }

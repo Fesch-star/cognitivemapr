@@ -9,7 +9,7 @@ prep_cm_visualisation(edgelist, node_measures)
 \arguments{
 \item{edgelist}{an edgelist}
 
-\item{nodelist}{an node_measures list}
+\item{node_measures}{an node_measures list}
 }
 \value{
 Returns a list of lists

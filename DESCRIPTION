@@ -41,7 +41,9 @@ Suggests:
 Imports: 
     dplyr,
     igraph,
-    tibble
+    tibble,
+    tidyr,
+    visNetwork
 VignetteBuilder: knitr
 Depends: 
     R (>= 3.5)

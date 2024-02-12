@@ -74,5 +74,5 @@ paradigm_support <- function(node_measures, paradigm_a, paradigm_b){
 
   node_measures[paradigm_b][base::is.na(node_measures[paradigm_b])] <- 0 #nan omzetten in 0
 
-  base::return <- node_measures
+  return <- node_measures
 }

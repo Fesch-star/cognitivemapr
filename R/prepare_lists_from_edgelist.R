@@ -52,61 +52,61 @@
 #'}
 prepare_lists_from_edgelist <- function(edgelist){
 
-#list only unique concepts in from-column
-nodelist_from <- base::unique(edgelist$from)
+  #list only unique concepts in from-column
+  nodelist_from <- base::unique(edgelist$from)
 
-#list only the unique concepts in to-column
-nodelist_to <- base::unique(edgelist$to)
+  #list only the unique concepts in to-column
+  nodelist_to <- base::unique(edgelist$to)
 
-#join the two nodelist together
-nodelist <- c(nodelist_from, nodelist_to)
+  #join the two nodelist together
+  nodelist <- c(nodelist_from, nodelist_to)
 
-#retain only the unique values
-nodelist <- base::unique(nodelist)
+  #retain only the unique values
+  nodelist <- base::unique(nodelist)
 
-#make vector into a dataframe
-nodelist <- base::as.data.frame(nodelist)
+  #make vector into a dataframe
+  nodelist <- base::as.data.frame(nodelist)
 
-#rename the column into node_name
-nodelist <- dplyr::rename(nodelist, node_name = nodelist)
+  #rename the column into node_name
+  nodelist <- dplyr::rename(nodelist, node_name = nodelist)
 
-#put id's in front of the nodes
-nodelist <- tibble::rowid_to_column(nodelist, "id")
+  #put id's in front of the nodes
+  nodelist <- tibble::rowid_to_column(nodelist, "id")
 
-#add a value column to the nodelist, set all values to 1 (=positive)
-nodelist <- base::cbind(nodelist, value = 1)
+  #add a value column to the nodelist, set all values to 1 (=positive)
+  nodelist <- base::cbind(nodelist, value = 1)
 
-#add corresponding id's for the concepts from the nodelist to the edgelist
-#first for the 'from' concepts
-edgelist <- dplyr::left_join(edgelist, nodelist, by = c("from" = "node_name"))
+  #add corresponding id's for the concepts from the nodelist to the edgelist
+  #first for the 'from' concepts
+  edgelist <- dplyr::left_join(edgelist, nodelist, by = c("from" = "node_name"))
 
-#then for the 'to' concepts
-edgelist <- dplyr::left_join(edgelist, nodelist, by = c("to" = "node_name"))
+  #then for the 'to' concepts
+  edgelist <- dplyr::left_join(edgelist, nodelist, by = c("to" = "node_name"))
 
-#beware it renames the first(from) id to id.x and the second(to)id to id.y
+  #beware it renames the first(from) id to id.x and the second(to)id to id.y
 
-#drop the concept names: so the from and to columns with the concept names
-edgelist <- dplyr::select(edgelist, -c(from,to))
+  #drop the concept names: so the from and to columns with the concept names
+  edgelist <- dplyr::select(edgelist, -c(from,to))
 
-#rename id.x to 'from'
-edgelist <- dplyr::rename(edgelist, from = id.x)
+  #rename id.x to 'from'
+  edgelist <- dplyr::rename(edgelist, from = id.x)
 
-#rename id.y to 'to'
-edgelist <- dplyr::rename(edgelist, to = id.y)
+  #rename id.y to 'to'
+  edgelist <- dplyr::rename(edgelist, to = id.y)
 
-#to put the from and to columns in the first two columns in edgelist (needed to
-#turn it into a CM later) when we do not know what kind and how much meta-data
-#is in the edgelist, use the dplyr select function with the option 'everything()'
-edgelist <- dplyr::select(edgelist, from, to, weight, everything())
+  #to put the from and to columns in the first two columns in edgelist (needed to
+  #turn it into a CM later) when we do not know what kind and how much meta-data
+  #is in the edgelist, use the dplyr select function with the option 'everything()'
+  edgelist <- dplyr::select(edgelist, from, to, weight, everything())
 
-#safety check: if weight and edge-value are left empty, replace with a value 1,
-#so the map reads that all edges are included once with a positive sign
-edgelist <- dplyr::mutate(edgelist, weight = ifelse(is.na(weight), 1, weight))
-edgelist <- dplyr::mutate(edgelist, edge_value = ifelse(is.na(edge_value), 1, edge_value))
+  #safety check: if weight and edge-value are left empty, replace with a value 1,
+  #so the map reads that all edges are included once with a positive sign
+  edgelist <- dplyr::mutate(edgelist, weight = ifelse(is.na(weight), 1, weight))
+  edgelist <- dplyr::mutate(edgelist, edge_value = ifelse(is.na(edge_value), 1, edge_value))
 
-#now return to the nodelist and add empty columns for optional node characteristics
-nodelist <- base::cbind(nodelist, paradigms = NA, instruments = NA)
+  #now return to the nodelist and add empty columns for optional node characteristics
+  nodelist <- base::cbind(nodelist, paradigms = NA, instruments = NA)
 
-#return the edgelist and a nodelist to which paradigms and instruments can be addedrut
-base::return (list(edgelist, nodelist))
+  #return the edgelist and a nodelist to which paradigms and instruments can be addedrut
+  return (list(edgelist, nodelist))
 }

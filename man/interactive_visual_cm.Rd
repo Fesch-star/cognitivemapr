@@ -9,7 +9,7 @@ interactive_visual_cm(edgelist, node_measures)
 \arguments{
 \item{edgelist}{an edgelist prepared to work with VisNetworks}
 
-\item{nodelist}{an node_measures prepared to work with VisNetworks}
+\item{node_measures}{an node_measures prepared to work with VisNetworks}
 }
 \value{
 Returns an VisNetwork interactive graph

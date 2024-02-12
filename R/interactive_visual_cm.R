@@ -10,7 +10,7 @@
 #' or collapse them into one category. The resulting CM also has legends.
 #'
 #' @param edgelist an edgelist prepared to work with VisNetworks
-#' @param nodelist an node_measures prepared to work with VisNetworks
+#' @param node_measures an node_measures prepared to work with VisNetworks
 #' @return Returns an VisNetwork interactive graph
 #' @export
 #' @examples
@@ -22,44 +22,44 @@
 
 interactive_visual_cm <- function(edgelist, node_measures) {
 
-# make a list of instrument and paradigm names
+  # make a list of instrument and paradigm names
 
-linstr <- base::unique(node_measures$instruments)
-lparad <- base::unique(node_measures$paradigms)
+  linstr <- base::unique(node_measures$instruments)
+  lparad <- base::unique(node_measures$paradigms)
 
-# prepare df for the legends for both nodes and edges,
-# edges first
-ledges <- base::data.frame(color = c("green", "red", "black"),
+  # prepare df for the legends for both nodes and edges,
+  # edges first
+  ledges <- base::data.frame(color = c("green", "red", "black"),
                              label = c("positive", "negative", "neutral"))
 
-# then for the nodes
-lnodes <- base::data.frame(shape = c("square", "triangleDown","dot"),
+  # then for the nodes
+  lnodes <- base::data.frame(shape = c("square", "triangleDown","dot"),
                              label = c(lparad))
 
-# derive the name of the edgelist to use as a subtitle
-subtitle <- deparse(substitute(edgelist))
+  # derive the name of the edgelist to use as a subtitle
+  subtitle <- deparse(substitute(edgelist))
 
-interactive_cm <- visNetwork::visNetwork(node_measures, edgelist, width = "100%", height = "600px",
-           main = "Cognitive Map",
-           submain = subtitle,
-           footer = "click on the containers to reveal the concept names per instrument category") %>%
-  visNetwork::visNodes(color = "lightblue") %>%
-  visNetwork::visEdges(shadow = TRUE,
-          arrows =list(to = list(enabled = TRUE, scaleFactor = 2))) %>%
-  visNetwork::visOptions(selectedBy = "paradigms",
-            nodesIdSelection = TRUE) %>%
-  visNetwork::visLegend(addEdges = ledges, addNodes = lnodes, useGroups = FALSE) %>%
-  visNetwork::visIgraphLayout(layout = "layout_nicely") %>%
-  visNetwork::visClusteringByGroup(groups = linstr, shape = "ellipse", label = "Group : ", ) %>%
-  visNetwork::visInteraction(dragNodes = TRUE,
-                 dragView = TRUE,
-                 zoomView = TRUE,
-                 navigationButtons = TRUE) %>%
-  visNetwork::visLayout(randomSeed = 12) # to have always the same network
+  interactive_cm <- visNetwork::visNetwork(node_measures, edgelist, width = "100%", height = "600px",
+                                           main = "Cognitive Map",
+                                           submain = subtitle,
+                                           footer = "click on the containers to reveal the concept names per instrument category") %>%
+    visNetwork::visNodes(color = "lightblue") %>%
+    visNetwork::visEdges(shadow = TRUE,
+                         arrows =list(to = list(enabled = TRUE, scaleFactor = 2))) %>%
+    visNetwork::visOptions(selectedBy = "paradigms",
+                           nodesIdSelection = TRUE) %>%
+    visNetwork::visLegend(addEdges = ledges, addNodes = lnodes, useGroups = FALSE) %>%
+    visNetwork::visIgraphLayout(layout = "layout_nicely") %>%
+    visNetwork::visClusteringByGroup(groups = linstr, shape = "ellipse", label = "Group : ", ) %>%
+    visNetwork::visInteraction(dragNodes = TRUE,
+                               dragView = TRUE,
+                               zoomView = TRUE,
+                               navigationButtons = TRUE) %>%
+    visNetwork::visLayout(randomSeed = 12) # to have always the same network
 
-interactive_cm %>% visNetwork::visSave(file = "interactive_cm.html")
+  interactive_cm %>% visNetwork::visSave(file = "interactive_cm.html")
 
-return(interactive_cm)
+  return(interactive_cm)
 }
 
 

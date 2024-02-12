@@ -16,14 +16,14 @@
 
 set_iterations <- function (edgelist, nodelist){
 
-#first draw map to be able to calculate diameter
-map <- igraph::graph_from_data_frame(d=edgelist, vertices=nodelist, directed = T)
+  #first draw map to be able to calculate diameter
+  map <- igraph::graph_from_data_frame(d=edgelist, vertices=nodelist, directed = T)
 
-#determine diameter = the length of the longest geodesic, this equal the maximum
-#number of iterations that the evaluate_concepts functions need to run through the
-#for-loop
-max_runs <- igraph::diameter(map, directed = TRUE, unconnected = TRUE)
+  #determine diameter = the length of the longest geodesic, this equal the maximum
+  #number of iterations that the evaluate_concepts functions need to run through the
+  #for-loop
+  max_runs <- igraph::diameter(map, directed = TRUE, unconnected = TRUE)
 
-return(max_runs)
+  return(max_runs)
 
 }

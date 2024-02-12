@@ -33,19 +33,19 @@
 #'}
 align_edge_nodelist <- function(edgelist, nodelist){
 
-#drop the old value.x and value.y columns
-edgelist <- dplyr::select(edgelist, -c(value.x,value.y))
+  #drop the old value.x and value.y columns
+  edgelist <- dplyr::select(edgelist, -c(value.x,value.y))
 
-#derive only the ids and values from the nodelist
-nodes <- dplyr:: select(nodelist, c(id,value))
+  #derive only the ids and values from the nodelist
+  nodes <- dplyr:: select(nodelist, c(id,value))
 
-# join edgeslist and nodes df by id's
-#first for the 'from' concepts
-edgelist <- dplyr::left_join(edgelist, nodes, by = c("from" = "id"))
+  # join edgeslist and nodes df by id's
+  #first for the 'from' concepts
+  edgelist <- dplyr::left_join(edgelist, nodes, by = c("from" = "id"))
 
-#then for the 'to' concepts
-edgelist <- dplyr::left_join(edgelist, nodes, by = c("to" = "id"))
+  #then for the 'to' concepts
+  edgelist <- dplyr::left_join(edgelist, nodes, by = c("to" = "id"))
 
-#return the edgelist and a nodelist
-base::return (list(edgelist, nodelist))
+  #return the edgelist and a nodelist
+  return (list(edgelist, nodelist))
 }
