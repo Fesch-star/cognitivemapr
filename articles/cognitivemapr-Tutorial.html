@@ -104,10 +104,9 @@
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/load.html" class="external-link">load</a></span><span class="op">(</span><span class="st">"../data/rutte_p2_edgelist.rda"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/load.html" class="external-link">load</a></span><span class="op">(</span><span class="st">"../data/rutte_p2_nodelist.rda"</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level3">
-<h3 id="step-3-display-first-rows">Step 3: Display first rows<a class="anchor" aria-label="anchor" href="#step-3-display-first-rows"></a>
-</h3>
+<div class="section level4">
+<h4 id="step-2-1-display-first-rows">Step 2.1: Display first rows<a class="anchor" aria-label="anchor" href="#step-2-1-display-first-rows"></a>
+</h4>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rutte_p2_edgelist</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 10</span></span></span>
@@ -131,8 +130,9 @@
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>    40 Benefit of debt-states     <span style="color: #BB0000;">NA</span>          Intergovernmen…     1 <span style="color: #BB0000;">NA</span>         </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>    48 Benefit of the people      <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>                  1 <span style="color: #BB0000;">NA</span></span></span></code></pre></div>
 </div>
+</div>
 <div class="section level3">
-<h3 id="step-4-calculating-basic-cm-measures">Step 4: Calculating basic CM measures<a class="anchor" aria-label="anchor" href="#step-4-calculating-basic-cm-measures"></a>
+<h3 id="step-3-calculating-basic-cm-measures">Step 3: Calculating basic CM measures<a class="anchor" aria-label="anchor" href="#step-3-calculating-basic-cm-measures"></a>
 </h3>
 <p>Running the <code>calc_degrees_goW</code> function using the data of
 Rutte shows that the function returns a dataframe in which all the
@@ -177,10 +177,9 @@ maximum, mean w_degree) as well as the overall complexity of the map
 <span><span class="co">#&gt;  Mean   :-0.2202   Mean   :-0.2192  </span></span>
 <span><span class="co">#&gt;  3rd Qu.: 1.0000   3rd Qu.: 1.0000  </span></span>
 <span><span class="co">#&gt;  Max.   : 1.0000   Max.   : 1.0000</span></span></code></pre></div>
-</div>
-<div class="section level3">
-<h3 id="step-5-sum-of-saliency">Step 5: Sum of saliency<a class="anchor" aria-label="anchor" href="#step-5-sum-of-saliency"></a>
-</h3>
+<div class="section level4">
+<h4 id="step-3-1-sum-of-saliency">Step 3.1: Sum of saliency<a class="anchor" aria-label="anchor" href="#step-3-1-sum-of-saliency"></a>
+</h4>
 <p>In addition, the sum of saliency divided by two tells us of how many
 relations the CM consists, which is the most commonly used measure of
 the relative size of a CM in comparison to others.</p>
@@ -188,9 +187,9 @@ the relative size of a CM in comparison to others.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">rutte_p2_node_measures</span><span class="op">$</span><span class="va">w_degree</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span></span>
 <span><span class="co">#&gt; [1] 115</span></span></code></pre></div>
 </div>
-<div class="section level3">
-<h3 id="step-6-top-10-concepts">Step 6: Top 10 concepts<a class="anchor" aria-label="anchor" href="#step-6-top-10-concepts"></a>
-</h3>
+<div class="section level4">
+<h4 id="step-3-2-top-10-concepts">Step 3.2: Top 10 concepts<a class="anchor" aria-label="anchor" href="#step-3-2-top-10-concepts"></a>
+</h4>
 <p>At the concept level, the output of the calc_degrees_goW function
 also provides us with the first feel of the content of the CM. The table
 below, for instance shows the top 10 concepts in terms of saliency and
@@ -217,8 +216,9 @@ crisis, while also debating the value of being pragmatic.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>   258 Euroscepsis                        5 <span style="color: #BB0000;">NA</span>         </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>   405 Market trust                       5 <span style="color: #BB0000;">NA</span></span></span></code></pre></div>
 </div>
+</div>
 <div class="section level3">
-<h3 id="step-7-calculating-the-evaluation-of-concepts-from-the-cm">Step 7: Calculating the evaluation of concepts from the CM<a class="anchor" aria-label="anchor" href="#step-7-calculating-the-evaluation-of-concepts-from-the-cm"></a>
+<h3 id="step-4-calculating-the-evaluation-of-concepts">Step 4: Calculating the evaluation of concepts<a class="anchor" aria-label="anchor" href="#step-4-calculating-the-evaluation-of-concepts"></a>
 </h3>
 <p>By analysing the relationships between the concepts in a path,
 scholars can establish if, and how concepts are perceived within the
@@ -232,8 +232,13 @@ relation between ’pro-European attitude’ and the positive goal solving
 the crisis is seen as non-existent (represented by a 0 sign for the
 relation. As this concept does not have any other outgoing paths,
 ‘pro_European attitude’ is evaluated as ambiguous within the context of
-this map .</p>
-<p><img src="images/figure%201%20rutte%20map%20exerpt.png"></p>
+this map.</p>
+</div>
+<div class="section level3">
+<h3 id="change-the-figure-to-one-showing-the-true-evaluations-rewrite-the-text">change the figure to one showing the true evaluations &amp; rewrite
+the text<a class="anchor" aria-label="anchor" href="#change-the-figure-to-one-showing-the-true-evaluations-rewrite-the-text"></a>
+</h3>
+<p><img src="images/figure_1_rutte_map_exerpt.png"></p>
 <p>Running the function ‘evaluation_step’ establishes the evaluation of
 the concepts in the map by analysing their outgoing relations in this
 fashion, taking into account the sign and weight of the relation as well
@@ -244,8 +249,16 @@ concepts in figure 1 have more relations than displayed in the figure
 and thus their evaluation as show in the next step may be
 different).</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">rutte_p2_evaluation_run1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/evaluation_step.html">evaluation_step</a></span><span class="op">(</span><span class="va">rutte_p2_edgelist</span>, <span class="va">rutte_p2_node_measures</span><span class="op">)</span></span>
-<span><span class="va">rutte_p2_evaluation_run1</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">39</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"node_name"</span>,<span class="st">"val_run1"</span><span class="op">)</span><span class="op">]</span></span>
+<code class="sourceCode R"><span></span>
+<span><span class="va">test_edge1</span> <span class="op">&lt;-</span> <span class="fu">cognitivemapr</span><span class="fu">::</span><span class="fu"><a href="../reference/evaluation_step.html">evaluation_step</a></span><span class="op">(</span><span class="va">rutte_p2_edgelist</span>, <span class="va">rutte_p2_node_measures</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="va">test_node1</span> <span class="op">&lt;-</span> <span class="fu">cognitivemapr</span><span class="fu">::</span><span class="fu"><a href="../reference/evaluation_step.html">evaluation_step</a></span><span class="op">(</span><span class="va">rutte_p2_edgelist</span>, <span class="va">rutte_p2_node_measures</span><span class="op">)</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># find out the rownumber for the data on node with node_name "High credit rating' </span></span>
+<span><span class="va">rownr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"High credit rating"</span>, <span class="va">rutte_p2_node_measures</span><span class="op">$</span><span class="va">node_name</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># show concept and evaluation</span></span>
+<span></span>
+<span><span class="va">test_node1</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">rownr</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"node_name"</span>,<span class="st">"val_run1"</span><span class="op">)</span><span class="op">]</span> </span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 3</span></span></span>
 <span><span class="co">#&gt;      id node_name          val_run1</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
@@ -256,224 +269,284 @@ of this calculation. Running the evaluation_step function on the
 concepts in figure 1, once would result in a negative evaluation for the
 concept ‘high credit rating’ for at the start of the analysis, the
 concept ‘wider yield spread’ was still assumed to be positive. However,
-running the function once, has changed the evaluation of the concept to
-negative. As at the end of this step ‘high credit rating’ has a negative
-effect on this (now) negative concept, we would actually assume Rutte to
-feel ‘high credit rating’ to be a good thing (as it limits its negative
-effect on fiscal discipline and therefore on solving the crisis).</p>
-</div>
-<div class="section level3">
-<h3 id="step-8-set-maximum-number-of-iterations">Step 8: Set maximum number of iterations<a class="anchor" aria-label="anchor" href="#step-8-set-maximum-number-of-iterations"></a>
-</h3>
-<p>This means that to arrive at the true evaluation of all concepts in
-the map, we need to run the evaluation_step function multiple times. As
-we want to be sure that we have reiterated across all concepts in all
-paths in the CM, we need to iterate the function the same number of
-times as the number of steps in the longest path in the CM. The
-set_iterations calculates this number of iterations. Running this
-function for the example data for Rutte shows that the number of
-iterations for this map should be 5.</p>
+by evaluating its outgoing relations to it’s immediate neighbouring
+concepts, has changed the evaluation of the concept ‘wider yield spread’
+to ambiguous (0). This would in turrn change the evaluation of the
+concept ‘high credit rating’ to ambiguous. Running the evaluate_step
+function again on the output of the first run, shows that indeed ‘high
+credit rating’ now has a value of 0.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">max_runs</span> <span class="op">&lt;-</span> <span class="fu">cognitivemapr</span><span class="fu">::</span><span class="fu"><a href="../reference/set_iterations.html">set_iterations</a></span><span class="op">(</span><span class="va">rutte_p2_edgelist</span>, <span class="va">rutte_p2_nodelist</span><span class="op">)</span></span>
-<span><span class="va">max_runs</span></span>
+<code class="sourceCode R"><span><span class="va">test_edge2</span> <span class="op">&lt;-</span> <span class="fu">cognitivemapr</span><span class="fu">::</span><span class="fu"><a href="../reference/evaluation_step.html">evaluation_step</a></span><span class="op">(</span><span class="va">test_edge1</span>, <span class="va">test_node1</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="va">test_node2</span> <span class="op">&lt;-</span> <span class="fu">cognitivemapr</span><span class="fu">::</span><span class="fu"><a href="../reference/evaluation_step.html">evaluation_step</a></span><span class="op">(</span><span class="va">test_edge1</span>, <span class="va">test_node1</span><span class="op">)</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># find out the rownumber for the data on node with node_name "High credit rating' </span></span>
+<span><span class="va">rownr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"High credit rating"</span>, <span class="va">rutte_p2_node_measures</span><span class="op">$</span><span class="va">node_name</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># show concept and evaluation</span></span>
+<span></span>
+<span><span class="va">test_node2</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">rownr</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"node_name"</span>,<span class="st">"val_run1"</span><span class="op">)</span><span class="op">]</span> </span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 3</span></span></span>
+<span><span class="co">#&gt;      id node_name          val_run1</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>   339 High credit rating        0</span></span>
+<span></span>
+<span><span class="co"># delete the test data, so not to crowd the environment</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/rm.html" class="external-link">rm</a></span><span class="op">(</span><span class="va">test_edge1</span>,<span class="va">test_edge2</span>, <span class="va">test_node1</span>, <span class="va">test_node2</span>, <span class="va">rownr</span><span class="op">)</span></span></code></pre></div>
+<div class="section level4">
+<h4 id="step-4-1-set-maximum-number-of-iterations">Step 4.1: Set maximum number of iterations<a class="anchor" aria-label="anchor" href="#step-4-1-set-maximum-number-of-iterations"></a>
+</h4>
+<p>This means that to arrive at the accurate evaluation of the concepts
+in the map, we need to run the evaluation_step function multiple times.
+We want to be sure that we have reiterated across all concepts in all
+paths in the CM, which means that at maximum we need to iterate through
+the function the same number of times as the number of steps of the
+longest path in the CM (this presumes the CM is not cyclical, if a CM is
+cyclical the evaluate_concepts function randomly stops the cycle at this
+point, fixing the evaluation of the concepts to the result of the last
+iteration. We will work on a more elegant solution in the next version
+of the Package). The set_iterations calculates this number of
+iterations. Running this function for the example data for Rutte shows
+that the number of iterations for this map should be 5.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">cognitivemapr</span><span class="fu">::</span><span class="fu"><a href="../reference/set_iterations.html">set_iterations</a></span><span class="op">(</span><span class="va">rutte_p2_edgelist</span>, <span class="va">rutte_p2_nodelist</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 5</span></span></code></pre></div>
 </div>
-<div class="section level3">
-<h3 id="step-9-calculating-the-evaluation-of-concepts-holistically">Step 9: Calculating the evaluation of concepts holistically<a class="anchor" aria-label="anchor" href="#step-9-calculating-the-evaluation-of-concepts-holistically"></a>
-</h3>
-<p>This logic is incorporated in the ‘evaluate_concepts’ function, which
-runs the evaluation_step function the appropriate number of times while
-adjusting and storing the changing evaluation values of the concepts.
-The function takes an edgelist and the node_measures list that was
-returned from the calculate_degrees function above.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># test the function on Rutte (ff 3x)</span></span>
-<span></span>
-<span></span>
-<span><span class="va">test_edge1</span> <span class="op">&lt;-</span> <span class="fu">cognitivemapr</span><span class="fu">::</span><span class="fu"><a href="../reference/evaluation_step.html">evaluation_step</a></span><span class="op">(</span><span class="va">rutte_p2_edgelist</span>, <span class="va">rutte_p2_node_measures</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
-<span><span class="va">test_node1</span> <span class="op">&lt;-</span> <span class="fu">cognitivemapr</span><span class="fu">::</span><span class="fu"><a href="../reference/evaluation_step.html">evaluation_step</a></span><span class="op">(</span><span class="va">rutte_p2_edgelist</span>, <span class="va">rutte_p2_node_measures</span><span class="op">)</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span>
-<span></span>
-<span><span class="va">test_edge2</span> <span class="op">&lt;-</span> <span class="fu">cognitivemapr</span><span class="fu">::</span><span class="fu"><a href="../reference/evaluation_step.html">evaluation_step</a></span><span class="op">(</span><span class="va">rutte_p2_edgelist</span>, <span class="va">rutte_p2_node_measures</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
-<span><span class="va">test_node2</span> <span class="op">&lt;-</span> <span class="fu">cognitivemapr</span><span class="fu">::</span><span class="fu"><a href="../reference/evaluation_step.html">evaluation_step</a></span><span class="op">(</span><span class="va">rutte_p2_edgelist</span>, <span class="va">rutte_p2_node_measures</span><span class="op">)</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span>
-<span></span>
-<span><span class="va">test_edge3</span> <span class="op">&lt;-</span> <span class="fu">cognitivemapr</span><span class="fu">::</span><span class="fu"><a href="../reference/evaluation_step.html">evaluation_step</a></span><span class="op">(</span><span class="va">rutte_p2_edgelist</span>, <span class="va">rutte_p2_node_measures</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
-<span><span class="va">test_node3</span> <span class="op">&lt;-</span> <span class="fu">cognitivemapr</span><span class="fu">::</span><span class="fu"><a href="../reference/evaluation_step.html">evaluation_step</a></span><span class="op">(</span><span class="va">rutte_p2_edgelist</span>, <span class="va">rutte_p2_node_measures</span><span class="op">)</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
+<div class="section level4">
+<h4 id="step-4-2-calculating-the-evaluation-of-concepts-holistically">Step 4.2: Calculating the evaluation of concepts holistically<a class="anchor" aria-label="anchor" href="#step-4-2-calculating-the-evaluation-of-concepts-holistically"></a>
+</h4>
+<p>The set_iterations function is incorporated in the
+‘evaluate_concepts’ function, which runs the evaluation_step function
+the appropriate number of times while adjusting and storing the changing
+evaluation values of the concepts. The function takes an edgelist and
+the node_measures list that was returned from the calculate_degrees
+function above.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">result_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/evaluate_concepts.html">evaluate_concepts</a></span><span class="op">(</span><span class="va">rutte_p2_edgelist</span>, <span class="va">rutte_p2_node_measures</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">result_list</span> <span class="op">&lt;-</span> <span class="fu">cognitivemapr</span><span class="fu">::</span><span class="fu"><a href="../reference/evaluate_concepts.html">evaluate_concepts</a></span><span class="op">(</span><span class="va">rutte_p2_edgelist</span>, <span class="va">rutte_p2_node_measures</span><span class="op">)</span></span></code></pre></div>
+<p>[improve the functions along the lines of what Thomas did for the
+software: 1) make it stop when a balance is reached 2) for cyclical
+graphs, let the researcher chose what values to take for the unstable
+concepts]</p>
+<p>If we print the top of the node_measures list resulting from the
+final iteration, it shows how conducting a CM analysis in this fashion
+reveals both the nature, strength and complexity of Rutte’s ideas as
+well as whether they are valued positively or negatively.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#test of the current solution to running multiple iterations of the evaluate_concepts function:</span></span>
-<span><span class="va">run1</span> <span class="op">&lt;-</span> <span class="va">result_list</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"node_name"</span>,<span class="st">"val_run1"</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="va">run2</span> <span class="op">&lt;-</span> <span class="va">result_list</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"node_name"</span>,<span class="st">"val_run1"</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="va">run3</span> <span class="op">&lt;-</span> <span class="va">result_list</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"node_name"</span>,<span class="st">"val_run1"</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="va">run4</span> <span class="op">&lt;-</span> <span class="va">result_list</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"node_name"</span>,<span class="st">"val_run1"</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="va">run5</span> <span class="op">&lt;-</span> <span class="va">result_list</span><span class="op">[[</span><span class="fl">5</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"node_name"</span>,<span class="st">"val_run1"</span><span class="op">)</span><span class="op">]</span></span>
-<span></span>
-<span><span class="va">run1</span><span class="op">$</span><span class="va">val_run1</span></span>
-<span><span class="co">#&gt;  [1]  1  1  1  1  1  1  1  0 -1  1  1  1  1  1 -1  1  1  1  1  1  1  1  1  1  1</span></span>
-<span><span class="co">#&gt; [26]  1  1  1  1  0  1  0  1  1  1  1  1  0 -1  1  0  1  1  1  1  1  1  1  1 -1</span></span>
-<span><span class="co">#&gt; [51]  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  0  1</span></span>
-<span><span class="co">#&gt; [76]  1  1  1  1  1  1  1  1  1</span></span>
-<span><span class="va">test_node1</span><span class="op">$</span><span class="va">val_run1</span></span>
-<span><span class="co">#&gt;  [1]  1  1  1  1  1  1  1  0 -1  1  1  1  1  1 -1  1  1  1  1  1  1  1  1  1  1</span></span>
-<span><span class="co">#&gt; [26]  1  1  1  1  0  1  0  1  1  1  1  1  0 -1  1  0  1  1  1  1  1  1  1  1 -1</span></span>
-<span><span class="co">#&gt; [51]  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  0  1</span></span>
-<span><span class="co">#&gt; [76]  1  1  1  1  1  1  1  1  1</span></span>
-<span><span class="va">run2</span><span class="op">$</span><span class="va">val_run1</span></span>
-<span><span class="co">#&gt;  [1]  1  1  1  1  1  1  1  0 -1  1  1  1  1  1 -1  1  1  1  1  1  1  1  1  1  1</span></span>
-<span><span class="co">#&gt; [26]  1  1  1  1  0  1  0  1  1  1  1  1  0  0  1  0  1  1  0  1  1  1  1  1 -1</span></span>
-<span><span class="co">#&gt; [51]  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  0  1  1  0  1</span></span>
-<span><span class="co">#&gt; [76]  1  1  1  1  1  1  1  1  1</span></span>
-<span><span class="va">test_node2</span><span class="op">$</span><span class="va">val_run1</span></span>
-<span><span class="co">#&gt;  [1]  1  1  1  1  1  1  1  0 -1  1  1  1  1  1 -1  1  1  1  1  1  1  1  1  1  1</span></span>
-<span><span class="co">#&gt; [26]  1  1  1  1  0  1  0  1  1  1  1  1  0 -1  1  0  1  1  1  1  1  1  1  1 -1</span></span>
-<span><span class="co">#&gt; [51]  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  0  1</span></span>
-<span><span class="co">#&gt; [76]  1  1  1  1  1  1  1  1  1</span></span>
-<span><span class="va">run3</span><span class="op">$</span><span class="va">val_run1</span></span>
-<span><span class="co">#&gt;  [1]  1  1  1  1  1  1  1  0 -1  1  1  1  1  1 -1  1  1  1  1  1  1  1  1  1  1</span></span>
-<span><span class="co">#&gt; [26]  1  1  1  1  0  1  0  1  1  1  1  1  0  0  1  0  1  1  0  1  1  1  1  1 -1</span></span>
-<span><span class="co">#&gt; [51]  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  0  1  1  0  1</span></span>
-<span><span class="co">#&gt; [76]  1  1  1  1  1  1  1  1  1</span></span>
-<span><span class="va">test_node3</span><span class="op">$</span><span class="va">val_run1</span></span>
-<span><span class="co">#&gt;  [1]  1  1  1  1  1  1  1  0 -1  1  1  1  1  1 -1  1  1  1  1  1  1  1  1  1  1</span></span>
-<span><span class="co">#&gt; [26]  1  1  1  1  0  1  0  1  1  1  1  1  0 -1  1  0  1  1  1  1  1  1  1  1 -1</span></span>
-<span><span class="co">#&gt; [51]  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  0  1</span></span>
-<span><span class="co">#&gt; [76]  1  1  1  1  1  1  1  1  1</span></span>
-<span></span>
-<span><span class="va">results1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span> <span class="op">(</span><span class="va">run1</span><span class="op">$</span><span class="va">val_run1</span> <span class="op">==</span> <span class="va">test_node1</span><span class="op">$</span><span class="va">val_run1</span>, <span class="st">'same'</span>, <span class="st">"different"</span><span class="op">)</span></span>
-<span><span class="va">results2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span> <span class="op">(</span><span class="va">run2</span><span class="op">$</span><span class="va">val_run1</span> <span class="op">==</span> <span class="va">test_node2</span><span class="op">$</span><span class="va">val_run1</span>, <span class="st">'same'</span>, <span class="st">"different"</span><span class="op">)</span></span>
-<span><span class="va">results3</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span> <span class="op">(</span><span class="va">run3</span><span class="op">$</span><span class="va">val_run1</span> <span class="op">==</span> <span class="va">test_node3</span><span class="op">$</span><span class="va">val_run1</span>, <span class="st">'same'</span>, <span class="st">"different"</span><span class="op">)</span></span>
-<span></span>
-<span></span>
-<span><span class="va">results1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span> <span class="op">(</span><span class="va">run1</span><span class="op">$</span><span class="va">val_run1</span> <span class="op">==</span> <span class="va">run2</span><span class="op">$</span><span class="va">val_run1</span>, <span class="st">'same'</span>, <span class="st">"different"</span><span class="op">)</span></span>
-<span><span class="va">results2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span> <span class="op">(</span><span class="va">run2</span><span class="op">$</span><span class="va">val_run1</span> <span class="op">==</span> <span class="va">run3</span><span class="op">$</span><span class="va">val_run1</span>, <span class="st">'same'</span>, <span class="st">"different"</span><span class="op">)</span></span>
-<span><span class="va">results3</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span> <span class="op">(</span><span class="va">run3</span><span class="op">$</span><span class="va">val_run1</span> <span class="op">==</span> <span class="va">run4</span><span class="op">$</span><span class="va">val_run1</span>, <span class="st">'same'</span>, <span class="st">"different"</span><span class="op">)</span></span>
-<span><span class="va">results4</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span> <span class="op">(</span><span class="va">run4</span><span class="op">$</span><span class="va">val_run1</span> <span class="op">==</span> <span class="va">run5</span><span class="op">$</span><span class="va">val_run1</span>, <span class="st">'same'</span>, <span class="st">"different"</span><span class="op">)</span></span>
-<span></span>
-<span></span>
-<span><span class="va">results1</span></span>
-<span><span class="co">#&gt;  [1] "same"      "same"      "same"      "same"      "same"      "same"     </span></span>
-<span><span class="co">#&gt;  [7] "same"      "same"      "same"      "same"      "same"      "same"     </span></span>
-<span><span class="co">#&gt; [13] "same"      "same"      "same"      "same"      "same"      "same"     </span></span>
-<span><span class="co">#&gt; [19] "same"      "same"      "same"      "same"      "same"      "same"     </span></span>
-<span><span class="co">#&gt; [25] "same"      "same"      "same"      "same"      "same"      "same"     </span></span>
-<span><span class="co">#&gt; [31] "same"      "same"      "same"      "same"      "same"      "same"     </span></span>
-<span><span class="co">#&gt; [37] "same"      "same"      "different" "same"      "same"      "same"     </span></span>
-<span><span class="co">#&gt; [43] "same"      "different" "same"      "same"      "same"      "same"     </span></span>
-<span><span class="co">#&gt; [49] "same"      "same"      "same"      "same"      "same"      "same"     </span></span>
-<span><span class="co">#&gt; [55] "same"      "same"      "same"      "same"      "same"      "same"     </span></span>
-<span><span class="co">#&gt; [61] "same"      "same"      "same"      "same"      "same"      "same"     </span></span>
-<span><span class="co">#&gt; [67] "same"      "same"      "same"      "same"      "different" "same"     </span></span>
-<span><span class="co">#&gt; [73] "same"      "same"      "same"      "same"      "same"      "same"     </span></span>
-<span><span class="co">#&gt; [79] "same"      "same"      "same"      "same"      "same"      "same"</span></span>
-<span><span class="va">results2</span></span>
-<span><span class="co">#&gt;  [1] "same" "same" "same" "same" "same" "same" "same" "same" "same" "same"</span></span>
-<span><span class="co">#&gt; [11] "same" "same" "same" "same" "same" "same" "same" "same" "same" "same"</span></span>
-<span><span class="co">#&gt; [21] "same" "same" "same" "same" "same" "same" "same" "same" "same" "same"</span></span>
-<span><span class="co">#&gt; [31] "same" "same" "same" "same" "same" "same" "same" "same" "same" "same"</span></span>
-<span><span class="co">#&gt; [41] "same" "same" "same" "same" "same" "same" "same" "same" "same" "same"</span></span>
-<span><span class="co">#&gt; [51] "same" "same" "same" "same" "same" "same" "same" "same" "same" "same"</span></span>
-<span><span class="co">#&gt; [61] "same" "same" "same" "same" "same" "same" "same" "same" "same" "same"</span></span>
-<span><span class="co">#&gt; [71] "same" "same" "same" "same" "same" "same" "same" "same" "same" "same"</span></span>
-<span><span class="co">#&gt; [81] "same" "same" "same" "same"</span></span>
-<span><span class="va">results3</span></span>
-<span><span class="co">#&gt;  [1] "same" "same" "same" "same" "same" "same" "same" "same" "same" "same"</span></span>
-<span><span class="co">#&gt; [11] "same" "same" "same" "same" "same" "same" "same" "same" "same" "same"</span></span>
-<span><span class="co">#&gt; [21] "same" "same" "same" "same" "same" "same" "same" "same" "same" "same"</span></span>
-<span><span class="co">#&gt; [31] "same" "same" "same" "same" "same" "same" "same" "same" "same" "same"</span></span>
-<span><span class="co">#&gt; [41] "same" "same" "same" "same" "same" "same" "same" "same" "same" "same"</span></span>
-<span><span class="co">#&gt; [51] "same" "same" "same" "same" "same" "same" "same" "same" "same" "same"</span></span>
-<span><span class="co">#&gt; [61] "same" "same" "same" "same" "same" "same" "same" "same" "same" "same"</span></span>
-<span><span class="co">#&gt; [71] "same" "same" "same" "same" "same" "same" "same" "same" "same" "same"</span></span>
-<span><span class="co">#&gt; [81] "same" "same" "same" "same"</span></span></code></pre></div>
-<div class="section level5">
-<h5 id="continue-here">Continue here<a class="anchor" aria-label="anchor" href="#continue-here"></a>
-</h5>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># to save the changes in edgelist and nodeslist under a relevant name, use the following code when running this function</span></span>
-<span></span>
-<span><span class="co"># name_period_edgelist &lt;- evaluation_loop(edgelist, nodelist) [[1]] </span></span>
-<span></span>
-<span><span class="co"># name_period_edge_calc &lt;- evaluation_loop(edgelist, nodelist) [[2]]</span></span>
-<span></span>
-<span><span class="co"># name_period_nodecalc &lt;- evaluation_loop(edgelist, nodelist)) [[3]] </span></span></code></pre></div>
-<p>A CM analysis thus reveals both the nature, strength and complexity
-of ideas as well as whether they are valued positively or
-negatively.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">result_list</span><span class="op">[[</span><span class="fl">5</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 15</span></span></span>
+<span><span class="co">#&gt;      id node_name    paradigms int   value instruments indegree outdegree degree</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>    39 benefit of … <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>        1 <span style="color: #BB0000;">NA</span>                30         0     30</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>   602 Structural … <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>        1 Structural…        1         5      6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>   372 Institution… <span style="color: #BB0000;">NA</span>        Supr…     1 E M U Refo…        1         7      8</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>   469 Pragmatism   <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>        1 <span style="color: #BB0000;">NA</span>                 3         4      7</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>   569 solving the… <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>        1 <span style="color: #BB0000;">NA</span>                 6         0      6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>   296 Fiscal disc… Ordolibe… Inte…     1 <span style="color: #BB0000;">NA</span>                 1         5      6</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 6 more variables: w_indegree &lt;dbl&gt;, w_outdegree &lt;dbl&gt;, w_degree &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   go &lt;dbl&gt;, gow &lt;dbl&gt;, val_run1 &lt;dbl&gt;</span></span></span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
-<h3 id="categorical-analysis-calc_dims-function">Categorical analysis (calc_dims function)<a class="anchor" aria-label="anchor" href="#categorical-analysis-calc_dims-function"></a>
+<h3 id="step-5-simple-graphical-visualisation">Step 5: Simple graphical visualisation<a class="anchor" aria-label="anchor" href="#step-5-simple-graphical-visualisation"></a>
 </h3>
-<p>In the case of the Eurozone crisis, scholars have identified two
-competing paradigms underlying the policy debate: Keynesianism and
-Ordoliberalism. The Ordoliberal paradigm is characterised by a belief in
-the primacy of price stability which may be ensured by pursuing
-austerity and denouncing monetary financing. In contrast, for
-Keynesians, economic growth and employment take precedence and economic
-stimulation is advocated to promote these goals during economic
-downturns. Keynesians are also more favourable to monetary financing and
-for a central bank to act as a lender of last resort (Dullien and Guérot
-2012; Hall 2014). To capture the paradigmatic orthodoxy of Rutte and
-Knot’s belief system, all concepts in their CM were classified as either
-Keynesian, Ordoliberal or neutral (Van Esch et al. 2018). The result of
-this analysis shows that during the period from May 2010 and July 2012
-both Rutte and Knot’s belief system are more Ordoliberal than Keynesian
-(see figure 2). Other types of (automated) text analysis are capable of
-classifying text into broad categories in a similar fashion (Ban 2015).
-The nuance of the CM analyses, however, reveals that there are also
-considerable Keynesian elements in Rutte´s and Knot´s belief system,
-lending support to the thesis that paradigms are not incommensurable
-(Carstensen 2011b; Princen and Van Esch 2016). Moreover, due to the
-standardised way the CM technique works, we are also able to compare
-their scores to other leaders and conclude that internationally, the
-Dutch leaders have a relatively high leaning towards the Ordoliberalism
-(Van Esch et al. 2018). In a similar way, we could also analyse changes
-in ideas over time, thereby fulfilling the third requirement discussed
-above (Bonham, Shapiro, and Trumble 1979; Van Esch 2014).</p>
+<p>However in order to reap the full benefits of CM analysis and grasp
+the relations between Rutte’s ideas as well as reveal the argumentation
+and narrative underlying his belief system, the CM is best analysed
+visually in its graphical form. The draw_cm function creates a first
+simple visual graph of the CM on the basis of the edge and nodelist. In
+step 7 of this tutorial a function is introduced that produces a more
+encompassing visualisation with several interactive features is
+introduced.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#run the function</span></span>
+<span><span class="va">simple_cm_rutte_p2</span> <span class="op">&lt;-</span> <span class="fu">cognitivemapr</span><span class="fu">::</span><span class="fu"><a href="../reference/draw_cm.html">draw_cm</a></span><span class="op">(</span><span class="va">rutte_p2_edgelist</span>, <span class="va">rutte_p2_nodelist</span><span class="op">)</span></span></code></pre></div>
+<p><img src="cognitivemapr-Tutorial_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
+</div>
+<div class="section level3">
+<h3 id="step-6-categorical-analysis-paradigms-and-policy-instruments">Step 6: Categorical analysis: Paradigms and policy instruments<a class="anchor" aria-label="anchor" href="#step-6-categorical-analysis-paradigms-and-policy-instruments"></a>
+</h3>
+<p>The potential of the CM analysis may be expanded even further by
+making use of the theoretical notion that there are different types of
+ideas. Two types of ideas often used in the literature are paradigms and
+instrumental ideas. Paradigms are often seen as ‘ideas on steriods’(ref
+Hall), they encompass xx. Traditionally, rivalling paradigms are also
+perceived as incommensurable. The example data for this package is
+derived from a speech concerning the Eurozone crisis. In this domain,
+scholars have identified two competing paradigms that underly the policy
+debate: (neo)Keynesianism and Ordoliberalism (Dullien and Guérot 2012;
+Hall 2014). To capture the paradigmatic orthodoxy of Rutte’s belief
+system, all concepts in his CM were classified as either Keynesian,
+Ordoliberal or neutral. Applying the ‘paradigm_support’ function
+calculates the support by calculating the relative weighted degree (or
+saliency in CM terms) of all the Ordoliberal and Keynesian concepts in
+the map. Reflecting the idea that competing paradigms are
+incommensurable, when an Ordoliberal concept is evaluated negatively,
+its saliency (weighted degree) score is added to the support for the
+Keynesian paradigm and vice versa. Ambiguously evaluated concepts are
+omitted from the analysis.</p>
+<div class="section level4">
+<h4 id="step-6-1-paradigm-support">Step 6.1: Paradigm Support<a class="anchor" aria-label="anchor" href="#step-6-1-paradigm-support"></a>
+</h4>
+<p>In order to run the paradigm_support function, first the
+calculate_degrees function as well as the evaluate_concepts functions
+need to be ran first. As such, we will use the nodelist that resulted
+from the last iteration of the evaluate_concepts function as the input
+for the paradigm support function. In addition we need to derive the
+names of the paradigms present in the data.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># plot the 10 most salient concepts</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">rutte_p2_node_measures</span><span class="op">$</span><span class="va">w_degree</span> <span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>, <span class="va">rutte_p2_node_measures</span><span class="op">$</span><span class="va">gow</span> <span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>, xlab <span class="op">=</span> <span class="st">"Saliency"</span>, ylab <span class="op">=</span> <span class="st">"Weighted Goal Orientation"</span>, pch <span class="op">=</span><span class="fl">19</span>, frame <span class="op">=</span> <span class="cn">FALSE</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/text.html" class="external-link">text</a></span><span class="op">(</span><span class="va">rutte_p2_node_measures</span><span class="op">$</span><span class="va">w_degree</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>, <span class="va">rutte_p2_node_measures</span><span class="op">$</span><span class="va">gow</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>, <span class="va">rutte_p2_node_measures</span><span class="op">$</span><span class="va">node_name</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>, pos <span class="op">=</span> <span class="fl">1</span>, cex <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div>
-<p><img src="cognitivemapr-Tutorial_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
-<p>In addition, the CM technique allows scholars to distinguish between
-different types of beliefs, For instance, it is also possible to
-establish instrumental beliefs with CM. One way of doing this is to
-inductively identify a range of possible policy-instruments relevant in
-the policy area under study. For this, we used a larger set of cognitive
-maps regarding the Eurozone crisis to derive seven relevant policy
-measures: Stronger EU fiscal regulation, structural reforms, monetary
-measures by the ECB, economic stimulation, fiscal support, financial
-market measures and EMU reforms (Van Esch et al. 2018). Comparing Rutte
-and Knot’s maps shows that while they both lean towards an Ordoliberal
-approach, they differ in terms of their instrumental beliefs: Rutte
+<code class="sourceCode R"><span><span class="co"># store the result of the last iteration of evaluate_concepts as the new 'node_measures' df</span></span>
+<span></span>
+<span><span class="va">rutte_p2_node_measures</span> <span class="op">&lt;-</span> <span class="va">result_list</span><span class="op">[[</span><span class="fl">5</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># Derive all paradigm names from this dataframe, and store them in a list</span></span>
+<span></span>
+<span><span class="va">paradigms</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">rutte_p2_node_measures</span><span class="op">$</span><span class="va">paradigms</span><span class="op">)</span></span>
+<span><span class="va">paradigms</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span> <span class="op">(</span><span class="va">paradigms</span><span class="op">)</span> <span class="co"># omitting the NULL category</span></span>
+<span><span class="va">paradigm_a</span> <span class="op">&lt;-</span> <span class="va">paradigms</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span><span class="va">paradigm_b</span> <span class="op">&lt;-</span> <span class="va">paradigms</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span></code></pre></div>
+<p>Then run the paradigm_support function with these parameters, and
+store this in the node_measures dataframe</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># run the paradigm support function on this analysed data</span></span>
+<span></span>
+<span><span class="va">rutte_p2_node_measures</span> <span class="op">&lt;-</span> <span class="fu">cognitivemapr</span><span class="fu">::</span><span class="fu"><a href="../reference/paradigm_support.html">paradigm_support</a></span><span class="op">(</span><span class="va">rutte_p2_node_measures</span>, <span class="va">paradigm_a</span>, <span class="va">paradigm_b</span><span class="op">)</span></span></code></pre></div>
+<p>When summing up all the scores in the columns of both paradigms
+(displayed as a percentage of the total saliency of the CM), it is clear
+that this CM of Rutte signals a strong support for the Ordoliberal
+paradigm and limited support for the Keynesian paradigm.</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># calculate the total saliency (weighted degree) of the CM</span></span>
+<span><span class="va">w_degree</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">rutte_p2_node_measures</span><span class="op">$</span><span class="va">w_degree</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># make an empty df with names of instruments as ?</span></span>
+<span></span>
+<span><span class="va">par_support</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">vector</a></span><span class="op">(</span>mode<span class="op">=</span><span class="st">"numeric"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># calculate the support for each instrument</span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">paradigm</span> <span class="kw">in</span> <span class="va">paradigms</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">score</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">rutte_p2_node_measures</span><span class="op">[</span><span class="va">paradigm</span><span class="op">]</span><span class="op">/</span><span class="va">w_degree</span><span class="op">)</span></span>
+<span>  <span class="va">par_support</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/append.html" class="external-link">append</a></span><span class="op">(</span><span class="va">par_support</span>, <span class="va">score</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="co"># show the results in a dataframe</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">paradigms</span>, <span class="va">par_support</span><span class="op">)</span></span>
+<span><span class="co">#&gt;     paradigms par_support</span></span>
+<span><span class="co">#&gt; 1 Ordoliberal  0.13478261</span></span>
+<span><span class="co">#&gt; 2   Keynesian  0.06956522</span></span>
+<span></span>
+<span><span class="co">#delete temporary values</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/rm.html" class="external-link">rm</a></span><span class="op">(</span><span class="va">paradigm</span>, <span class="va">score</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="step-6-2-instrument-support">Step 6.2: Instrument Support<a class="anchor" aria-label="anchor" href="#step-6-2-instrument-support"></a>
+</h4>
+<p>In a similar way, but without the added complexity of the idea of
+incommensurability in the analysis, the instrument_support function
+calculates the support for different types of policy instruments
+embedded in the CM. In order to use this function, the concepts in the
+CM need to be categorised as belonging to a certain type of policy
+instrument. In de example data for this package seven policy instruments
+are distinguished: Stronger EU fiscal regulation, structural reforms,
+monetary measures by the ECB, economic stimulation, fiscal support,
+financial market measures and EMU reforms (Van Esch &amp; snellens
+2024). In this case, the calculation simply lists whether the concepts
+belonging to the different categories are evaluated positively or
+negatively taking the saliency (weighted degree) of the concept into
+account and stores the values in the node_measures dataframe. To execute
+the function, we first need to derive all instrument-names included in
+the data and store it in a vector.</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Derive all instrument names from the dataframe, and store them in a list</span></span>
+<span></span>
+<span><span class="va">instruments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">rutte_p2_node_measures</span><span class="op">$</span><span class="va">instruments</span><span class="op">)</span></span>
+<span><span class="va">instruments</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span> <span class="op">(</span><span class="va">instruments</span><span class="op">)</span> <span class="co"># omitting the NULL category</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">rutte_p2_node_measures</span> <span class="op">&lt;-</span> <span class="fu">cognitivemapr</span><span class="fu">::</span><span class="fu"><a href="../reference/instrument_support.html">instrument_support</a></span><span class="op">(</span><span class="va">rutte_p2_node_measures</span>, <span class="va">instruments</span><span class="op">)</span></span></code></pre></div>
+<p>When summing up all the scores in the columns of all the instruments
+(as a percentage of the total saliency of the CM), it shows that Rutte
 favours implementing structural reforms and stronger fiscal regulation
 over making institutional reforms to EMU, fiscal support and economic
-stimulation. He does not discuss financial market measures and ECB
-measures (see figure 3). Knot favours interventions by the ECB over
-structural and EMU reforms and stronger EU fiscal regulation. In
-addition, he shows a similar limited support for providing fiscal aid as
-the PM and does not support economic stimulation or financial market
-measures. These findings thus allow us to compare the extent the
-instrumental ideas of Rutte and Knot influenced the Dutch management of
-the Eurozone crisis (see below).</p>
+stimulation. The policy instruments financial market measures and ECB
+measures that were originally included in the empirical research are
+absent from Rutte’s CM altogether. An analysis along these lines would
+allow us to compare the extent the instrumental ideas of Rutte
+influenced the Dutch management of the Eurozone crisis.</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># make an empty vector to store the data in</span></span>
+<span><span class="va">instr_support</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">vector</a></span><span class="op">(</span>mode<span class="op">=</span><span class="st">"numeric"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># calculate the support for each instrument</span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">instrument</span> <span class="kw">in</span> <span class="va">instruments</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">score</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">rutte_p2_node_measures</span><span class="op">[</span><span class="va">instrument</span><span class="op">]</span><span class="op">/</span><span class="va">w_degree</span><span class="op">)</span></span>
+<span>  <span class="va">instr_support</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/append.html" class="external-link">append</a></span><span class="op">(</span><span class="va">instr_support</span>, <span class="va">score</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="co"># show the results in a dataframe</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">instruments</span>, <span class="va">instr_support</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                     instruments instr_support</span></span>
+<span><span class="co">#&gt; 1            Structural Reforms   0.082608696</span></span>
+<span><span class="co">#&gt; 2                 E M U Reforms   0.039130435</span></span>
+<span><span class="co">#&gt; 3 Stronger EU fiscal regulation   0.056521739</span></span>
+<span><span class="co">#&gt; 4                Fiscal Support   0.013043478</span></span>
+<span><span class="co">#&gt; 5          Economic Stimulation   0.004347826</span></span>
+<span></span>
+<span><span class="co">#remove temporary values</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/rm.html" class="external-link">rm</a></span><span class="op">(</span><span class="va">instrument</span>, <span class="va">score</span><span class="op">)</span></span></code></pre></div>
+<p>In essence, the instrument_support function conducts a rather
+straightforward categorical analysis. So while for the example data
+categorising the concepts in the CM in terms of type of policy
+instrument may be relevant, scholars can use this function to conduct
+categorical analyses using any other type of categorisation relevant to
+their research. In contrast to the paradigm_support function also the
+number of categories is flexible.</p>
+</div>
 </div>
 <div class="section level3">
-<h3 id="causal-power">Causal Power<a class="anchor" aria-label="anchor" href="#causal-power"></a>
+<h3 id="step-7-interactive-visualisation-of-the-cm">Step 7:: Interactive visualisation of the CM<a class="anchor" aria-label="anchor" href="#step-7-interactive-visualisation-of-the-cm"></a>
 </h3>
-<p>(HEB ik nog niet omgezet in R code) Finally, taking full advantage of
-its graphical nature, CM can be used to establish the causal strength of
-the policy instruments identified in a map. For this we combine the
-narrative analysis with the quantitative measures. We start by assuming
-that the higher the weight of the link between cause and effect, the
-stronger actors believe in its causal effect. In addition, we assume
-that the larger the distance between the cause and the effect (the more
-logical steps it takes to explain the relationship between instrument
-and goal), the weaker the presumed causal power of the instrument (cf.
-Septer, Dijkstra, and Stokman 2012; Shapiro and Bonham 1973). On the
-basis of this, we propose that the causal power (CP) of an instrument on
-a particular goal may be established as follows (Septer, Dijkstra, and
-Stokman 2012): First, for each subsequent concept in the antecedent
-path, its autonomous power (AP) may be determined following the
-calculation:</p>
+<p>As argued above, to conduct a narrative analysis of the CM, the most
+convenient way is to make a visual representation of the CM. Using the
+visNetworks package, it is possible to draw more sophisticated CMs that
+include information about the paradigms and instruments and that are
+more easy to read. In addition, with this package a CM can be made
+interactive, allowing the user to move the concepts, zoom in and out. In
+addition, it creates containers for the different instrument types so
+the instrument-concepts can be shown both individually, or collapsed
+into their category. In order to use such features, the edgelist and
+node_measures lists must be reformatted to work with the VisNetworks
+package. The prep_cm_visualisation function will conduct this
+reformatting.</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># run the prep_cm_visualisation function</span></span>
+<span><span class="va">interact_cm_lists</span> <span class="op">&lt;-</span> <span class="fu">cognitivemapr</span><span class="fu">::</span><span class="fu"><a href="../reference/prep_cm_visualisation.html">prep_cm_visualisation</a></span><span class="op">(</span><span class="va">rutte_p2_edgelist</span>,<span class="va">rutte_p2_node_measures</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># extract and store the new edge and node_measures list</span></span>
+<span><span class="va">rutte_p2_edgelist</span> <span class="op">&lt;-</span> <span class="va">interact_cm_lists</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="va">rutte_p2_node_measures</span> <span class="op">&lt;-</span> <span class="va">interact_cm_lists</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
+<p>Subsequently, the interactive_visual_cm function will produce the
+interactive CM for the researcher to analyse. In order for the r</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># create the interactive cm</span></span>
+<span><span class="va">interactive_cm_rutte_p2</span> <span class="op">&lt;-</span> <span class="fu">cognitivemapr</span><span class="fu">::</span><span class="fu"><a href="../reference/interactive_visual_cm.html">interactive_visual_cm</a></span><span class="op">(</span><span class="va">rutte_p2_edgelist</span>, <span class="va">rutte_p2_node_measures</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># if a group consists of one value, the clustering only shows the node not the group</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="step-8-causal-power-to-be-added-in-the-next-version">Step 8: Causal Power [to be added in the next version]<a class="anchor" aria-label="anchor" href="#step-8-causal-power-to-be-added-in-the-next-version"></a>
+</h3>
+<p>Finally, taking full advantage of its graphical nature, CM can be
+used to establish the causal strength of the policy instruments
+identified in a map. For this we combine the narrative analysis with the
+quantitative measures. We start by assuming that the higher the weight
+of the link between cause and effect, the stronger actors believe in its
+causal effect. In addition, we assume that the larger the distance
+between the cause and the effect (the more logical steps it takes to
+explain the relationship between instrument and goal), the weaker the
+presumed causal power of the instrument (cf. Septer, Dijkstra, and
+Stokman 2012; Shapiro and Bonham 1973). On the basis of this, we propose
+that the causal power (CP) of an instrument on a particular goal may be
+established as follows (Septer, Dijkstra, and Stokman 2012: First, for
+each subsequent concept in the antecedent path, its autonomous power
+(AP) may be determined following the calculation:</p>
 <p>AP = Ev<em>W</em>(0.9(D-1)); Whereby: Ev = Evaluation of the cause
 concept (-1, 0, +1) W = Weight of the relation D = Distance/steps to the
 effect concept</p>
@@ -491,21 +564,6 @@ conditions under which ideas affect policies and even to run simulations
 of policy making processes (Bonham, Shapiro, and Trumble 1979; Hart
 1976).</p>
 </div>
-<div class="section level3">
-<h3 id="upgraded-visualisation">Upgraded visualisation<a class="anchor" aria-label="anchor" href="#upgraded-visualisation"></a>
-</h3>
-<p>(draw final map function)</p>
-</div>
-<div class="section level3">
-<h3 id="nog-ergens-overlap-in-maps">(nog ergens overlap in maps? )<a class="anchor" aria-label="anchor" href="#nog-ergens-overlap-in-maps"></a>
-</h3>
-</div>
-</div>
-<div class="section level2">
-<h2 id="making-cm-available-for-scholars-without-technical-skills-the-cm-shiny-app">Making CM available for scholars without technical skills: the CM
-shiny app<a class="anchor" aria-label="anchor" href="#making-cm-available-for-scholars-without-technical-skills-the-cm-shiny-app"></a>
-</h2>
-<p>(HEB ik nog niet omgezet in R code)</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

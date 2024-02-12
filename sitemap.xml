@@ -28,6 +28,9 @@
     <loc>https://fesch-start.github.io/cognitivemapr/reference/calculate_degrees.html</loc>
   </url>
   <url>
+    <loc>https://fesch-start.github.io/cognitivemapr/reference/draw_cm.html</loc>
+  </url>
+  <url>
     <loc>https://fesch-start.github.io/cognitivemapr/reference/evaluate_concepts.html</loc>
   </url>
   <url>
@@ -40,7 +43,13 @@
     <loc>https://fesch-start.github.io/cognitivemapr/reference/instrument_support.html</loc>
   </url>
   <url>
+    <loc>https://fesch-start.github.io/cognitivemapr/reference/interactive_visual_cm.html</loc>
+  </url>
+  <url>
     <loc>https://fesch-start.github.io/cognitivemapr/reference/paradigm_support.html</loc>
+  </url>
+  <url>
+    <loc>https://fesch-start.github.io/cognitivemapr/reference/prep_cm_visualisation.html</loc>
   </url>
   <url>
     <loc>https://fesch-start.github.io/cognitivemapr/reference/prepare_lists_from_edgelist.html</loc>
