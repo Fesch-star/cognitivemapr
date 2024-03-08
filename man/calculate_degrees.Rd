@@ -12,26 +12,27 @@ The data needs to following column structure. The last two columns include
 the meta-data and are optional. For other research projects, other types of
 meta-data may be important.
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{ * from: the 'cause'-node/concept id (corresponding to the id in the nodeslist)
+\if{html}{\out{<div class="sourceCode">}}\preformatted{ * from: the 'cause'-node/concept id (corresponding to the id in the nodelist)
 
- * to: the 'effect'-node/concept id (corresponding to the id in the nodeslist)
+ * to: the 'effect'-node/concept id (corresponding to the id in the nodelist)
 
  * weight: the weight of the edge/relation (the number of times the relation
     is mentioned in the raw data (speech/text/survey))
 
- * map_id#: a unique id for the source (speech/text/respondent) the CM
+ * map_id: a unique id for the source (speech/text/respondent) the CM
     is derived from
 
- * map_date#: the date of the source (speech/text/survey)the CM is derived
+ * map_date: the date of the source (speech/text/survey)the CM is derived
     from
 }\if{html}{\out{</div>}}}
 
-\item{nodelist}{The function takes a nodelist (dataframe) including all nodes/concepts in the CM
-The data needs to following column structure. Other columns may be included
-containing categorization of the concepts in terms of - for instance - the
-paradigm they align with or the type of policy instrument the concept refers to.
-For different researchprojects, different types of categorizations may be relevant.
-In addition, researchers may want to add meta-data to the nodes:
+\item{nodelist}{The function takes a nodelist (dataframe) including all unique nodes/concepts
+in the CM. The data needs to follow the column structure listed below.
+Other columns may be included containing categorization of the concepts in
+terms of - for instance - the paradigm they align with or the type of policy
+instrument the concept refers to. For different research projects, different
+types of categorizations may be relevant. In addition, researchers may want
+to add meta-data to the nodes. The required column structure:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{ * id: unique id (number) for the node/concept
 
@@ -43,8 +44,8 @@ In addition, researchers may want to add meta-data to the nodes:
 }\if{html}{\out{</div>}}}
 }
 \value{
-The function returns a dataframe entitled "node_measures" with all calculated values as
-well as the original data.
+The function returns a dataframe entitled "node_measures" with all
+calculated values as well as the original data.
 For the function to return and store the following output a dataframe with the
 values, you need to insert the following code below the function in your script:
 

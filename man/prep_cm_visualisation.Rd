@@ -15,11 +15,14 @@ prep_cm_visualisation(edgelist, node_measures)
 Returns a list of lists
 }
 \description{
-It needs to be run on the edgelist and node_measures list and to have run the
-calculate_degrees, evaluate_concepts, paradigm_support and instrument_support
-prior to running this function to reap the function's full potential.
-It prepares the resulting egdelist and node_measure list for the interactive_cm
-function
+This function needs to be run on the edgelist and node_measures list and you
+will need to have run the calculate_degrees, evaluate_concepts, paradigm_support
+and instrument_support functions on your data prior to running this function
+to reap the function's full potential.
+This function reformats the egdelist and node_measure lists resulting from the
+previously ran function so you can make create these into an interactive_cm
+with the "interactive_visual_cm" function in this package which in turn relies
+on the VisNetworks package.
 }
 \examples{
 \dontrun{

@@ -16,10 +16,11 @@ Returns a visual graph
 }
 \description{
 This function is used to provide a first simple visualisation of the CM as
-recorded in the edgelist and nodelist. The "interactive_CM_visualization
-function in this package provides a more sufficated and easier to read graph
-(see below).It takes an edgelist and nodelist, you may use either the original
-nodelist or the node_measures list.
+recorded in the edgelist and nodelist. The "interactive_CM_visualization"
+function in this package provides a more sophisticated and easier to read graph
+(see below). This function takes an edgelist and nodelist, you may use either
+your original nodelist or the node_measures list that is returned by functions
+you may have used earlier in the analysis (like the 'calculate_degrees" function).
 }
 \examples{
 \dontrun{
