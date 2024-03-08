@@ -74,7 +74,7 @@ The functions requires your edgelist to have the following four columns
 with the listed column titles, in addition any number of columns with
 meta-data may be added.
 
-1.   "from": cause concept
+1.  "from": cause concept
 
 2.  "to": effect concept
 
