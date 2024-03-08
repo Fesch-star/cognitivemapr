@@ -1,8 +1,8 @@
-#' Reformats a simple edgelist into an edgelist and nodelist that have the required
-#' format for the cognitivemapr package
+#' Reformats a simple edgelist into an edgelist and nodelist formatted correctly
+#' for the cognitivemapr package
 #'
-#' This function is used to determine to derive a nodelist from a simple edgelist
-#' as well as reformat a simple edgelist so it will ready for analysis with the
+#' This function is used to derive a nodelist from a simple edgelist as well as
+#' reformat the edgelist so it is formatted correctly to be used in the
 #' cognitivemapr Rpackage.
 #' It takes an edgelist with the following 4 mandatory columns:
 #' "from": cause concept
@@ -15,23 +15,28 @@
 #' in addition any number of columns with meta-data may be added.
 #'
 #' The function replaces the concepts in the edgelist with id's that
-#' correspond to those in the nodelist and reorders the columns, to match the
-#' requirements of the other functions in this package. It checks whether columns
-#' weight and edge-value in the edgelist have values, and sets these values to
-#' the default of 1 (weight = 1, edge_value = positive)if they were left empty.
+#' correspond to those in the returned nodelist. It reorders the columns to match
+#' the requirements of the other functions in this package. It checks whether the
+#' columns weight and edge-value in the edgelist have values and sets these values
+#' to the default of 1 (weight = 1, edge_value = positive)if not.
 #' It assumes all the concepts in the edgelist are in principle normatively positive
 #' or neutral by adding two columns: value.x (value of concepts in 'from' column)
 #' and value.y (value of concepts in 'to'  column) and sets all values to 1 (=positive)
 #'
 #' It derives a nodelist from the edgelist with all unique concepts and an id to
 #' link the edge and nodelists. It adds three  columns to the nodelist,
-#' a column 'value' which is set to 1 (concept has a positive or neutral value)
-#' by default. This value may be changed manually in excel if needed after
+#' a column 'value' which is set to 1 (the concept has a positive or neutral value)
+#' by default. This value may be changed (in R or manually in excel) if needed after
 #' running this function. It also adds two empty columns named "paradigms" and
-#' "instruments", for the researcher to fill in manually via excel after running
-#' the function. Categorizing concepts as paradigmatic or as instruments is optional,
-#' but required to run the functions paradigm_support and instrument_support
-#' functions - see more instructions in the documentation of these functions).
+#' "instruments", for the researcher to fill in after running the function.
+#' Categorizing concepts as paradigmatic or as instruments is optional,
+#' but required to run the functions "paradigm_support" and "instrument_support"
+#' functions of this package - see more instructions in the documentation of
+#' these functions).
+#' If the value of the nodes is changed after running this function, you will
+#' subsequently need to run the "align_edge_nodelist" function to make sure your
+#' edge and nodelist are aligned again (not necessary when only paradigms or
+#' instruments are added).
 #'
 #' @param edgelist an edgelist
 #' @return Returns a list with the resulting edgelist and nodelist

@@ -1,13 +1,17 @@
 #' Creates an interactive graph of the CM
 #'
-#' It needs to be run on the edgelist and node_measures list and to have run the
+#' It needs to be run on the edgelist and node_measures list and you need to run
 #' calculate_degrees, evaluate_concepts, paradigm_support and instrument_support
 #' prior to running this function to reap the function's full potential.
 #' It uses the 'layout nicely' algorithm, you can move the concepts
 #' zoom in and out, it shows the sign of the relations in colors, as well as
-#' different node forms for the different paradigmatic concepts. it creates containers for
-#' the different instruments so you can show the 'instrument-concepts individually
-#' or collapse them into one category. The resulting CM also has legends.
+#' different node forms for the different paradigmatic concepts. it creates
+#' containers for the different instruments so you can show the 'instrument-concepts'
+#' individually or collapse them into one category. The resulting CM has legends.
+#'
+#' You need to reformat you edge and nodelist first to work with the specifications
+#' of VisNetworks - by using the function "prep-cm_visualisations" from our
+#' cogntivemapr package first.
 #'
 #' @param edgelist an edgelist prepared to work with VisNetworks
 #' @param node_measures an node_measures prepared to work with VisNetworks

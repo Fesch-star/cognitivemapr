@@ -3,14 +3,15 @@
 #' Calculates to what extent the cognitive map signals support for certain types
 #' of policy instruments. More specifically, it determines the saliency of all
 #' concepts classified as a type of policy instrument which are valued positively
-#' as determined via the evaluate_concepts function. To be able to run this
-#' function, the functions calculate-degrees AND evaluate_concepts  should have
-#' been run first. Also the nodelist (node_measures) list this function takes,
+#' as determined via the "evaluate_concepts" function. To be able to run this
+#' function, the functions "calculate-degrees" AND "evaluate_concepts" should have
+#' been run first. Also the nodelist (node_measures) this function takes,
 #' needs to contain a column with the name 'instruments' in which for each concept
 #' it is noted what type of policy instrument it represents. If a concept does
 #' not refer to a policy instrument, the cell should be left empty.
 #' The researcher can use any typology of policy instruments that is relevant to
-#' their research.
+#' their research. This function can also be used to conduct a similar analysis
+#' on categories other than policy instruments, like a thematic analysis.
 #'
 #' @param node_measures An object of class "dataframe" including all measures
 #' returned when running the functions calculate_degrees & evaluate_concepts, as

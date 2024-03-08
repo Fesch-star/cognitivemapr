@@ -1,8 +1,8 @@
 #' Reformats a simple edgelist and nodelist into an edgelist and nodelist that
 #' have the required format for the cognitivemapr package
 #'
-#' This function is used to reformat a simple node and edgelist into a node and
-#' edgelist that have the proper format to conduct all analyses in the
+#' This function is used to reformat both a simple node and edgelist into a node
+#' and edgelist that have the proper format to conduct all analyses in the
 #' cognitivemapr Rpackage.
 #'
 #  It takes an edgelist with the following 3 mandatory columns:
@@ -15,7 +15,7 @@
 #'            the function will set it by default to 1 (positive)
 #'  in addition any number of columns with meta-data may be added.
 #'
-#' It a nodelist with the following 4 mandatory columns:
+#' It takes a nodelist with the following 4 mandatory columns:
 #' "node_name": name of all unique concepts in an edgelist
 #' "value": the intrisic (normative) value of the concept displayed as a number:
 #'          1 = positive/neutral, -1 = negative. You should use the negative
@@ -38,17 +38,17 @@
 #' The function adds id's to the nodelist and replaces the concepts in the edgelist
 #' with id's that correspond to those in the nodelist. It reorders the columns in
 #' the edgelist to match the requirements of the  functions in this package.
-#' It checks whether columns weight and edge-value in the edgelist and the column
-#' value in the nodelist have values, and sets these values to the default of 1
-#' (weight = 1, edge_value = positive, (node)value = positive/neutral) if they were left
-#' empty in the uploaded lists.
+#' It checks whether the columns weight and edge-value in the edgelist and the
+#' column value in the nodelist have values, and sets these values to the default
+#' of 1 (weight = 1, edge_value = positive, (node)value = positive/neutral) if
+#' they were left empty in the uploaded lists.
 #' It assigns all the concepts in the edgelist the value they were given in the
 #' nodelist (or if left empty set to the default of 1) by adding two columns to
 #' the edgelist: value_x (value of concepts in 'from' column) and value_y (value
 #' of concepts in 'to'  column).
 #'
 #' It returns an edgelist and a nodelist with all the information needed
-#' to run all functions in the cognitivemapr package in the proper order, and
+#' to run the functions in the cognitivemapr package in the proper order, and
 #' retains all meta-data that was included in the original lists.
 #'
 #' @param edgelist an edgelist

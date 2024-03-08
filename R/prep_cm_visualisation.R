@@ -1,10 +1,13 @@
 #' Prepares the edge and node_measures list for VisNetwork graph
 #'
-#' It needs to be run on the edgelist and node_measures list and to have run the
-#' calculate_degrees, evaluate_concepts, paradigm_support and instrument_support
-#' prior to running this function to reap the function's full potential.
-#' It prepares the resulting egdelist and node_measure list for the interactive_cm
-#' function
+#' This function needs to be run on the edgelist and node_measures list and you
+#' will need to have run the calculate_degrees, evaluate_concepts, paradigm_support
+#' and instrument_support functions on your data prior to running this function
+#' to reap the function's full potential.
+#' This function reformats the egdelist and node_measure lists resulting from the
+#' previously ran function so you can make create these into an interactive_cm
+#' with the "interactive_visual_cm" function in this package which in turn relies
+#' on the VisNetworks package.
 #'
 #' @param edgelist an edgelist
 #' @param node_measures an node_measures list
@@ -20,12 +23,12 @@ prep_cm_visualisation <- function(edgelist, node_measures) {
 
   # in the visNetwork package the column name "value" is reserved for the size of
   # the nodes rather than its evaluation, so rename the value column in the node_measure list
-  # idem for the column node_name which needs to be relabelled into "label"
+  # idem for the column node_name which needs to be relabeled into "label"
   node_measures <- node_measures %>%
     dplyr::rename(evaluation = value) %>%
     dplyr::rename(label = node_name)
 
-  # rename the column to "value", but rescale to optimise visualisation, the range
+  # rename the column to "value", but re scale to optimise visualisation, the range
   # of the maps of political leaders derived from speeches is often about 1-10 so
   # (wdegree/5)+1 appears to be a useful scale
   node_measures <- dplyr::mutate(node_measures, value = w_degree/5 + 1)
