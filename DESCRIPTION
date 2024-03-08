@@ -22,13 +22,24 @@ Authors@R:
         "Moopen", 
         email = "n.moopen@uu.nn", 
         role = c("ctb"),
+        comment = c(ORCID = "YOUR-ORCID-ID") 
+      ),
+      person(
+        "Jeroen", 
+        "Snellens", 
+        email = "snellens@gmail.com", 
+        role = c("ctb"),
         comment = c(ORCID = "YOUR-ORCID-ID")
     )
     )
-Description: Cognitive Mapping is a method specifically designed to study belief
-  systems as espoused by individuals or organisations and has several
-  advantages over other methods. The goal of `cognitivemapr` is to reduce
-  the initial investment currently needed to start using the method.
+Description: Assist in analysing cognitive maps following the method described in: 
+  Van Esch and Snellens (2024) (doi.org/10.1080/13501763.2022.2155215). Makes 
+  doing CM analysis more simple, time-effective and FAIR. 
+  Includes functions to create and reformat simple edge and nodelists; 
+  calculate the most common quantitative CM-measures; calculate the normative 
+  evaluation of the concepts in the CM; calculates paradigm and instrument support 
+  and creates a simple and interactive visualisation of the CM to facilitate the
+  narrative analysis of CMs.
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
