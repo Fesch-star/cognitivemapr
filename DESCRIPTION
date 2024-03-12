@@ -8,7 +8,7 @@ Authors@R:
         "van Esch", 
         email = "f.a.w.j.vanesch@uu.nl", 
         role = c("aut", "cre"),
-        comment = c(ORCID = "YOUR-ORCID-ID")
+        comment = c(ORCID = "0000-0002-2559-3127")
       ),   
       person(
         "Jelle", 
@@ -22,7 +22,7 @@ Authors@R:
         "Moopen", 
         email = "n.moopen@uu.nn", 
         role = c("ctb"),
-        comment = c(ORCID = "YOUR-ORCID-ID") 
+        comment = c(ORCID = "0000-0003-1412-4402") 
       ),
       person(
         "Jeroen", 
