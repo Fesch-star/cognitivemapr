@@ -52,7 +52,7 @@ startingpoints the data may find itself in:
     cognitivemapr package;
 
 2.  align_edge_nodelist: This function is used when you have an edgelist
-    and a nodelist, but these are not properly aligned yet or in the
+    and a nodelist, but these are not properly aligned yet nor in the
     required format. The function (re)aligns the lists by copying the
     (normative) value of nodes from the nodelist to the edgelist, which
     is required for running the other functions in the package. You may
