@@ -15,6 +15,11 @@ several functions to conduct the type of cognitive mapping analysis as described
 in the article: 'How to ‘measure’ Ideas. Introducing the method of cognitive mapping
 to the domain of ideational policy studies’ as published in 2024 in the Journal
 of European Public Policy by Femke Van Esch and Jeroen Snellens.
+
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+
 authors:
 - family-names: van Esch
   given-names: Femke

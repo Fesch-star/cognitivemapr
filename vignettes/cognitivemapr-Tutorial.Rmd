@@ -28,10 +28,11 @@ the initial investment currently needed to start using the method. The
 package provides several functions to conduct the type of cognitive
 mapping analysis as described in the article: 'How to 'measure' Ideas.
 Introducing the method of cognitive mapping to the domain of ideational
-policy studies' as published in 2024 in the Journal of European Public
-Policy by Femke Van Esch and Jeroen Snellens. For an instruction on how
-to compile the data (edge and nodelists) needed to use the functions in
-this package, see the 'Tutorial_edge_nodelist'.
+policy studies' as published in 2024 in the *Journal of European Public
+Policy* ,31(2), 428-451. by Femke Van Esch and Jeroen Snellens
+(<https://doi.org/10.1080/13501763.2022.2155215>). For an instruction on
+how to compile the data (edge and nodelists) needed to use the functions
+in this package, see the 'Tutorial_edge_nodelist'.
 
 # Getting started
 
