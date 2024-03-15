@@ -20,7 +20,7 @@ Authors@R:
       person(
         "Neha", 
         "Moopen", 
-        email = "n.moopen@uu.nn", 
+        email = "n.moopen@uu.nl", 
         role = c("ctb"),
         comment = c(ORCID = "0000-0003-1412-4402") 
       ),

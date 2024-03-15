@@ -1,0 +1,356 @@
+---
+title: "Tutorial Edge and Nodelists"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Tutorial-Edge-Nodelists}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Create edge and nodelists
+
+## 1: Install `cognitivemapr`
+
+To install the cognitivemapr package, run the following code:
+
+```{r, results='hide', warning=FALSE, message=FALSE}
+install.packages("devtools", repos = "https://cloud.r-project.org/")
+library(devtools)
+
+devtools::install_github("https://github.com/Fesch-star/cognitivemapr")
+
+# install.packages("remotes", repos = "https://cloud.r-project.org/")
+# library(remotes)
+
+# remotes::install_github("Fesch-star/cognitivemapr")
+```
+
+## 2: Introducing the functions
+
+The cognitivemapr package contains three functions that help to reformat
+existing edgelists, create associated nodelists and put these into the
+proper form to be used with the functions in this package. A cognitive
+map is a semantic network consisting of causal and utility relations
+(see Van Esch and Snellens, 2024). Therefore, in order to use this
+Rpackage, the edgelist should consist of a list of directed relations
+between concepts. The nodelist contains all unique concepts in the
+edgelist with additional information regarding these concepts, such as
+their intrinsic normative value or their categorisation in terms of
+paradigms or (policy) instruments (see further below). The functions
+that are introduced in this tutorial cater to the various startingpoints
+the data may find itself in:
+
+1.  prepare_lists_from_edgelist: This function is used when you only
+    have an edgelist with relations. It helps you create the nodelist
+    associated with this edgelist and reformats the edgelist to work
+    with the other functions in the cognitivemapr package;
+
+2.  align_edge_nodelist: This function is used when you have an edgelist
+    and a nodelist, but these are not properly aligned yet. The function
+    (re)aligns the lists by copying the (normative) value of nodes from
+    the nodelist to the edgelist, which is required for running the
+    other functions in the package. This situation may occur when you
+    have (manually) added or changed the (intrinsic normative) value of
+    some of the nodes in your nodelist (you do not need to re-align the
+    edge and nodelist returned from the first function when you have
+    only added the categorisation in terms of paradigms or instruments).
+
+3.  reformat_edge_nodelist: This function is used when you have both an
+    edgelist and associated nodelist that contain the necessary
+    information but are not in the required format for this package. The
+    function reformats both lists so you can run the other functions in
+    this package.
+
+The edgelists and nodelists that these functions take, already require
+you to use a certain formatting while compiling them (see below). In
+this tutorial simple bespoke edgelists (and nodelists) will be created
+as examples to run the functions on.
+
+## 3: Create a nodelist from an edgelist
+
+In order to run the functions in this package an edgelist with
+associated nodelist is needed. If your data only exists of an edgelist
+with relations, the function "prepare_lists_from_edgelist" will help you
+create an accompanying nodelist, containing all the (unique) concepts in
+your edgelist.
+
+This function requires your edgelist to have the following 4 columns
+with the listed column titles, in addition any number of columns with
+meta-data may be added.
+
+1.  "from": cause concept (may consist of multiple words)
+
+2.  "to": effect or utility concept (may consist of multiple words)
+
+3.  "weight": number of times the relation is mentioned (can have any
+    number, if left empty the function will set it to 1 by default)
+
+4.  "edge_value": sign/value of the relation: can be 1 (positive
+    relation), -1 (negative relation), or 0 (non-existent relation). If
+    left empty the function will set it by default to 1 (positive).
+
+We first create a simple dataframe/edgelist fitting these requirements
+to use as an example in this tutorial (see Van Esch etal 2018 for a
+discussion on how to derive an edgelist for CM analysis from texts or
+obtain the data directly from respondents).
+
+```{r message=FALSE, warning=FALSE, results='hide'}
+
+# create a simple single edgelist
+
+# create a list of cause concepts (mandatory column)
+from <- c("a","c","d","b") 
+# creat a list of effect/utility concepts (mandatory column)
+to <- c("c","d","e","d") 
+# set number of times the relation occurs (mandatory column, could be left empty)
+weight <- c(1,1,1,1) 
+# set the value of the relation (positive, negative or non-existent effect, could be left empty)
+edge_value <- c(1,-1,-1,1) 
+# example of non-mandatory meta-data: date
+map_date <- c("20-5-2010", "21-5-2010","22-5-2010","23-5-2010") 
+# combine the data into a dataframe: the original simple edgelist
+single_edgelist <- data.frame(from, to, weight, edge_value, map_date)
+
+```
+
+Run the function on the example data and return the resulting edgelist
+and nodelist.
+
+```{r}
+# run the function on the example data and return the resulting edge and nodelist
+
+# run the function and return both the edge and nodelist
+new_edgelist <- cognitivemapr::prepare_lists_from_edgelist(single_edgelist)[[1]]
+nodelist <- cognitivemapr::prepare_lists_from_edgelist(single_edgelist)[[2]]
+
+# show both lists
+new_edgelist
+nodelist
+
+
+```
+
+Reviewing the resulting edgelist and nodelist shows that the list has
+been reformatted to fit the requirements of the other functions in this
+package: The created nodelist contains all (unique) concepts featured in
+the original edgelist and for each of these concepts a unique id was
+created. By default, the function assumes that all concepts have a
+positive/neutral (intrinsic normative) value (value of 1). As no
+information was supplied about the categorisation of the concepts in
+terms of paradigms or instruments, these columns are created but left
+empty.
+
+In addition, the edgelist has been reformatted to align with the
+nodelist: Rather than listing the concepts, the "from" and "to" columns
+now list the id's for the concepts corresponding to those in the
+nodelist. The data in the columns "weight", "edge-value" and "map_date"
+are left untouched. However two extra columns were added displaying the
+(intrinsic normative) value of the concepts in the "from" (value.x) and
+"to" (value.y) columns as derived from the nodelist.
+
+The nodelist and new edgelist that the prepare_lists_from_edgelist
+function creates contain the minimum amount of data needed to run the
+most basic functions in the cognitivemapr Rpackage (calculate_degrees &
+evaluate_concepts) as well as the correct formatting. However, more
+information is needed to reap the full potential of the package, and to
+use functions like paradigm_support, instrument_support and
+interactive_visual_cm. These functions require a nodelist that supplies
+the categorisation of concepts in terms of paradigms and instruments.
+Also, some concepts may have an intrinsic negative normative value,
+which necessitates adjusting the values in the "value" columns in both
+the nodelist and edgelist. The nodelist that the
+prepare_list_from_edgelist function has returned may be used as a
+template to add/change this information.
+
+## 4: Adding to or revising a nodelist
+
+Deriving a nodelist from an edgelist with the prepare_list_from_edgelist
+function results in nodelist that does not contain the necessary
+categorisations of the concepts in the CM to conduct a full analysis. In
+addition, the (normative) value of all concepts is set to
+positive/neutral by default, which may not be accurate. In order to add
+and/or change the information, changes must be made to the nodelist.
+This may be done manually in excel by storing the nodelist. However, for
+our example data, we will make the changes in R. When changes are made
+in de value of the concepts in the nodelist, the edge and nodelist must
+subsequently be realigned using the second list function in the
+cognitivemapr package: align_edge_nodelist.
+
+```{r}
+
+# to store the new_nodelist when you want to make the changes manually in excel, you run the following code to save the list in csv format in a location of your choice [will not be executed in this tutorial]
+
+# write.csv(nodelist, file = "[location/filename.csv]", row.names = FALSE)
+
+# change nodelist by adding information on paradigms and instruments
+nodelist$paradigms[nodelist$node_name == c("a", "b")] <- "ordoliberal" 
+nodelist$instruments[nodelist$node_name == c("a")] <- "economic stimulation"
+
+# change the value of concept a from positive to negative
+nodelist$value[nodelist$node_name == "c"] <- -1
+
+# renaming the nodelist for clarity
+new_nodelist <- nodelist
+
+# show the new_nodelist
+new_nodelist
+```
+
+The new_nodelist that is returned has not changed and still contains the
+same information as we (manually) added to it in the previous steps. The
+new_edgelist2 shows a new value of -1 for concept c, which corresponds
+to the changes we (manually) made to the nodelist. Note that there is no
+trace of the changes we made in the paradigms and instruments column in
+the edgelist. This information is only stored in the nodelist. This
+means no re-alignment of the egdelist and nodelist is needed when you
+only amend the information on the paradigms and instruments.
+
+## 5: (Re) align the edge and nodelist
+
+The second function to create edge and nodelist that are properly
+formatted to use with the functions in the cognitivemapr Rpackage -
+align_edge_nodelist - may be used to properly realign the edgelist with
+the amended nodelist. This function takes the amended nodelist and the
+edgelist which was returns from the 'prepare_lists_from_edgelist' as
+it's input.
+
+```{r}
+
+#run the function on the amended nodelist and new_edgelist
+new_edgelist2 <- cognitivemapr::align_edge_nodelist(new_edgelist, nodelist)[[1]]
+new_nodelist <- cognitivemapr::align_edge_nodelist(new_edgelist, nodelist)[[2]]
+
+# show the new edge and nodelist
+new_edgelist2
+new_nodelist
+```
+
+The new_nodelist that is returned has not changed since the previous
+step and still contains the same information as we (manually) added to
+it. The new_edgelist2, however, shows a new value of -1 for concept c,
+which corresponds to the changes included in the new_nodelist. Note that
+there is no trace of the changes we made in the paradigms and
+instruments column in the edgelist. This information is only stored in
+the nodelist. This means no re-alignment of the egdelist and nodelist is
+needed when you only amend the information on the paradigms and
+instruments.
+
+## 6: Reformat edge and nodelist
+
+Finally, you may start the proces of analysing your data with the
+cognitivemapr package with both an edgelist as well as a nodelist with
+the proper node values and categorisation of the concepts in terms of
+paradigms and instruments. However, these may not yet fulfill the
+formatting requirements of the package. The function
+reformat_edge_nodelist helps you put a simple edge and nodelist in the
+proper formatting to work with the other cognitivemapr functions. There
+are some simple requirements for the function to reformat your lists.
+
+The reformat_edge_nodelist function requires your **edgelist** to have
+the following 4 columns with the listed column titles, in addition any
+number of columns with meta-data may be added.
+
+1.  "from": cause concept (may consist of multiple words)
+
+2.  "to": effect or utility concept (may consist of multiple words)
+
+3.  "weight": number of times the relation is mentioned (can have any
+    number, if left empty the function will set it to 1 by default)
+
+4.  "edge_value": sign/value of the relation: can be 1 (positive
+    relation), -1 (negative relation), or 0 (non-existent relation). If
+    left empty the function will set it by default to 1 (positive).
+
+The reformat_edge_nodelist function also requires your **nodelist** to
+have the following 4 columns with the listed column titles, in addition
+any number of columns with meta-data may be added.
+
+1.  "node_name": name of all unique concepts in the edgelist
+
+2.  "value": the intrisic (normative) value of the concept displayed as
+    a number (1 = positive/neutral, -1 = negative). You should use the
+    negative value sparsely for whether a concept is positive or
+    negative is often subjective. If a cell that is left empty in this
+    column the function will set it by default to 1 (positive/neutral).
+
+3.  "paradigms": the categorisation of the concept as belonging to/being
+    associated with one of two incommensurable paradigms, such as
+    Ordoliberal versus Keynesian (van Esch & Snellens 2024). You can
+    only distinguish two paradigms in this column or leave the cell
+    empty when a concept does not align with one of these two paradigms.
+
+4.  "instruments": the categorisation of the concept as a particular
+    type of policy-instrument. You can distinguish any number of
+    different instruments in this column or leave the cell empty when a
+    concept is not a policy instrument. This column can also be used for
+    any other type of categorisation of the concepts that is deemed
+    relevant, but you cannot change the name of the column.
+
+The single_edgelist created at the start of this tutorial fulfills the
+requirements for the reformat_edge_nodelist function, however, we do
+need to create a new nodelist for the one's created by the previous
+functions, already has more columns than required.
+
+```{r}
+
+# create a simple nodelist with the proper information on the value, paradigms and instruments  
+node_name <- c("a","b","c","d", "e") # making a list of all unique concepts in the edgelist
+value <- c("1","-1","1","1","-1") # making a list of node values
+paradigms <- c("ordoliberal", NA, NA, "keynesian", NA) # list of paradigms
+instruments <- c("economic stimulation", "financial market regulation", NA, NA, "economic stimulation") # list of instruments
+date <- c("20-5-2010", "20-5-2010","22-5-2010","23-5-2010", "23-5-2010") # non-mandatory meta-data
+
+# compile the nodelist (dataframe) from these lists
+complete_nodelist <- data.frame(node_name, value, paradigms, instruments, date)
+
+#show the complete_nodelist
+complete_nodelist
+```
+
+We now have both a simple edge and nodelist that may easily be compiled
+by the researcher and that has the proper format to run the
+reformat_edge_nodelist function on.
+
+```{r}
+# run the function & return the edge and nodelist
+
+new_edgelist3 <- cognitivemapr::reformat_edge_nodelist(single_edgelist, complete_nodelist) [[1]]
+new_nodelist2 <- cognitivemapr::reformat_edge_nodelist(single_edgelist, complete_nodelist) [[2]]
+
+new_edgelist3
+new_nodelist2
+```
+
+Reviewing the returned edge and nodelist shows that the
+reformat_edge_nodelist function adds id's to the nodelist and replaces
+the concepts in the edgelist with the id's that correspond to those in
+the nodelist. It reorders the columns in the edgelist to match the
+requirements of the functions in this package. It checks whether the
+columns weight and edge-value in the edgelist and the column value in
+the nodelist have values, and sets these values to the default of 1 if
+they were left empty in the uploaded lists. It assigns the "from" and
+"to" concepts in the edgelist the value they were given in the nodelist
+(or sets to the default of 1 if left empty) by adding respectively the
+value.x and value.y to the edgelist. It The function also retains all
+meta-data that was included in the original lists.
+
+These list can now be used for analysis with the other functions in the
+cognitivemapr package.
+
+```{r}
+#running the first function of the package - calculate_degrees - with the new_edgelist3 and new_nodelist2 as an example data of Mark Rutte, and storing it as a df
+test_node_measures <- cognitivemapr::calculate_degrees(new_edgelist3, new_nodelist2)
+
+# this shows that the created edge and nodelist indeed work with the other functions in the package and returns some first basis findings
+str(test_node_measures)
+```
+
+Please refer to the cognitivemapr_Tutorial for an explanation and
+illustration of the analytical functions in the cognitivemapr package.

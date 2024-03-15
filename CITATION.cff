@@ -2,20 +2,40 @@
 # CITATION file created with {cffr} R package, v0.4.1
 # See also: https://docs.ropensci.org/cffr/
 # -----------------------------------------------------------
- 
+
 cff-version: 1.2.0
 message: 'To cite package "cognitivemapr" in publications use:'
 type: software
-title: 'cognitivemapr: What the Package Does (One Line, Title Case)'
+title: 'cognitivemapr: Functions for Cognitive Mapping Analysis'
 version: 0.0.0.9000
-abstract: What the package does (one paragraph).
+abstract: Cognitive mapping is a method specifically designed to study belief systems
+and has several advantages over other methods. The goal of the package is to reduce
+the initial (time) investment needed to start using the method. The package provides
+several functions to conduct the type of cognitive mapping analysis as described
+in the article: 'How to ‘measure’ Ideas. Introducing the method of cognitive mapping
+to the domain of ideational policy studies’ as published in 2024 in the Journal
+of European Public Policy by Femke Van Esch and Jeroen Snellens.
 authors:
 - family-names: van Esch
   given-names: Femke
-  email: first.last@example.com
-  orcid: https://orcid.org/YOUR-ORCID-ID
+  email: f.a.w.j.vanesch@uu.nl
+  orcid: https://orcid.org/0000-0002-2559-3127
+- family-names: Treep
+  given-names: Jelle
+  email: h.j.treep@uu.nl
+  orcid: https://orcid.org/0000-0003-3196-7954
+
+contributors:
+- family-names: Moopen
+  given-names: Neha
+  email: n.moopen@uu.nl
+  orcid: https://orcid.org/0000-0003-1412-4402
+- family-names: Snellens
+  given-names: Jeroen
+  email: snellens@gmail.com
+
 contact:
 - family-names: van Esch
   given-names: Femke
-  email: first.last@example.com
-  orcid: https://orcid.org/YOUR-ORCID-ID
+  email: f.a.w.j.vanesch@uu.nl
+  orcid: https://orcid.org/0000-0002-2559-3127
