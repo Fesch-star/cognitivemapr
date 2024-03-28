@@ -132,7 +132,7 @@ the context of this map.
 
 ## change the figure to one showing the true evaluations & rewrite the text
 
-![](images/figure_1_rutte_map_exerpt.png)
+![](simple_cm_rutte.png)
 
 Running the function 'evaluation_step' establishes the evaluation of the
 concepts in the map by analysing their outgoing relations in this
