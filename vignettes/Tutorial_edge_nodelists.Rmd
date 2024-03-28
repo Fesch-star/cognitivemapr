@@ -352,5 +352,5 @@ test_node_measures <- cognitivemapr::calculate_degrees(new_edgelist3, new_nodeli
 str(test_node_measures)
 ```
 
-Please refer to the cognitivemapr_Tutorial for an explanation and
+Please refer to the [cognitivemapr Tutorial](cognitivemapr_Tutorial.html) for an explanation and
 illustration of the analytical functions in the cognitivemapr package.
