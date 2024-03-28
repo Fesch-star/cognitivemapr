@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   Tutorial_edge_nodelists: Tutorial_edge_nodelists.html
   cognitivemapr-Tutorial: cognitivemapr-Tutorial.html
-last_built: 2024-03-28T10:57Z
+last_built: 2024-03-28T11:09Z
 urls:
   reference: https://fesch-start.github.io/cognitivemapr/reference
   article: https://fesch-start.github.io/cognitivemapr/articles
