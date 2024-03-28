@@ -4,14 +4,16 @@ on:
   push:
     branches: [main]
     paths:
+      - 'DESCRIPTION'
       - 'R/**'
-      - 'vignettes/cognitivemapr-Tutorial.Rmd'
+      - 'vignettes/**.Rmd'
 
   pull_request:
     branches: [main]
     paths:
+      - 'DESCRIPTION'
       - 'R/**'
-      - 'vignettes/cognitivemapr-Tutorial.Rmd'
+      - 'vignettes/**.Rmd'
 
 name: R-CMD-check
 
