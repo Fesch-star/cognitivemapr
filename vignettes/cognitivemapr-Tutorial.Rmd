@@ -218,11 +218,6 @@ result_list <- cognitivemapr::evaluate_concepts(rutte_p2_edgelist, rutte_p2_node
 
 ```
 
-[improve the functions along the lines of what Thomas did for the
-software: 1) make it stop when a balance is reached 2) for cyclical
-graphs, let the researcher chose what values to take for the unstable
-concepts]
-
 If we print the top of the node_measures list resulting from the final
 iteration, it shows how conducting a CM analysis in this fashion reveals
 both the nature, strength and complexity of Rutte's ideas as well as
