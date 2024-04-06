@@ -48,8 +48,8 @@
 #' data("edgelist")
 #'
 #' # Run the following lines of code to save the edge and nodelist
-#' speaker_edgelist <- prepare_lists_from_edgelist(edgelist)[[1]]
-#' speaker_nodelist <- prepare_lists_from_edgelist(edgelist)[[2]]
+#' speaker_nodelist <- prepare_lists_from_edgelist(edgelist)[[1]]
+#' speaker_edgelist <- prepare_lists_from_edgelist(edgelist)[[2]]
 #'
 #' # You may store the nodelist as csv and fill in the value, paradigms and
 #' # instruments column via excel by running the following code:
@@ -113,5 +113,5 @@ prepare_lists_from_edgelist <- function(edgelist){
   nodelist <- base::cbind(nodelist, paradigms = NA, instruments = NA)
 
   #return the edgelist and a nodelist to which paradigms and instruments can be addedrut
-  return (list(edgelist, nodelist))
+  return (list(nodelist, edgelist))
 }

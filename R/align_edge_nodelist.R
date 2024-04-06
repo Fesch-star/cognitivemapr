@@ -24,8 +24,8 @@
 #' # Load the data
 #' data("edgelist", "nodelist")
 #'
-#' speaker_edgelist <- align_edge_nodelist(edgelist, nodelist)[[1]]
-#' speaker_nodelist <- align_edge_nodelist(edgelist, nodelist)[[2]]
+#' speaker_nodelist <- align_edge_nodelist(edgelist, nodelist)[[1]]
+#' speaker_edgelist <- align_edge_nodelist(edgelist, nodelist)[[2]]
 #'
 #' You may store the nodelist as csv and fill in the value, paradigms and
 #' instruments column via excel by running the following code:
@@ -48,5 +48,5 @@ align_edge_nodelist <- function(edgelist, nodelist){
   edgelist <- dplyr::left_join(edgelist, nodes, by = c("to" = "id"))
 
   #return the edgelist and a nodelist
-  return (list(edgelist, nodelist))
+  return (list(nodelist, edgelist))
 }

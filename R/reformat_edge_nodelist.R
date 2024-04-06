@@ -5,7 +5,7 @@
 #' and edgelist that have the proper format to conduct all analyses in the
 #' cognitivemapr Rpackage.
 #'
-#  It takes an edgelist with the following 3 mandatory columns:
+#  It takes an edgelist with the following 4 mandatory columns:
 #' "from": cause concept
 #' "to": effect concept
 #' "weight": number of times the relation is mentioned (can have any number,
@@ -62,16 +62,31 @@
 #' data("edgelist")
 #'
 #' # Run the following lines of code to save the edge and nodelist
-#' speaker_edgelist <- reformat_edge_nodelist(edgelist, nodelist)[[1]]
-#' speaker_nodelist <- reformat_edge_nodelist(edgelist, nodelist)[[2]]
-#'
+#' speaker_nodelist <- reformat_edge_nodelist(edgelist, nodelist)[[1]]
+#' speaker_edgelist <- reformat_edge_nodelist(edgelist, nodelist)[[2]]
 #' }
 #'
 reformat_edge_nodelist <- function(edgelist, nodelist){
 
-  #safety check: if column 'value'in the nodelist is left empty, replace with value 1,
+  #safety check: if column 'value' in the nodelist is left empty, replace with value 1,
   #1, so all concepts are seen as neutral or positive
   nodelist <- dplyr::mutate(nodelist, value = ifelse(is.na(value), 1, value))
+
+  #list only unique concepts in from-column of the edgelist
+  nodes_from <- base::unique(edgelist$from)
+
+  #list only the unique concepts in to-column of the edgelist
+  nodes_to <- base::unique(edgelist$to)
+
+  #join the two nodelist together
+  nodes <- c(nodes_from, nodes_to)
+
+  #retain only the unique values
+  nodes <- base::unique(nodes)
+
+  # retain only the nodes in the nodeslist that also appear in the nodes df
+
+  nodelist <- nodelist[nodelist$node_name %in% nodes, ]
 
   # add id's to the nodelist
   nodelist <- tibble::rowid_to_column(nodelist, "id")
@@ -111,6 +126,6 @@ reformat_edge_nodelist <- function(edgelist, nodelist){
   edgelist <- dplyr::mutate(edgelist, edge_value = ifelse(is.na(edge_value), 1, edge_value))
 
 
-  #return the edgelist and a nodelist to which paradigms and instruments can be added rut
-  return (list(edgelist, nodelist))
+  #return the edgelist and a nodelist to which paradigms and instruments can be added
+  return (list(nodelist, edgelist))
 }
