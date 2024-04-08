@@ -192,12 +192,11 @@ cognitivemapr package: align_edge_nodelist.
 # write.csv(nodelist, file = "[location/filename.csv]", row.names = FALSE)
 
 # change nodelist by adding information on paradigms and instruments
-nodelist$paradigms[nodelist$node_name %in% c("a", "b")] <- "ordoliberal"
-nodelist$instruments[nodelist$node_name == "a"] <- "economic stimulation"
+nodelist$paradigms <- ifelse(nodelist$node_name %in% c("a", "b"), "ordoliberal", nodelist$paradigms)
+nodelist$instruments <- ifelse(nodelist$node_name == "a", "economic stimulation", nodelist$instruments)
 
 # change the value of concept a from positive to negative
-nodelist$value[nodelist$node_name == "c"] <- -1
-
+nodelist$value <- ifelse(nodelist$node_name == "c", -1, nodelist$value)
 # renaming the nodelist for clarity
 new_nodelist <- nodelist
 
