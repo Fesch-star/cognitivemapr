@@ -5,7 +5,7 @@
 #' and edgelist that have the proper format to conduct all analyses in the
 #' cognitivemapr Rpackage.
 #'
-#  It takes an edgelist with the following 4 mandatory columns:
+#'  It takes an edgelist with the following 4 mandatory columns:
 #' "from": cause concept
 #' "to": effect concept
 #' "weight": number of times the relation is mentioned (can have any number,
