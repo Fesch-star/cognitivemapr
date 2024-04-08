@@ -94,7 +94,7 @@ relations the CM consists, which is the most commonly used measure of
 the relative size of a CM in comparison to others.
 
 ```{r}
-sum(rutte_p2_node_measures$w_degree)/2
+sum(rutte_p2_node_measures$w_degree) / 2
 ```
 
 ### Step 3.2: Top 10 concepts
@@ -151,7 +151,7 @@ rownr <- which(grepl("High credit rating", rutte_p2_node_measures$node_name))
 
 # show concept and evaluation
 
-test_node1[c(rownr), c("id", "node_name","val_run1")] 
+test_node1[c(rownr), c("id", "node_name", "val_run1")]
 
 ```
 
@@ -177,10 +177,10 @@ rownr <- which(grepl("High credit rating", rutte_p2_node_measures$node_name))
 
 # show concept and evaluation
 
-test_node2[c(rownr), c("id", "node_name","val_run1")] 
+test_node2[c(rownr), c("id", "node_name", "val_run1")]
 
 # delete the test data, so not to crowd the environment
-rm(test_edge1,test_edge2, test_node1, test_node2, rownr)
+rm(test_edge1, test_edge2, test_node1, test_node2, rownr)
 ```
 
 ### Step 4.1: Set maximum number of iterations
@@ -308,7 +308,7 @@ w_degree <- sum(rutte_p2_node_measures$w_degree)
 
 # make an empty df with names of instruments as ?
 
-par_support<- vector(mode="numeric")
+par_support <- vector(mode="numeric")
 
 # calculate the support for each instrument
 for (paradigm in paradigms) {

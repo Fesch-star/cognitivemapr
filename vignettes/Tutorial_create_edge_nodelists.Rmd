@@ -106,15 +106,15 @@ obtain the data directly from respondents).
 # create a simple single edgelist
 
 # create a list of cause concepts (mandatory column)
-from <- c("a","c","d","b") 
+from <- c("a", "c", "d", "b")
 # creat a list of effect/utility concepts (mandatory column)
-to <- c("c","d","e","d") 
+to <- c("c", "d", "e", "d")
 # set number of times the relation occurs (mandatory column, could be left empty)
-weight <- c(1,1,1,1) 
+weight <- c(1, 1, 1, 1)
 # set the value of the relation (positive, negative or non-existent effect, could be left empty)
-edge_value <- c(1,-1,-1,1) 
+edge_value <- c(1, -1, -1, 1)
 # example of non-mandatory meta-data: date
-map_date <- c("20-5-2010", "21-5-2010","22-5-2010","23-5-2010") 
+map_date <- c("20-5-2010", "21-5-2010", "22-5-2010", "23-5-2010")
 # combine the data into a dataframe: the original simple edgelist
 single_edgelist <- data.frame(from, to, weight, edge_value, map_date)
 
@@ -185,13 +185,15 @@ cognitivemapr package: align_edge_nodelist.
 
 ```{r}
 
-# to store the new_nodelist when you want to make the changes manually in excel, you run the following code to save the list in csv format in a location of your choice [will not be executed in this tutorial]
+# to store the new_nodelist when you want to make the changes
+# manually in excel, you run the following code
+# [will not be executed in this tutorial]
 
 # write.csv(nodelist, file = "[location/filename.csv]", row.names = FALSE)
 
 # change nodelist by adding information on paradigms and instruments
-nodelist$paradigms[nodelist$node_name == c("a", "b")] <- "ordoliberal" 
-nodelist$instruments[nodelist$node_name == c("a")] <- "economic stimulation"
+nodelist$paradigms[nodelist$node_name %in% c("a", "b")] <- "ordoliberal"
+nodelist$instruments[nodelist$node_name == "a"] <- "economic stimulation"
 
 # change the value of concept a from positive to negative
 nodelist$value[nodelist$node_name == "c"] <- -1
@@ -301,11 +303,11 @@ functions, already has more columns than required.
 ```{r}
 
 # create a simple nodelist with the proper information on the value, paradigms and instruments  
-node_name <- c("a","b","c","d", "e") # making a list of all unique concepts in the edgelist
-value <- c("1","-1","1","1","-1") # making a list of node values
+node_name <- c("a", "b", "c", "d", "e") # making a list of all unique concepts in the edgelist
+value <- c("1", "-1", "1", "1", "-1") # making a list of node values
 paradigms <- c("ordoliberal", NA, NA, "keynesian", NA) # list of paradigms
 instruments <- c("economic stimulation", "financial market regulation", NA, NA, "economic stimulation") # list of instruments
-date <- c("20-5-2010", "20-5-2010","22-5-2010","23-5-2010", "23-5-2010") # non-mandatory meta-data
+date <- c("20-5-2010", "20-5-2010", "22-5-2010", "23-5-2010", "23-5-2010") # non-mandatory meta-data
 
 # compile the nodelist (dataframe) from these lists
 complete_nodelist <- data.frame(node_name, value, paradigms, instruments, date)
