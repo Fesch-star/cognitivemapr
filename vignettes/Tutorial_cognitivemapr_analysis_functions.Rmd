@@ -94,7 +94,7 @@ relations the CM consists, which is the most commonly used measure of
 the relative size of a CM in comparison to others.
 
 ```{r}
-sum(rutte_p2_node_measures$w_degree)/2
+sum(rutte_p2_node_measures$w_degree) / 2
 ```
 
 ### Step 3.2: Top 10 concepts
@@ -130,9 +130,7 @@ a 0 sign for the relation. As this concept does not have any other
 outgoing paths, 'pro_European attitude' is evaluated as ambiguous within
 the context of this map.
 
-## change the figure to one showing the true evaluations & rewrite the text
-
-![](simple_cm_rutte.png)
+![](images/figure_1_rutte_map_exerpt.png)
 
 Running the function 'evaluation_step' establishes the evaluation of the
 concepts in the map by analysing their outgoing relations in this
@@ -153,7 +151,7 @@ rownr <- which(grepl("High credit rating", rutte_p2_node_measures$node_name))
 
 # show concept and evaluation
 
-test_node1[c(rownr), c("id", "node_name","val_run1")] 
+test_node1[c(rownr), c("id", "node_name", "val_run1")]
 
 ```
 
@@ -179,10 +177,10 @@ rownr <- which(grepl("High credit rating", rutte_p2_node_measures$node_name))
 
 # show concept and evaluation
 
-test_node2[c(rownr), c("id", "node_name","val_run1")] 
+test_node2[c(rownr), c("id", "node_name", "val_run1")]
 
 # delete the test data, so not to crowd the environment
-rm(test_edge1,test_edge2, test_node1, test_node2, rownr)
+rm(test_edge1, test_edge2, test_node1, test_node2, rownr)
 ```
 
 ### Step 4.1: Set maximum number of iterations
@@ -310,7 +308,7 @@ w_degree <- sum(rutte_p2_node_measures$w_degree)
 
 # make an empty df with names of instruments as ?
 
-par_support<- vector(mode="numeric")
+par_support <- vector(mode="numeric")
 
 # calculate the support for each instrument
 for (paradigm in paradigms) {
@@ -441,30 +439,30 @@ cause and the effect (the more logical steps it takes to explain the
 relationship between instrument and goal), the weaker the presumed
 causal power of the instrument (cf. Septer, Dijkstra, and Stokman 2012;
 Shapiro and Bonham 1973). On the basis of this, we propose that the
-causal power (CP) of an instrument on a particular goal may be
+causal power ($CP$) of an instrument on a particular goal may be
 established as follows (Septer, Dijkstra, and Stokman 2012: First, for
 each subsequent concept in the antecedent path, its autonomous power
-(AP) may be determined following the calculation:
+($AP$) may be determined following the calculation:
 
 $$AP = Ev*W*(0.9(D-1))$$Whereby:
 
-Ev = Evaluation of the cause concept (-1, 0, +1)
+$Ev$ = Evaluation of the cause concept  (-1, 0, +1)
 
-W = Weight of the relation
+$W$ = Weight of the relation
 
-D = Distance/steps to the effect concept
+$D$ = Distance/steps to the effect concept
 
 To calculate the total causal power of a policy instrument, the
-AP-scores of all concepts in the path are multiplied:
+$AP$-scores of all concepts in the path are multiplied:
 
-$$CP = AP1 \* AP2 \* ... APi$$
+$$CP = AP1 * AP2 * ... APi$$
 
-In figure 1, the causal power of the concept 'ESM' (D=2) runs via (W=2,
-EV=+1) the concept 'market trust' (D=1), which in turn positively feeds
-into (W=1, EV=+1) 'solving the crisis'. The causal power of ESM is thus
+In figure 1, the causal power of the concept 'ESM' ($D=2$) runs via ($W=2$,
+$EV=+1$) the concept 'market trust' ($D=1$), which in turn positively feeds
+into ($W=1$, $EV=+1$) 'solving the crisis'. The causal power of ESM is thus
 calculated as follows:
 
-$$CP=(+1*2*(0.9 (2-1)) \* (+1*1*(0.9 (1-1)) = 1.8$$
+$$CP=(+1*2*(0.9 (2-1)) * (+1*1*(0.9 (1-1)) = 1.8$$
 
 Scholars have used similar analyses to derive policy preferences in the
 domain of environmental and foreign policy decisions to identify
