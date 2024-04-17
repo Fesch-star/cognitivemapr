@@ -1,0 +1,7 @@
+name;data_type;n_missing;complete_rate;n_unique;empty;min;median;max;mean;sd;whitespace;hist;label
+id;numeric;0;1,000000000000000;NA;NA; 8;386;647;363,702380952380963;195,699965816984218;NA;▅▅▃▅▇;NA
+node_name;character;0;1,000000000000000;84;0;3;NA;40;NA;NA;0;NA;NA
+paradigms;character;56;0,333333333333333;2;0;9;NA;11;NA;NA;0;NA;NA
+int;character;55;0,345238095238095;2;0;13;NA;17;NA;NA;0;NA;NA
+value;numeric;0;1,000000000000000;NA;NA;-1;  1;  1;0,952380952380952;0,306741989801716;NA;▁▁▁▁▇;NA
+instruments;character;64;0,238095238095238;5;0;13;NA;29;NA;NA;0;NA;NA
