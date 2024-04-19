@@ -21,6 +21,7 @@ and edgelist that have the proper format to conduct all analyses in the
 cognitivemapr Rpackage.
 }
 \details{
+It takes an edgelist with the following 4 mandatory columns:
 "from": cause concept
 "to": effect concept
 "weight": number of times the relation is mentioned (can have any number,
@@ -73,9 +74,8 @@ retains all meta-data that was included in the original lists.
 data("edgelist")
 
 # Run the following lines of code to save the edge and nodelist
-speaker_edgelist <- reformat_edge_nodelist(edgelist, nodelist)[[1]]
-speaker_nodelist <- reformat_edge_nodelist(edgelist, nodelist)[[2]]
-
+speaker_nodelist <- reformat_edge_nodelist(edgelist, nodelist)[[1]]
+speaker_edgelist <- reformat_edge_nodelist(edgelist, nodelist)[[2]]
 }
 
 }

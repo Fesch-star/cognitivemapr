@@ -1,7 +1,7 @@
 name;data_type;n_missing;complete_rate;n_unique;empty;min;median;max;mean;sd;whitespace;hist;label
-from;numeric;0;1;NA;NA;  8;372;647;369,764150943396203;181,865180409727458;NA;▃▅▆▃▇;NA
-to;numeric;0;1;NA;NA; 25;222;647;299,481132075471692;232,481201744185086;NA;▇▃▁▃▆;NA
-weight;numeric;0;1;NA;NA;  1;  1;  3;1,084905660377359;0,312224721522111;NA;▇▁▁▁▁;NA
+from;numeric;0;1;NA;NA;  8;372;647;369,764150943396203;181,865180409727458;NA;▃▅▆▃▇;numerical id for the cause concept
+to;numeric;0;1;NA;NA; 25;222;647;299,481132075471692;232,481201744185086;NA;▇▃▁▃▆;numerical id for the effect concept
+weight;numeric;0;1;NA;NA;  1;  1;  3;1,084905660377359;0,312224721522111;NA;▇▁▁▁▁;number of times the relation is mentioned (can have any number)
 edge_value;numeric;0;1;NA;NA; -1;  1;  3;0,698113207547170;0,841425223124202;NA;▂▁▇▁▁;NA
 edge_id;numeric;0;1;NA;NA;  1; 54;106;53,500000000000000;30,743563011900015;NA;▇▇▇▇▇;NA
 map_id;numeric;0;1;NA;NA;280;388;388;376,405660377358515;31,319483758406392;NA;▁▁▁▁▇;NA
