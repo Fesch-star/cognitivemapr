@@ -10,8 +10,7 @@ name: Document
 jobs:
   document:
     runs-on: ubuntu-latest
-    env:
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    environment: doc
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
