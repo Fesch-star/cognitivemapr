@@ -38,6 +38,7 @@ jobs:
         shell: Rscript {0}
 
       - name: GIT Commit Build Artifacts (coverage, dist, devdist, docs)
+        if: steps.verify_diff.outputs.changed == 'true'
         run: |
           git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"
           git config --global user.email "username@users.noreply.github.com"
