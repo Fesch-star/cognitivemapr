@@ -36,8 +36,8 @@ of these functions).
 # Load the data
 data("edgelist", "nodelist")
 
-speaker_edgelist <- align_edge_nodelist(edgelist, nodelist)[[1]]
-speaker_nodelist <- align_edge_nodelist(edgelist, nodelist)[[2]]
+speaker_nodelist <- align_edge_nodelist(edgelist, nodelist)[[1]]
+speaker_edgelist <- align_edge_nodelist(edgelist, nodelist)[[2]]
 
 You may store the nodelist as csv and fill in the value, paradigms and
 instruments column via excel by running the following code:

@@ -12,7 +12,7 @@ commit](https://img.shields.io/github/last-commit/Fesch-star/cognitivemapr)
 
 <!-- badges: end -->
 
-# cognitivemapr <img src="man/figures/logo.png" align="right" height="128" />
+# cognitivemapr <img src="man/figures/cognitivemapr_logo.png" align="right" height="128" />
 
 Cognitive Mapping is a method specifically designed to study belief
 systems as espoused by individuals or organisations and has several
