@@ -53,3 +53,24 @@ contact:
 - email: f.a.w.j.vanesch@uu.nl
   given-names: Femke
   family-names: van Esch
+references:
+  - type: software
+    title: "CognitiveMapr"
+    doi: 10.5281/zenodo.10827420
+    repository-code: "https://github.com/jfasnellens/cognitivemapr"
+  - type: article
+    authors:
+    - given-names: van Esch
+      family-names: Femke
+      email: f.a.w.j.vanesch@uu.nl
+      orcid: 'https://orcid.org/0000-0002-2559-3127'
+      affiliation: Utrecht University
+    - given-names: Snellens
+      family-names: Jeroen
+      email: snellens@gmail.com
+    title: "How to ‘Measure’ Ideas. Introducing the Method of Cognitive Mapping to the Domain of Ideational Policy Studies"
+    year: 2024
+    journal: Journal of European Public Policy
+    volume: 31
+    issue: 2
+    doi: 10.1080/13501763.2022.2155215
