@@ -16,7 +16,7 @@
 #' consequent node (effect-concept) (a diminishes b, while b is seen as a positive
 #' thing) logically leads to the conclusion that the node (cause-concept) is
 #' valued negatively. A negative relation to a negatively valued node (effect-concept)
-#' suggest that the cause-concept positive.
+#' suggest that the cause-concept positive. BLABLABLA
 #' The function takes the dyads of nodes (cause and effect-concept) and determines
 #' the value of all cause-concepts. As nodes may have multiple consequent paths,
 #' that may lead to different conclusions as to the value of the cause-concept,
