@@ -3,6 +3,11 @@
 #' The nodelist containing all unique concepts in the edgelist with additional
 #' information regarding these concepts, such as their intrinsic normative value
 #' or their categorisation in terms of paradigms or (policy) instruments.
+#'
+#' The data includes a nodelist with all of the concepts that are used in _rutte_p2_edgelist_,
+#' categorised in terms of the policy-paradigms and policy-instruments that they
+#' are associated with.
+#'
 #' The variables are as follows:
 #'
 #' @name rutte_p2_nodelist
@@ -10,12 +15,12 @@
 #'
 #' @format A data frame with 84 rows and 6 variables:
 #' \describe{
-#'   \item{id}{numerical id for all unique concepts in the associated edgelist}
-#'   \item{node_name}{name of  all unique concepts in the associated edgelist}
-#'   \item{paradigms}{the categorisation of the concept as belonging to/being associated with one of two incommensurable paradigms}
-#'   \item{int}{the categorisation of the concept as intergovernmental or supranational (superfluous column for now)}
-#'   \item{value}{the intrinsic (normative) value of the concept displayed as a number: 1 = positive/neutral, -1 = negative.}
-#'   \item{instruments}{the categorisation of the concept as a particular type of policy-instrument. This column can also be used for any other type of categorization of the concepts that
+#'   \item{id}{_num_ numerical id for all unique concepts in the associated edgelist}
+#'   \item{node_name}{_chr_ name of  all unique concepts in the associated edgelist}
+#'   \item{paradigms}{_chr_ the categorisation of the concept as belonging to/being associated with one of two incommensurable paradigms}
+#'   \item{int}{_chr_ the categorisation of the concept as intergovernmental or supranational (superfluous column for now)}
+#'   \item{value}{_num_ the intrinsic (normative) value of the concept displayed as a number: 1 = positive/neutral, -1 = negative.}
+#'   \item{instruments}{_chr_ the categorisation of the concept as a particular type of policy-instrument. This column can also be used for any other type of categorization of the concepts that
 #' is deemed relevant}
 #' }
 #'
