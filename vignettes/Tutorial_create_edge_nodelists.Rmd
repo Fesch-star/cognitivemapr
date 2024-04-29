@@ -1,8 +1,8 @@
 ---
-title: "Tutorial Edge and Nodelists"
+title: "Tutorial Preprocessing Edge and Nodelists"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Tutorial Edge and Nodelists}
+  %\VignetteIndexEntry{Tutorial Preprocessing Edge and Nodelists}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 

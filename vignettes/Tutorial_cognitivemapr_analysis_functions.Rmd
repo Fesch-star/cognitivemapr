@@ -1,8 +1,8 @@
 ---
-title: "cognitivemapr Tutorial"
+title: "cognitivemapr analysis functions"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{cognitivemapr Tutorial}
+  %\VignetteIndexEntry{cognitivemapr analysis functions}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
@@ -33,8 +33,6 @@ Policy* ,31(2), 428-451. by Femke Van Esch and Jeroen Snellens
 (<https://doi.org/10.1080/13501763.2022.2155215>). For an instruction on
 how to compile the data (edge and nodelists) needed to use the functions
 in this package, see the 'Tutorial_edge_nodelist'.
-
-# Getting started
 
 ## Step 1: Install `cognitivemapr`
 

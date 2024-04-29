@@ -5,7 +5,7 @@
 \alias{rutte_p2_node_measures}
 \title{rutte_p2_node_measures}
 \format{
-A data frame with 84 rows and 6 variables:
+A data frame with 84 rows and 14 variables:
 \describe{
 \item{id}{\emph{num} numerical id for all unique concepts in the associated edgelist}
 \item{node_name}{\emph{chr} name of  all unique concepts in the associated edgelist}
