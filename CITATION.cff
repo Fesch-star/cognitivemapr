@@ -26,6 +26,9 @@ authors:
   - given-names: Jeroen
     family-names: Snellens
     email: snellens@gmail.com
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.11068149
 repository-code: 'https://github.com/Fesch-star/cognitivemapr'
 abstract: >-
   Cognitive mapping is a method specifically designed to

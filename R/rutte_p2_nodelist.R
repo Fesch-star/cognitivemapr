@@ -1,14 +1,8 @@
 #' rutte_p2_nodelist
 #'
-#' The nodelist containing all unique concepts in the edgelist with additional
-#' information regarding these concepts, such as their intrinsic normative value
-#' or their categorisation in terms of paradigms or (policy) instruments.
-#'
 #' The data includes a nodelist with all of the concepts that are used in _rutte_p2_edgelist_,
 #' categorised in terms of the policy-paradigms and policy-instruments that they
 #' are associated with.
-#'
-#' The variables are as follows:
 #'
 #' @name rutte_p2_nodelist
 #' @docType data
