@@ -14,7 +14,7 @@ v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org
 
 <!-- badges: end -->
 
-<img src="man/figures/cognitivemapr_logo.png" data-align="right" width="494" />
+<img src="man/figures/logo.png" data-align="right" width="128" />
 
 Cognitive Mapping (CM) is a method specifically designed to study belief
 systems as espoused by individuals or organisations and has several
