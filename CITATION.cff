@@ -26,6 +26,7 @@ authors:
   - given-names: Jeroen
     family-names: Snellens
     email: snellens@gmail.com
+    orcid: https://orcid.org/0009-0007-0755-6297
 identifiers:
   - type: doi
     value: 10.5281/zenodo.11068149
