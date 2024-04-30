@@ -27,7 +27,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: end -->
 
-# cognitivemapr ![](man/figures/cognitivemapr_logo.png){align="right" width="494"}
+![](man/figures/cognitivemapr_logo.png){align="right" width="494"}
 
 Cognitive Mapping (CM) is a method specifically designed to study belief
 systems as espoused by individuals or organisations and has several

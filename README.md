@@ -14,8 +14,7 @@ v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org
 
 <!-- badges: end -->
 
-# cognitivemapr <img src="man/figures/cognitivemapr_logo.png" data-align="right"
-width="494" />
+<img src="man/figures/cognitivemapr_logo.png" data-align="right" width="494" />
 
 Cognitive Mapping (CM) is a method specifically designed to study belief
 systems as espoused by individuals or organisations and has several
@@ -56,13 +55,13 @@ Running the functions in the cognitivemapr package requires your data to
 be compiled into an edge and nodelists.
 
 -   For an instruction on the formatting requirements, see the
-    ‘Tutorial_create_edge_nodelist’. This tutorial also provides an
+    [Preprocessing edge and nodelist tutorial](https://fesch-star.github.io/cognitivemapr/articles/Tutorial_create_edge_nodelists.html). This tutorial also provides an
     explanation on how to use the three functions in the package that
     may help you reformat your data.
 
 -   For more information regarding the analytical functions in the
     package, please refer to the
-    Tutorial_cognitivemapr_analysis_functions.
+    [Tutorial on cognitivemapr analysis functions](https://fesch-star.github.io/cognitivemapr/articles/Tutorial_cognitivemapr_analysis_functions.html)
 
 ## Contributing
 
