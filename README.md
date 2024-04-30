@@ -5,7 +5,8 @@
 
 <!-- badges: start -->
 
-![builds](https://github.com/Fesch-star/cognitivemapr/actions/workflows/check-standard.yaml/badge.svg)
+![GitHub
+contributors](https://img.shields.io/github/contributors/Fesch-star/cognitivemapr)
 ![GitHub last
 commit](https://img.shields.io/github/last-commit/Fesch-star/cognitivemapr)
 [![License: GPL
@@ -14,7 +15,7 @@ v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org
 
 <!-- badges: end -->
 
-<img src="man/figures/cognitivemapr_logo.png" data-align="right" width="494" />
+<img src="man/figures/logo.png" data-align="right" width="128" />
 
 Cognitive Mapping (CM) is a method specifically designed to study belief
 systems as espoused by individuals or organisations and has several
@@ -39,8 +40,17 @@ devtools::install_github("Fesch-star/cognitivemapr")
 
 ## Dependencies
 
-Installing the package (above) will install the package dependencies:
+To run the code you need to install the following packages:
 
+- tidyverse - built under R version 4.0.5 v ggplot2 3.3.3 v purrr 0.3.4
+  v tibble 3.1.1 v dplyr 1.0.5 v tidyr 1.1.3 v stringr 1.4.0 v readr
+  1.4.0 v forcats 0.5.1
+
+- igraph - built under R version 4.0.5
+
+- tidygraph
+
+<<<<<<< HEAD
 -   `knitr`
 -   `readr`
 -   `rmarkdown`
@@ -68,6 +78,41 @@ be compiled into an edge and nodelists.
 We are very happy with any suggestions or contributions to improve the
 package. Read the [contributing guidelines](/CONTRIBUTING.md) for
 instructions.
+=======
+- ggraph
+
+## Tutorials
+
+Running the functions in the cognitivemapr package requires your data to
+be compiled into an edge and nodelists.
+
+- For an instruction on the formatting requirements, see the
+  ‘Tutorial_create_edge_nodelist’. This tutorial also provides an
+  explanation on how to use the three functions in the package that may
+  help you reformat your data.
+
+- For more information regarding the analytical functions in the
+  package, please refer to the
+  Tutorial_cognitivemapr_analysis_functions.
+
+## Contributing
+
+cognitivemapr is an open-source project, and we welcome contributions
+from the community.
+
+To contribute to the codebase, follow these steps:
+
+1.  Fork the Project
+
+2.  Create your Feature Branch
+    (`git checkout -b debug/CreativeSolution`)
+
+3.  Commit your changes (`git commit -m 'Add some CreativeSolution'`)
+
+4.  Push to the Branch (`git push origin debug/CreativeSolution`)
+
+5.  Open a Pull Request
+>>>>>>> fixed CITATION.cff, dataset descriptions, citation in README.md
 
 ## Authors & Acknowledgements
 
@@ -82,6 +127,13 @@ License](/LICENSE.md)
 ## Citation
 
 Please cite this project as follows:
+<<<<<<< HEAD
+=======
+
+van Esch, F., Treep, J., Moopen, N., & Snellens, J. cognitivemapr:
+Functions for Cognitive Mapping Analysis \[Computer software\].
+<https://github.com/Fesch-star/cognitivemapr>
+>>>>>>> fixed CITATION.cff, dataset descriptions, citation in README.md
 
     @software{van_Esch_cognitivemapr_Functions_for,
     author = {van Esch, Femke and Treep, Jelle and Moopen, Neha and Snellens, Jeroen},
