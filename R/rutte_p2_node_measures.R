@@ -1,6 +1,6 @@
 #' rutte_p2_node_measures
 #'
-#' This is an intermediate dataset used for examples in the vignette
+#' This is an intermediate dataset used for examples in the vignette: [cognitivemapr analysis functions](https://fesch-star.github.io/cognitivemapr/articles/Tutorial_cognitivemapr_analysis_functions.html).
 #'
 #' @name rutte_p2_node_measures
 #' @docType data

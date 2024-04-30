@@ -98,8 +98,8 @@ To contribute to the codebase, follow these steps:
 
 ## Authors & Acknowledgements
 
-The cognitivemapr package was created by Femke van Esch and Jelle Treep
-with contributions of Neha Moopen en Jeroen Snellens
+The `cognitivemapr` package was created by Femke van Esch and Jelle Treep
+with contributions of Neha Moopen and Jeroen Snellens.
 
 ## License
 
@@ -108,7 +108,9 @@ License](/LICENSE.md)
 
 ## Citation
 
-Please cite this project as follows: [add citation to the package]
+Please cite this project as follows:
+
+van Esch, F., Treep, J., Moopen, N., & Snellens, J. cognitivemapr: Functions for Cognitive Mapping Analysis [Computer software]. https://github.com/Fesch-star/cognitivemapr
 
 Femke van Esch:
 [F.a.w.j.vanEsch\@uu.nl](mailto:F.a.w.j.vanEsch@uu.nl){.email}

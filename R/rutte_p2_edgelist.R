@@ -4,8 +4,6 @@
 #' from speeches by the Dutch prime-minister Mark Rutte on the Eurozone crisis
 #' from the period from 2nd May 2010 to 26th July 2012.
 #'
-#' The variables are as follows:
-#'
 #' @name rutte_p2_edgelist
 #' @docType data
 #'
@@ -23,5 +21,5 @@
 #'   \item{value.y}{_num_ the evaluation (pos, neg ambiguous) of the 'to' concept}
 #' }
 #'
-#' @source ain of ideational policy studies. Journal of European Public Policy, 31(2), 428–451. <https://doi.org/10.1080/13501763.2022.2155215>
+#' @source van Esch, F., & Snellens, J. (2024). How to ‘measure’ ideas. Introducing the method of cognitive mapping to the domain of ideational policy studies. Journal of European Public Policy, 31(2), 428–451. https://doi.org/10.1080/13501763.2022.2155215
 "rutte_p2_edgelist"
