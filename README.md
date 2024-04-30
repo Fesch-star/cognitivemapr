@@ -69,26 +69,6 @@ We are very happy with any suggestions or contributions to improve the
 package. Read the [contributing guidelines](/CONTRIBUTING.md) for
 instructions.
 
-## Tutorials
-
-Running the functions in the cognitivemapr package requires your data to
-be compiled into an edge and nodelists.
-
--   For an instruction on the formatting requirements, see the
-    ‘Tutorial_create_edge_nodelist’. This tutorial also provides an
-    explanation on how to use the three functions in the package that
-    may help you reformat your data.
-
--   For more information regarding the analytical functions in the
-    package, please refer to the
-    Tutorial_cognitivemapr_analysis_functions.
-
-## Contributing
-
-We are very happy with any suggestions or contributions to improve the
-package. Read the [contributing guidelines](/CONTRIBUTING.md) for
-instructions.
-
 ## Authors & Acknowledgements
 
 The `cognitivemapr` package was created by Femke van Esch and Jelle
