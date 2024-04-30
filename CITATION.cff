@@ -8,23 +8,23 @@ message: >-
   metadata from this file.
 type: software
 authors:
-  - given-names: van Esch
-    family-names: Femke
+  - given-names: Femke
+    family-names: van Esch
     email: f.a.w.j.vanesch@uu.nl
     orcid: 'https://orcid.org/0000-0002-2559-3127'
     affiliation: Utrecht University
-  - given-names: Treep
-    family-names: Jelle
+  - given-names: Jelle
+    family-names: Treep
     email: h.j.treep@uu.nl
     affiliation: Utrecht University
     orcid: 'https://orcid.org/0000-0003-3196-7954'
-  - given-names: Moopen
-    family-names: Neha
+  - given-names: Neha
+    family-names: Moopen
     email: n.moopen@uu.nl
     affiliation: Utrecht University
     orcid: 'https://orcid.org/0000-0003-1412-4402'
-  - given-names: Snellens
-    family-names: Jeroen
+  - given-names: Jeroen
+    family-names: Snellens
     email: snellens@gmail.com
 identifiers:
   - type: doi
@@ -63,13 +63,13 @@ references:
     repository-code: "https://github.com/jfasnellens/cognitivemapr"
   - type: article
     authors:
-    - given-names: van Esch
-      family-names: Femke
+    - given-names: Femke
+      family-names: van Esch
       email: f.a.w.j.vanesch@uu.nl
       orcid: 'https://orcid.org/0000-0002-2559-3127'
       affiliation: Utrecht University
-    - given-names: Snellens
-      family-names: Jeroen
+    - given-names: Jeroen
+      family-names: Snellens
       email: snellens@gmail.com
     title: "How to ‘Measure’ Ideas. Introducing the Method of Cognitive Mapping to the Domain of Ideational Policy Studies"
     year: 2024

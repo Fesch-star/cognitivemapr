@@ -5,7 +5,7 @@
 #' @name rutte_p2_node_measures
 #' @docType data
 #'
-#' @format A data frame with 84 rows and 6 variables:
+#' @format A data frame with 84 rows and 14 variables:
 #' \describe{
 #'   \item{id}{_num_ numerical id for all unique concepts in the associated edgelist}
 #'   \item{node_name}{_chr_ name of  all unique concepts in the associated edgelist}
