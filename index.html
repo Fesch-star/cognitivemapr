@@ -76,13 +76,13 @@
 <div class="section level1">
 <h1 id="cognitivemapr-">cognitivemapr <a class="anchor" aria-label="anchor" href="#cognitivemapr-"></a>
 </h1>
-<p>Cognitive Mapping is a method specifically designed to study belief systems as espoused by individuals or organisations and has several advantages over other methods. The goal of <code>cognitivemapr</code> is to reduce the initial investment currently needed to start using the method.</p>
+<p>Cognitive Mapping (CM) is a method specifically designed to study belief systems as espoused by individuals or organisations and has several advantages over other methods. The goal of <code>cognitivemapr</code> is to reduce the initial investment currently needed to start using the method. The functions in the package allow you to conduct a CM analysis similar to that conducted in the following publication: Van Esch, Femke A.W.J., Snellens, Jeroen F.A. (2024). ‘How to ’measure’ Ideas. Introducing the method of cognitive mapping to the domain of ideational policy studies’. <em>Journal of European Public Policy</em>, 31(2), 428-451. <a href="https://doi.org/10.1080/13501763.2022.2155215" class="external-link uri">https://doi.org/10.1080/13501763.2022.2155215</a></p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of cognitivemapr with the <code>devtools</code> package:</p>
+<p>You can install the development version of cognitivemapr from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"Fesch-star/cognitivemapr"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -100,9 +100,13 @@
 </ul>
 </div>
 <div class="section level2">
-<h2 id="tutorial">Tutorial<a class="anchor" aria-label="anchor" href="#tutorial"></a>
+<h2 id="tutorials">Tutorials<a class="anchor" aria-label="anchor" href="#tutorials"></a>
 </h2>
-<p>A tutorial can be found in the <code>vignettes</code> folder or on the <a href="https://fesch-star.github.io/cognitivemapr/articles/cognitivemapr-Tutorial.html" class="external-link">website</a>.</p>
+<p>Running the functions in the cognitivemapr package requires your data to be compiled into an edge and nodelists.</p>
+<ul>
+<li><p>For an instruction on the formatting requirements, see the ‘Tutorial_create_edge_nodelist’. This tutorial also provides an explanation on how to use the three functions in the package that may help you reformat your data.</p></li>
+<li><p>For more information regarding the analytical functions in the package, please refer to the Tutorial_cognitivemapr_analysis_functions.</p></li>
+</ul>
 </div>
 <div class="section level2">
 <h2 id="contributing">Contributing<a class="anchor" aria-label="anchor" href="#contributing"></a>
@@ -112,6 +116,7 @@
 <div class="section level2">
 <h2 id="authors--acknowledgements">Authors &amp; Acknowledgements<a class="anchor" aria-label="anchor" href="#authors--acknowledgements"></a>
 </h2>
+<p>The <code>cognitivemapr</code> package was created by Femke van Esch and Jelle Treep with contributions of Neha Moopen and Jeroen Snellens.</p>
 </div>
 <div class="section level2">
 <h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
@@ -121,12 +126,13 @@
 <div class="section level2">
 <h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
 </h2>
-<p>Please cite this project as follows: Van Esch, Femke A.W.J., Snellens, Jeroen F.A. (forthcoming). ‘How to ‘measure’ Ideas. Introducing the method of cognitive mapping to the domain of ideational policy studies’. Journal of European Public Policy.</p>
-</div>
-<div class="section level2">
-<h2 id="contact">Contact<a class="anchor" aria-label="anchor" href="#contact"></a>
-</h2>
-<p>Femke van Esch: <a href="mailto:F.a.w.j.vanEsch@uu.nl" class="email">F.a.w.j.vanEsch@uu.nl</a></p>
+<p>Please cite this project as follows:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="sc">@</span>software{van_Esch_cognitivemapr_Functions_for,</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>author <span class="ot">=</span> {van Esch, Femke and Treep, Jelle and Moopen, Neha and Snellens, Jeroen},</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>license <span class="ot">=</span> {GPL<span class="fl">-3.0</span>},</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>title <span class="ot">=</span> {{cognitivemapr<span class="sc">:</span> Functions <span class="cf">for</span> Cognitive Mapping Analysis}},</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>url <span class="ot">=</span> {https<span class="sc">:</span><span class="er">//</span>github.com<span class="sc">/</span>Fesch<span class="sc">-</span>star<span class="sc">/</span>cognitivemapr}</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 </div>
 
@@ -165,6 +171,7 @@
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://www.gnu.org/licenses/gpl-3.0" class="external-link"><img src="https://img.shields.io/badge/License-GPL%20v3-blue.svg" alt="License: GPL v3"></a></li>
+<li><a href="https://doi.org/10.5281/zenodo.11068150" class="external-link"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.11068150.svg" alt="DOI"></a></li>
 </ul>
 </div>
 
